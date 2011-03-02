@@ -12,6 +12,12 @@
 </ul>
 
 <ul>
+  <% @article.workflow_comments.each do |comment| %>
+    <li><%= comment %> — <%= comment.created_at %></li>
+  <% end %>
+</ul>
+
+<ul>
 	{% for change_view in history %}
 		{{ change_view }}
 	{% endfor %}
