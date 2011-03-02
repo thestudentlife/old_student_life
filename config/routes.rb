@@ -1,5 +1,8 @@
 TslRails::Application.routes.draw do
 
+  match 'users/login' => 'users#login'
+  match 'users/logout' => 'users#logout'
+
   resources :users
 
   resources :revisions

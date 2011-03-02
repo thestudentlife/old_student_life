@@ -1,4 +1,22 @@
 class UsersController < ApplicationController
+  def login
+    @user = User.new
+    if request.post?
+      if session[:user] = User.authenticate (params[:user][:username], params[:user][:password])
+        flash[:message] = "Login successful"
+        redirect_to_stored
+      else
+        flash[:warning] = "Login unsuccessful"
+      end
+    end
+  end
+  
+  def logout
+    session[:user] = nil
+    flash[:message] = "Logged out"
+    redirect_to '/users/login'
+  end
+ 
   # GET /users
   # GET /users.xml
   def index

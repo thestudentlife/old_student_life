@@ -2,16 +2,16 @@
 
 writer:
     username: "writer"
-    password: "randomsalt$880b877dd1b7af435d9572d2070e9b4b7731ebcd"
+    hashed_password: "randomsalt$880b877dd1b7af435d9572d2070e9b4b7731ebcd"
 
 writer2:
     username: "writer2"
-    password: "randomsalt$880b877dd1b7af435d9572d2070e9b4b7731ebcd"
+    hashed_password: "randomsalt$880b877dd1b7af435d9572d2070e9b4b7731ebcd"
     
 editor:
     username: "editor"
-    password: "randomsalt$880b877dd1b7af435d9572d2070e9b4b7731ebcd"
+    hashed_password: "randomsalt$880b877dd1b7af435d9572d2070e9b4b7731ebcd"
 
 admin:
     username: "admin"
-    password: "randomsalt$880b877dd1b7af435d9572d2070e9b4b7731ebcd"
+    hashed_password: "randomsalt$880b877dd1b7af435d9572d2070e9b4b7731ebcd"
