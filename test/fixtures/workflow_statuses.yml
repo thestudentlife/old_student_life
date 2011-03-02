@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+open:
+    name: "Open"
+    priority: 10
+section:
+    name: "Edited by Section"
+    priority: 50
+management:
+    name: "Edited by Management"
+    priority: 100

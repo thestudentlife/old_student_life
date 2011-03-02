@@ -1,5 +1,7 @@
 TslRails::Application.routes.draw do
 
+  resources :workflow_statuses
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

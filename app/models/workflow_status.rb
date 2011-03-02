@@ -1,0 +1,8 @@
+class WorkflowStatus < ActiveRecord::Base
+  validates_presence_of :name
+  validates_uniqueness_of :priority
+  
+  def to_s
+    name
+  end
+end
