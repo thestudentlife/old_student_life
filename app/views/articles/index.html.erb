@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+</head>
+<body>
+<table>
+	<tr>
+		<th>Working Name</th>
+	</tr>
+<% @articles.each do |article| %>
+	<tr>
+		<td>
+			<%= link_to article.working_name, article_path(article) %>
+		</td>
+	</tr>
+<% end %> 
+</table>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<style type="text/css">
+		body {
+			font-family: Arial;
+			color: #333;
+		}
+		
+		h1 {
+			color: #666;
+		}
+	
+		dt { font-weight: bold; }
+	</style>
+</head>
+<body>
+<p>Article working name: <%= @article.working_name %></p>
+<p>Section: <= @article.section %></p>
+<p>Status: <%= @article.status_message %></p>
+<p>Current workflow status: <= @article.workflow_status %></p>
+<p>Authors:</p>
+<ul>
+	< @article.authors.each do |author| %>
+		<li><= author.auth_user.username %></li>
+	< end %>
+</ul>
+
+<ul>
+	{% for change_view in history %}
+		{{ change_view }}
+	{% endfor %}
+</ul>
+
+</body>
+</html>
