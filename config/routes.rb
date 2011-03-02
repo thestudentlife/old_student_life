@@ -1,5 +1,7 @@
 TslRails::Application.routes.draw do
 
+  resources :revisions
+
   resources :workflow_comments
 
   resources :sections

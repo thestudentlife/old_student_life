@@ -18,6 +18,10 @@ class ArticlesController < ApplicationController
   end
   def show
     @article = Article.find params[:id]
+    @workflow_history_views = @article.workflow_history.map do |item|
+      slug = item.class.name.underscore
+      render_to_string :partial => slug, :locals => {slug.to_sym => item}
+    end
   end
   def edit
     @article = Article.find params[:id]
