@@ -2,6 +2,8 @@
 
 smiley:
   working_name: "Smiley 80s"
+  workflow_status: open
 
 billgates:
   working_name: "Bill Gates"
+  workflow_status: open

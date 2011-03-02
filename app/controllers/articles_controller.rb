@@ -4,6 +4,7 @@ class ArticlesController < ApplicationController
   end
   def new
     @article = Article.new
+    @workflow_statuses = WorkflowStatus.all
   end
   def create
     @article = Article.new params[:article]
@@ -19,6 +20,7 @@ class ArticlesController < ApplicationController
   end
   def edit
     @article = Article.find params[:id]
+    @workflow_statuses = WorkflowStatus.all
   end
   def update
     @article = Article.find params[:id]

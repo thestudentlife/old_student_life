@@ -1,7 +1,7 @@
 class WorkflowStatusesController < ApplicationController
   # GET /workflow_statuses
   def index
-    @workflow_statuses = WorkflowStatus.order "priority"
+    @workflow_statuses = WorkflowStatus.all
   end
 
   # GET /workflow_statuses/1

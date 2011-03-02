@@ -10,13 +10,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110302070905) do
+ActiveRecord::Schema.define(:version => 20110302071956) do
 
   create_table "articles", :force => true do |t|
     t.string   "working_name"
     t.string   "status_message"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "workflow_status_id"
   end
 
   create_table "workflow_statuses", :force => true do |t|
