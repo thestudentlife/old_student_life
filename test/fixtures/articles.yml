@@ -3,7 +3,9 @@
 smiley:
   working_name: "Smiley 80s"
   workflow_status: open
+  section: news
 
 billgates:
   working_name: "Bill Gates"
   workflow_status: open
+  section: news

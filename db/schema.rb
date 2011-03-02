@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110302071956) do
+ActiveRecord::Schema.define(:version => 20110302073246) do
 
   create_table "articles", :force => true do |t|
     t.string   "working_name"
@@ -18,6 +18,14 @@ ActiveRecord::Schema.define(:version => 20110302071956) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "workflow_status_id"
+    t.integer  "section_id"
+  end
+
+  create_table "sections", :force => true do |t|
+    t.string   "name",       :null => false
+    t.integer  "priority",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "workflow_statuses", :force => true do |t|

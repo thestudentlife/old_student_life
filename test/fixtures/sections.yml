@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+news:
+    name: "News"
+    priority: 10
+
+opinion:
+    name: "Opinion"
+    priority: 50

@@ -18,6 +18,10 @@
 		<%= f.label :workflow_status %>
 		<%= collection_select :article, :workflow_status_id, @workflow_statuses, :id, :name %>
 	</div>
+	<div class="field">
+		<%= f.label :section %>
+		<%= collection_select :article, :section_id, @sections, :id, :name %>
+	</div>
 	<div class="actions">
 		<%= f.submit %>
 	</div>
