@@ -1,55 +1,25 @@
 class RevisionsController < ApplicationController
-  # GET /revisions
-  # GET /revisions.xml
-  def index
-    @revisions = Revision.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @revisions }
-    end
-  end
-
-  # GET /revisions/1
-  # GET /revisions/1.xml
-  def show
-    @revision = Revision.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @revision }
-    end
-  end
-
   # GET /revisions/new
-  # GET /revisions/new.xml
   def new
     @revision = Revision.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @revision }
-    end
   end
 
   # GET /revisions/1/edit
   def edit
-    @revision = Revision.find(params[:id])
+    @article = Article.find(params[:article_id])
+    @revision = @article.revisions.find(params[:id])
   end
 
   # POST /revisions
-  # POST /revisions.xml
   def create
+    params[:revision][:article_id] = params[:article_id]
+    params[:revision][:author_id] = current_user.staff_member.id
     @revision = Revision.new(params[:revision])
-
-    respond_to do |format|
-      if @revision.save
-        format.html { redirect_to(@revision, :notice => 'Revision was successfully created.') }
-        format.xml  { render :xml => @revision, :status => :created, :location => @revision }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @revision.errors, :status => :unprocessable_entity }
-      end
+    
+    if @revision.save
+      redirect_to("/articles/#{params[:article_id]}", :notice => 'Revision was successfully created.')
+    else
+      render :action => "new"
     end
   end
 
@@ -66,18 +36,6 @@ class RevisionsController < ApplicationController
         format.html { render :action => "edit" }
         format.xml  { render :xml => @revision.errors, :status => :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /revisions/1
-  # DELETE /revisions/1.xml
-  def destroy
-    @revision = Revision.find(params[:id])
-    @revision.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(revisions_url) }
-      format.xml  { head :ok }
     end
   end
 end

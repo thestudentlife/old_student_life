@@ -1,4 +1,4 @@
-<%= form_for(@revision) do |f| %>
+<%= form_for(:revision, :url => "/articles/1/revisions/") do |f| %>
   <% if @revision.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@revision.errors.count, "error") %> prohibited this revision from being saved:</h2>
@@ -10,6 +10,15 @@
       </ul>
     </div>
   <% end %>
+
+  <div class="field">
+		<%= f.label :title %><br />
+		<%= f.text_field :title %>
+	</div>
+	<div class="field">
+		<%= f.label :body %>
+		<%= f.text_area :body %>
+	</div>
 
   <div class="actions">
     <%= f.submit %>

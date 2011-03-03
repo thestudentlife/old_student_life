@@ -8,8 +8,6 @@ TslRails::Application.routes.draw do
   
   resources :users
 
-  resources :revisions
-
   resources :workflow_comments
 
   resources :sections
@@ -23,7 +21,9 @@ TslRails::Application.routes.draw do
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
   
-  resources :articles
+  resources :articles do
+    resources :revisions
+  end
 
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
