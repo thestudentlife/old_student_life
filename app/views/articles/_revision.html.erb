@@ -1,10 +1,27 @@
-<div class="revision" style="font-family: 'Helvetica Neue', 'Lucida Grande', Arial, sans-serif; color: #333">
+<div class="revision" style="font-family: 'Helvetica Neue', 'Lucida Grande', Arial, sans-serif; color: #333; font-size: 12px;">
   <h4 style="font-size: 13px; font-weight: bold; margin: 0;">
     <%= revision.author %>
     <span class="date" style="font-size: 12px; color: #888; display: block; font-weight: normal;">
       <%= revision.created_at %>
     </span>
   </h4>
+<p>
+  <em>Published online:</em>
+  <% if revision.published_online %>
+    <%= revision.published_online_at %>
+  <% else %>
+    No
+  <% end %>
+</p>
+<p>
+  <em>Published in print:</em>
+  <% if revision.published_in_print %>
+    <%= revision.published_in_print_at %>
+  <% else %>
+    No
+  <% end %>
+</p>
+  
 <p style="font-size: 12px; font-weight: bold;"><%= revision.title %></p>
 <p style="font-size: 12px;"><%= revision.body.html_safe %></p>
 <p><%= link_to 'Edit', edit_revision_path(revision) %>
