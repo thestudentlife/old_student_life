@@ -1,4 +1,4 @@
-<%= form_for(@workflow_comment) do |f| %>
+<%= form_for(:workflow_comment, :url => "/articles/1/comments/") do |f| %>
   <% if @workflow_comment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@workflow_comment.errors.count, "error") %> prohibited this workflow_comment from being saved:</h2>
@@ -11,6 +11,10 @@
     </div>
   <% end %>
 
+  <div class="field">
+		<%= f.label :text %>
+		<%= f.text_area :text %>
+	</div>
   <div class="actions">
     <%= f.submit %>
   </div>

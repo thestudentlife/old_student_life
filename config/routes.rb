@@ -8,8 +8,6 @@ TslRails::Application.routes.draw do
   
   resources :users
 
-  resources :workflow_comments
-
   resources :sections
 
   resources :workflow_statuses
@@ -23,6 +21,7 @@ TslRails::Application.routes.draw do
   
   resources :articles do
     resources :revisions
+    resources :comments, :controller => "workflow_comments"
   end
 
   # Sample of named route:
