@@ -1,10 +1,11 @@
 class AuthorsController < ApplicationController
+  
+  before_filter :require_user, :find_article
+  
   def new
-    @article = Article.find params[:article_id]
     @authors = StaffMember.all
   end
   def create
-    @article = Article.find params[:article_id]
     @author = StaffMember.find params[:author_id]
     
     if @article.authors << @author
@@ -14,7 +15,6 @@ class AuthorsController < ApplicationController
     end
   end
   def destroy
-    @article = Article.find params[:article_id]
     @author = @article.authors.find params[:author_id]
     
     if @article.authors.delete @author
@@ -22,5 +22,10 @@ class AuthorsController < ApplicationController
     else
       redirect_to @article, :notice => 'Author was not removed'
     end
+  end
+  
+  private
+  def find_article
+    @article = Article.find params[:article_id]
   end
 end
