@@ -1,1 +1,9 @@
-<p><%= workflow_comment %> — <%= workflow_comment.created_at %>, by <%= workflow_comment.author %></p>
+<div class="comment" style="font-family: 'Helvetica Neue', 'Lucida Grande', Arial, sans-serif;">
+  <h4 style="font-size: 13px; font-weight: bold; margin: 0;">
+    <%= workflow_comment.author %>
+    <span class="date" style="font-size: 12px; color: #888; display: block; font-weight: normal;">
+      <%= workflow_comment.created_at %>
+    </span>
+  </h4>
+  <p style="font-size: 12px;"><%= workflow_comment %></p>
+</div>

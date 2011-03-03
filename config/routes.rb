@@ -37,8 +37,8 @@ TslRails::Application.routes.draw do
     def revision_path (revision)
       "/articles/#{revision.article_id}/revisions/#{revision.id}"
     end
-    def new_revision_path (revision)
-      "/articles/#{revision.article_id}/revisions/new"
+    def new_revision_path (article)
+      "/articles/#{article.id}/revisions/new"
     end
     def edit_revision_path (revision)
       "/articles/#{revision.article_id}/revisions/#{revision.id}/edit"

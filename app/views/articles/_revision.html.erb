@@ -1,4 +1,11 @@
-<p><%= revision.title %></p>
-<p><%= revision.body %></p>
-<p><%= revision.created_at %>, by <%= revision.author %></p>
+<div class="revision" style="font-family: 'Helvetica Neue', 'Lucida Grande', Arial, sans-serif; color: #333">
+  <h4 style="font-size: 13px; font-weight: bold; margin: 0;">
+    <%= revision.author %>
+    <span class="date" style="font-size: 12px; color: #888; display: block; font-weight: normal;">
+      <%= revision.created_at %>
+    </span>
+  </h4>
+<p style="font-size: 12px; font-weight: bold;"><%= revision.title %></p>
+<p style="font-size: 12px;"><%= revision.body.html_safe %></p>
 <p><%= link_to 'Edit', edit_revision_path(revision) %>
+</div>

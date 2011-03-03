@@ -12,11 +12,12 @@
 </ul>
 
 <p>History:</p>
-<ul>
+<ol style="list-style-type: none; margin-left: 0; padding-left: 0;">
   <% @workflow_history_views.each do |view| %>
-    <li><%= view %></li>
+    <li style="border-bottom: 1px solid #DDD; padding: 9px;"><%= view %></li>
   <% end %>
-</ul>
+</ol>
 
+<%= link_to 'Post revision', new_revision_path (@article) %> |
 <%= link_to 'Edit', edit_article_path(@article) %> |
 <%= link_to 'Back', articles_path %>

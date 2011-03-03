@@ -15,14 +15,18 @@
 
   <div class="field">
 		<%= f.label :title %><br />
-		<%= f.text_field :title %>
+		<%= f.text_field :title, :style => "width: 660px;" %>
 	</div>
 	<div class="field">
-		<%= f.label :body %>
-		<%= f.text_area :body %>
+		<%= f.label :body, :style => "display: block;" %>
+		<div id="wmd-button-bar" style="width: 660px"></div>
+		<%= text_area_tag "wmd-input" %>
+		<div id="wmd-preview"></div>
 	</div>
 
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+
+  <script type="text/javascript" src="/wmd/wmd.js"></script>

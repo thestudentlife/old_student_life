@@ -15,7 +15,9 @@ class RevisionsController < ApplicationController
   def create
     params[:revision][:article_id] = params[:article_id]
     params[:revision][:author_id] = current_user.staff_member.id
+    params[:revision][:body] = params["wmd-input"]
     @revision = Revision.new(params[:revision])
+    @article = Article.find params[:article_id]
     
     if @revision.save
       redirect_to("/articles/#{params[:article_id]}", :notice => 'Revision was successfully created.')
@@ -27,6 +29,7 @@ class RevisionsController < ApplicationController
   # PUT /revisions/1
   # PUT /revisions/1.xml
   def update
+    @article = Article.find(params[:article_id])
     @revision = Revision.find(params[:id])
 
     respond_to do |format|
