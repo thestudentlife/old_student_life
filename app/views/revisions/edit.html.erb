@@ -1,5 +1,37 @@
 <h1>Editing revision</h1>
 
-<%= render 'form' %>
+<%= form_for(@revision) do |f| %>
+  <% if @revision.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@revision.errors.count, "error") %> prohibited this revision from being saved:</h2>
 
-<%= link_to 'Show', @revision %> |
+      <ul>
+      <% @revision.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+		<%= f.label :published_online %><br />
+		<%= f.check_box :published_online %>
+	</div>
+	<div class="field">
+		<%= f.label :published_online_at %>
+		<%= f.datetime_select :published_online_at %>
+	</div>
+	
+	<div class="field">
+		<%= f.label :published_in_print %><br />
+		<%= f.check_box :published_in_print %>
+	</div>
+	<div class="field">
+		<%= f.label :published_in_print_at %>
+		<%= f.datetime_select :published_in_print_at %>
+	</div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

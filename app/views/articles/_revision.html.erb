@@ -1,3 +1,4 @@
 <p><%= revision.title %></p>
 <p><%= revision.body %></p>
 <p><%= revision.created_at %>, by <%= revision.author %></p>
+<p><%= link_to 'Edit', edit_revision_path(revision) %>

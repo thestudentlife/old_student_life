@@ -9,10 +9,10 @@ class CreateRevisions < ActiveRecord::Migration
       t.text :body
 
       t.boolean :published_online, :default => false
-      t.boolean :published_online_at, :null => true
+      t.datetime :published_online_at, :null => true
 
       t.boolean :published_in_print, :default => false
-      t.boolean :published_in_print_at, :null => true
+      t.datetime :published_in_print_at, :null => true
 
       t.timestamps
     end

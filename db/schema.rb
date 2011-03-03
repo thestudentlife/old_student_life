@@ -33,9 +33,9 @@ ActiveRecord::Schema.define(:version => 20110303034926) do
     t.string   "title"
     t.text     "body"
     t.boolean  "published_online",          :default => false
-    t.boolean  "published_online_at"
+    t.datetime "published_online_at"
     t.boolean  "published_in_print",        :default => false
-    t.boolean  "published_in_print_at"
+    t.datetime "published_in_print_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

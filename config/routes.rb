@@ -23,6 +23,27 @@ TslRails::Application.routes.draw do
     resources :revisions
     resources :comments, :controller => "workflow_comments"
   end
+  
+  module ArticlesHelper
+    def article_path (article)
+      "/articles/#{article.id}"
+    end
+  end
+  
+  module RevisionsHelper
+    def revisions_path (article)
+      "/articles/#{article.id}/revisions"
+    end
+    def revision_path (revision)
+      "/articles/#{revision.article_id}/revisions/#{revision.id}"
+    end
+    def new_revision_path (revision)
+      "/articles/#{revision.article_id}/revisions/new"
+    end
+    def edit_revision_path (revision)
+      "/articles/#{revision.article_id}/revisions/#{revision.id}/edit"
+    end
+  end
 
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase

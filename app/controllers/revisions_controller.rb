@@ -1,6 +1,7 @@
 class RevisionsController < ApplicationController
   # GET /revisions/new
   def new
+    @article = Article.find(params[:article_id])
     @revision = Revision.new
   end
 
@@ -30,7 +31,7 @@ class RevisionsController < ApplicationController
 
     respond_to do |format|
       if @revision.update_attributes(params[:revision])
-        format.html { redirect_to(@revision, :notice => 'Revision was successfully updated.') }
+        format.html { redirect_to(article_path(@revision.article_id), :notice => 'Revision was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
