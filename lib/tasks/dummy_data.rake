@@ -39,18 +39,21 @@ namespace :dummy do
      
     ellie = WorkflowComment.create(
       :article => smiley,
-      :visible_to_author => true,
+      :author => editor,
+      :visible_to_article_author => true,
       :text => "You should talk to Ellie Ash") 
     
     r1 = Revision.create(
       :article => smiley,
-      :visible_to_author => true,
+      :author => writer,
+      :visible_to_article_author => true,
       :title => "Smiley 80s should be fun",
       :body => "This is body text")
     
     meeting = WorkflowComment.create(
       :article => smiley,
-      :visible_to_author => true,
+      :author => editor,
+      :visible_to_article_author => true,
       :text => "Please come in at 8PM Tuesday")
   end
 end

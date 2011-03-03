@@ -27,13 +27,14 @@ ActiveRecord::Schema.define(:version => 20110303034926) do
   end
 
   create_table "revisions", :force => true do |t|
-    t.integer  "article_id"
-    t.boolean  "visible_to_author"
+    t.integer  "article_id",                                   :null => false
+    t.integer  "author_id",                                    :null => false
+    t.boolean  "visible_to_article_author", :default => true
     t.string   "title"
     t.text     "body"
-    t.boolean  "published_online",      :default => false
+    t.boolean  "published_online",          :default => false
     t.boolean  "published_online_at"
-    t.boolean  "published_in_print",    :default => false
+    t.boolean  "published_in_print",        :default => false
     t.boolean  "published_in_print_at"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -73,8 +74,9 @@ ActiveRecord::Schema.define(:version => 20110303034926) do
   end
 
   create_table "workflow_comments", :force => true do |t|
-    t.integer  "article_id"
-    t.boolean  "visible_to_author"
+    t.integer  "article_id",                                  :null => false
+    t.integer  "author_id",                                   :null => false
+    t.boolean  "visible_to_article_author", :default => true
     t.string   "text"
     t.datetime "created_at"
     t.datetime "updated_at"

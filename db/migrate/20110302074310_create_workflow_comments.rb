@@ -1,8 +1,9 @@
 class CreateWorkflowComments < ActiveRecord::Migration
   def self.up
     create_table :workflow_comments do |t|
-      t.belongs_to :article
-      t.boolean :visible_to_author
+      t.belongs_to :article, :null => false
+      t.belongs_to :author, :null => false
+      t.boolean :visible_to_article_author, :default => true
       
       t.string :text
 
