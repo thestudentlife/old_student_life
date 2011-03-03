@@ -9,6 +9,8 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
+	
+	<p>Currently logged in as <%= current_user %>. <%= link_to "Logout", '/users/logout' %></p>
 
 <%= yield %>
 

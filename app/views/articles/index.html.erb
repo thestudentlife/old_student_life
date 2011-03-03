@@ -6,8 +6,8 @@
 	<th>Workflow</th>
 	<th>Status</th>
 	<th>Section</th>
-    <th></th>
-    <th></th>
+	<th>Creation Date</th>
+	<th>Authors</th>
     <th></th>
   </tr>
 
@@ -17,8 +17,9 @@
 	<td><%= article.workflow_status %></td>
 	<td><%= article.status_message %></td>
 	<td><%= article.section %></td>
+	<td><%= article.created_at %></td>
+	<td><%= article.authors.map(&:to_s).join(", ") %></td>
     <td><%= link_to 'Show', article %></td>
-    <td><%= link_to 'Edit', edit_article_path(article) %></td>
   </tr>
 <% end %>
 </table>
