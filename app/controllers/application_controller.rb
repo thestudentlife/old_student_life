@@ -28,8 +28,8 @@ class ApplicationController < ActionController::Base
     def require_no_user
       if current_user
         store_location
-        flash[:notice] = "You must be logged out to access this page"
-        redirect_to '/'
+        flash[:notice] = "You are already logged in!"
+        redirect_to '/workflow/articles'
         return false
       end
     end

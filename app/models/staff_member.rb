@@ -4,6 +4,14 @@ class StaffMember < ActiveRecord::Base
   has_and_belongs_to_many :sections
   has_and_belongs_to_many :articles
   
+  def latest_published_revisions
+    Revision.latest_published.joins(
+      :article,
+      'LEFT JOIN "articles_staff_members" ON "articles_staff_members"."article_id" = "articles"."id"',
+      'LEFT JOIN "staff_members" ON "staff_members"."id" = "articles_staff_members"."staff_member_id"'
+    ).where("staff_members.id" => id)
+  end
+  
   def visible_articles
     if is_admin
       return Article.all

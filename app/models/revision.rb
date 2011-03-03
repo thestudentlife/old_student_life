@@ -4,9 +4,9 @@ class Revision < ActiveRecord::Base
   validates_presence_of :body
   
   def self.latest_published
-    self.group ("article_id"
-    ).where (:published_online => true
-    ).where ("published_online_at < ?", Time.now
+    self.group("article_id"
+    ).where(:published_online => true
+    ).where("published_online_at < ?", Time.now
     )
   end
   

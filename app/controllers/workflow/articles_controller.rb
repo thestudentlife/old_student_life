@@ -9,7 +9,7 @@ class Workflow::ArticlesController < ApplicationController
   def new
     @article = Article.new
     @workflow_statuses = WorkflowStatus.all
-    @sections = Section.all
+    @sections = current_user.staff_member.sections
   end
   def create
     @article = Article.new params[:article]

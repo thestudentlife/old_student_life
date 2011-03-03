@@ -7,6 +7,13 @@ class Section < ActiveRecord::Base
 
   default_scope :order => "priority"
 
+  def latest_published_revisions
+    Revision.latest_published.joins (:article
+    ).where (:articles => {
+        :section_id => self.id
+    })
+  end
+
   def to_s
     name
   end
