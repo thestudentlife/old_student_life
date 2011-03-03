@@ -8,6 +8,14 @@
 </head>
 <body>
 
+<p>
+	<% if current_user %>
+		Currently logged in as <em><%= current_user.username %></em>. <a href="/users/logout">Log out</a>.
+	<% else %>
+		Not logged in. <a href="/users/login">Log in</a>.
+	<% end %>
+</p>
+
 <%= yield %>
 
 </body>
