@@ -24,5 +24,7 @@
   
 <p style="font-size: 12px; font-weight: bold;"><%= revision.title %></p>
 <p style="font-size: 12px;"><%= revision.body.html_safe %></p>
-<p><%= link_to 'Edit', edit_revision_path(revision) %>
+<% if @editable %>
+  <p><%= link_to 'Edit', edit_revision_path(revision) %>
+<% end %>
 </div>

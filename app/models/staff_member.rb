@@ -33,7 +33,20 @@ class StaffMember < ActiveRecord::Base
     return true if self.is_admin
     return true if article.authors.include? self
     return true if self.sections.include? article.section
-    return false
+    false
+  end
+  
+  def can_edit_article (article)
+    return true if self.is_admin
+    return true if self.sections.include? article.section
+    false
+  end
+  
+  def can_post_to_article (article)
+    return true if self.is_admin
+    return true if article.open_to_author
+    return true if self.sections.include? article.section
+    false
   end
   
   def email

@@ -27,6 +27,9 @@ class ArticlesController < ApplicationController
       raise ActiveRecord::RecordNotFound
     end
     
+    @editable = staff_member.can_edit_article @article
+    @postable = staff_member.can_post_to_article @article
+    
     @workflow_history_views = \
     staff_member.visible_workflow_history_for (@article).map do |item|
       slug = item.class.name.underscore
