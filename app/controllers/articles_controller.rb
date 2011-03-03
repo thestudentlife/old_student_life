@@ -4,15 +4,7 @@ class ArticlesController < ApplicationController
   
   def index
     staff_member = current_user.staff_member
-    if staff_member.is_admin
-      @articles = Article.all
-    else
-      @articles = staff_member.articles
-      if not (sections = staff_member.sections).empty?
-        sections.map {|s| @articles += s.articles }
-        @articles.uniq!
-      end
-    end
+    @articles = staff_member.visible_articles
   end
   def new
     @article = Article.new
@@ -30,6 +22,10 @@ class ArticlesController < ApplicationController
   end
   def show
     @article = Article.find params[:id]
+    if not current_user.staff_member.can_see_article @article
+      raise ActiveRecord::RecordNotFound
+    end
+    
     @workflow_history_views = @article.workflow_history.map do |item|
       slug = item.class.name.underscore
       render_to_string :partial => slug, :locals => {slug.to_sym => item}

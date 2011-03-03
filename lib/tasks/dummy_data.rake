@@ -23,7 +23,8 @@ namespace :dummy do
     admin = StaffMember.create :user => User.create(
       :email => "admin@tsl.pomona.edu",
       :password => "password",
-      :password_confirmation => "password")
+      :password_confirmation => "password"),
+      :is_admin => true
     
     smiley = Article.create(
       :working_name => "Smiley 80s",
