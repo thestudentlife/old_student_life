@@ -4,8 +4,8 @@ namespace :dummy do
     opinions = Section.create(:name => "Opinions", :priority => 100)
     
     open = WorkflowStatus.create(:name => "Open", :priority => 10)
-    edited_by_section = WorkflowStatus.create(:name => "Open", :priority => 10)
-    edited_by_management = WorkflowStatus.create(:name => "Open", :priority => 10)
+    edited_by_section = WorkflowStatus.create(:name => "Edited by Section", :priority => 50)
+    edited_by_management = WorkflowStatus.create(:name => "Edited by Management", :priority => 100)
     
     writer = StaffMember.create :user => User.create(
         :email => "writer@tsl.pomona.edu",

@@ -1,9 +1,10 @@
 <h1>Listing articles</h1>
 
 <table>
-  <tr>
+  <tr style="text-align: left;">
 	<th>Working Name</th>
-	<th>Workflow Status</th>
+	<th>Workflow</th>
+	<th>Status</th>
 	<th>Section</th>
     <th></th>
     <th></th>
@@ -14,6 +15,7 @@
   <tr>
 	<td><%= article.working_name %></td>
 	<td><%= article.workflow_status %></td>
+	<td><%= article.status_message %></td>
 	<td><%= article.section %></td>
     <td><%= link_to 'Show', article %></td>
     <td><%= link_to 'Edit', edit_article_path(article) %></td>

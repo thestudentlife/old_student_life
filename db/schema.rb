@@ -15,6 +15,9 @@ ActiveRecord::Schema.define(:version => 20110303034926) do
   create_table "articles", :force => true do |t|
     t.string   "working_name"
     t.string   "status_message"
+    t.boolean  "open_to_author",     :default => true
+    t.boolean  "publishable",        :default => false
+    t.boolean  "visible",            :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "workflow_status_id"

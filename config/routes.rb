@@ -22,6 +22,7 @@ TslRails::Application.routes.draw do
   resources :articles do
     resources :revisions
     resources :comments, :controller => "workflow_comments"
+    resources :authors
   end
   
   module ArticlesHelper
