@@ -1,7 +1,1 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-first:
-    article: smiley
-    title: "Smiley Should Be Fun"
-    body: "This is body text"
-    visible_to_author: true

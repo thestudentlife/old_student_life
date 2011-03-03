@@ -1,8 +1,11 @@
 TslRails::Application.routes.draw do
 
-  match 'users/login' => 'users#login'
-  match 'users/logout' => 'users#logout'
-
+  resource :account, :controller => "users"
+  
+  match '/users/login' => 'user_sessions#new', :via => :get
+  match '/users/login' => 'user_sessions#create', :via => :post
+  match '/users/logout' => 'user_sessions#destroy'
+  
   resources :users
 
   resources :revisions

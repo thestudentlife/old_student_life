@@ -1,9 +1,18 @@
 class ArticlesController < ApplicationController
   
-  before_filter :login_required
+  before_filter :require_user
   
   def index
-    @articles = Article.all
+    staff_member = current_user.staff_member
+    if staff_member.is_admin
+      @articles = Article.all
+    else
+      @articles = staff_member.articles
+      if not (sections = staff_member.sections).empty?
+        sections.map {|s| @articles += s.articles }
+        @articles.uniq!
+      end
+    end
   end
   def new
     @article = Article.new

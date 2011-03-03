@@ -1,11 +1,1 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-ellie:
-    article: smiley
-    visible_to_author: true
-    text: "You should talk to Ellie Ash"
-    
-meeting:
-    article: smiley
-    visible_to_author: true
-    text: "Please come in at 8PM Tuesday"

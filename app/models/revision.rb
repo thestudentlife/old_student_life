@@ -1,8 +1,8 @@
 class Revision < ActiveRecord::Base
   belongs_to :article
-  validates_presence_of :text
+  validates_presence_of :body
   
   def to_s
-    text
+    body
   end
 end

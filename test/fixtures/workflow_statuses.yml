@@ -1,14 +1,1 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-open:
-    id: 1
-    name: "Open"
-    priority: 10
-section:
-    id: 2
-    name: "Edited by Section"
-    priority: 50
-management:
-    id: 3
-    name: "Edited by Management"
-    priority: 100
