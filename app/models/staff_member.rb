@@ -17,6 +17,18 @@ class StaffMember < ActiveRecord::Base
     end
   end
   
+  def is_editor_for (article)
+    self.sections.include? article.section
+  end
+  
+  def visible_workflow_history_for (article)
+    if is_admin or is_editor_for(article)
+      article.workflow_history
+    else
+      article.workflow_history_visible_to_article_author
+    end
+  end
+  
   def can_see_article (article)
     return true if self.is_admin
     return true if article.authors.include? self

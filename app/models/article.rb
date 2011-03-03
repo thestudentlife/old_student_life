@@ -10,4 +10,9 @@ class Article < ActiveRecord::Base
   def workflow_history
     (self.workflow_comments + self.revisions).sort_by &:created_at
   end
+  
+  def workflow_history_visible_to_article_author
+    (self.workflow_comments.where(:visible_to_article_author => true) + \
+     self.revisions.where(:visible_to_article_author => true)).sort_by &:created_at
+  end
 end

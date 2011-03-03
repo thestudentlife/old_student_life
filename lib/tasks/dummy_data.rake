@@ -55,5 +55,11 @@ namespace :dummy do
       :author => editor,
       :visible_to_article_author => true,
       :text => "Please come in at 8PM Tuesday")
+      
+    sucks = WorkflowComment.create(
+      :article => smiley,
+      :author => editor,
+      :visible_to_article_author => false,
+      :text => "Yo.. this article needs a lot of work")
   end
 end
