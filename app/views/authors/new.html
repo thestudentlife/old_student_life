@@ -1,0 +1,22 @@
+<h1>Adding author</h1>
+
+<%= form_tag(article_authors_path(@article), :method => :post) do %>
+	<% if @article.errors.any? %>
+		<div id="errorExplanation">
+			<h2><%= pluralize(@article.errors.count, "error") %> prohibited this article from being saved:</h2>
+			<ul>
+				<% @article.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
+
+	<div class="field">
+		<%= label_tag :author_id %>
+		<%= select_tag :author_id, options_from_collection_for_select(@authors, :id, :email) %>
+	</div>
+	<div class="actions">
+		<%= submit_tag "Add author" %>
+	</div>
+<% end %>
