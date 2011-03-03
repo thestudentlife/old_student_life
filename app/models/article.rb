@@ -7,6 +7,13 @@ class Article < ActiveRecord::Base
   
   validates_presence_of :workflow_status, :section
   
+  def latest_published_revision
+    revisions.where(:published_online => true
+    ).where("published_online_at < ?", Time.now
+    ).order("published_online_at DESC"
+    ).find(:first)
+  end
+  
   def workflow_history
     (self.workflow_comments + self.revisions).sort_by &:created_at
   end
