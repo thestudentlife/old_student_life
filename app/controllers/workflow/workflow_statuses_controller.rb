@@ -1,4 +1,4 @@
-class WorkflowStatusesController < ApplicationController
+class Workflow::WorkflowStatusesController < ApplicationController
   # GET /workflow_statuses
   def index
     @workflow_statuses = WorkflowStatus.all

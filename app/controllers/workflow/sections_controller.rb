@@ -1,4 +1,4 @@
-class SectionsController < ApplicationController
+class Workflow::SectionsController < ApplicationController
   # GET /sections
   def index
     @sections = Section.all

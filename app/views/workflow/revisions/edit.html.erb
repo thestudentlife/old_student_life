@@ -1,6 +1,6 @@
 <h1>Editing revision</h1>
 
-<%= form_for(@revision) do |f| %>
+<%= form_for(@revision, :url => workflow_article_revision_path(@article, @revision)) do |f| %>
   <% if @revision.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@revision.errors.count, "error") %> prohibited this revision from being saved:</h2>

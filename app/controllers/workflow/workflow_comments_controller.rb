@@ -1,4 +1,4 @@
-class WorkflowCommentsController < ApplicationController
+class Workflow::WorkflowCommentsController < ApplicationController
   
   before_filter :find_article
   
@@ -6,11 +6,6 @@ class WorkflowCommentsController < ApplicationController
   # GET /workflow_comments/new.xml
   def new
     @workflow_comment = WorkflowComment.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @workflow_comment }
-    end
   end
 
   def edit
@@ -24,7 +19,7 @@ class WorkflowCommentsController < ApplicationController
     @workflow_comment.visible_to_article_author = @article.open_to_author
     
     if @workflow_comment.save
-      redirect_to("/articles/#{params[:article_id]}", :notice => 'Comment was successfully created.')
+      redirect_to workflow_article_path(@article), :notice => 'Comment was successfully created.'
     else
       render :action => "new"
     end
@@ -35,15 +30,11 @@ class WorkflowCommentsController < ApplicationController
   def update
     @workflow_comment = WorkflowComment.find(params[:id])
 
-    respond_to do |format|
-      if @workflow_comment.update_attributes(params[:workflow_comment])
-        format.html { redirect_to(@workflow_comment, :notice => 'Workflow comment was successfully updated.') }
-        format.xml  { head :ok }
+      if @workflow_comment.update_attributes params[:workflow_comment]
+        redirect_to @workflow_comment, :notice => 'Workflow comment was successfully updated.'
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @workflow_comment.errors, :status => :unprocessable_entity }
+        render :action => "edit"
       end
-    end
   end
   
   private

@@ -25,6 +25,6 @@
 <p style="font-size: 12px; font-weight: bold;"><%= revision.title %></p>
 <p style="font-size: 12px;"><%= revision.body.html_safe %></p>
 <% if @editable %>
-  <p><%= link_to 'Edit', edit_revision_path(revision) %>
+  <p><%= link_to 'Edit', edit_workflow_article_revision_path(@article, revision) %>
 <% end %>
 </div>

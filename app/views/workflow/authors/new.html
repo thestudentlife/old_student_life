@@ -1,6 +1,6 @@
 <h1>Adding author</h1>
 
-<%= form_tag(article_authors_path(@article), :method => :post) do %>
+<%= form_tag(workflow_article_authors_path(@article), :method => :post) do %>
 	<% if @article.errors.any? %>
 		<div id="errorExplanation">
 			<h2><%= pluralize(@article.errors.count, "error") %> prohibited this article from being saved:</h2>

@@ -1,4 +1,4 @@
-class RevisionsController < ApplicationController
+class Workflow::RevisionsController < ApplicationController
 
   before_filter :find_article
 
@@ -21,7 +21,7 @@ class RevisionsController < ApplicationController
     @revision.visible_to_article_author = @article.open_to_author
     
     if @revision.save
-      redirect_to("/articles/#{params[:article_id]}", :notice => 'Revision was successfully created.')
+      redirect_to workflow_article_path(@article), :notice => 'Revision was successfully created.'
     else
       render :action => "new"
     end
@@ -32,15 +32,11 @@ class RevisionsController < ApplicationController
   def update
     @revision = Revision.find(params[:id])
 
-    respond_to do |format|
       if @revision.update_attributes(params[:revision])
-        format.html { redirect_to(article_path(@revision.article_id), :notice => 'Revision was successfully updated.') }
-        format.xml  { head :ok }
+        redirect_to workflow_article_path(@revision.article_id), :notice => 'Revision was successfully updated.'
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @revision.errors, :status => :unprocessable_entity }
+        render :action => "edit"
       end
-    end
   end
   
   private

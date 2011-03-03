@@ -19,11 +19,11 @@
 	<td><%= article.section %></td>
 	<td><%= article.created_at %></td>
 	<td><%= article.authors.map(&:to_s).join(", ") %></td>
-    <td><%= link_to 'Show', article %></td>
+    <td><%= link_to 'Show', workflow_article_path(article) %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Article', new_article_path %>
+<%= link_to 'New Article', new_workflow_article_path %>

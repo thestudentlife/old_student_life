@@ -2,9 +2,11 @@ TslRails::Application.routes.draw do
 
   resource :account, :controller => "users"
   
-  match '/users/login' => 'user_sessions#new', :via => :get
-  match '/users/login' => 'user_sessions#create', :via => :post
-  match '/users/logout' => 'user_sessions#destroy'
+  namespace :workflow do
+    match '/login' => 'user_sessions#new', :via => :get, :as => "login"
+    match '/login' => 'user_sessions#create', :via => :post, :as => "login"
+    match '/logout' => 'user_sessions#destroy', :as => "logout"
+  end
   
   resources :users
 
@@ -19,30 +21,11 @@ TslRails::Application.routes.draw do
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
   
-  resources :articles do
-    resources :revisions
-    resources :comments, :controller => "workflow_comments"
-    resources :authors
-  end
-  
-  module ArticlesHelper
-    def article_path (article)
-      "/articles/#{article.id}"
-    end
-  end
-  
-  module RevisionsHelper
-    def revisions_path (article)
-      "/articles/#{article.id}/revisions"
-    end
-    def revision_path (revision)
-      "/articles/#{revision.article_id}/revisions/#{revision.id}"
-    end
-    def new_revision_path (article)
-      "/articles/#{article.id}/revisions/new"
-    end
-    def edit_revision_path (revision)
-      "/articles/#{revision.article_id}/revisions/#{revision.id}/edit"
+  namespace :workflow do
+    resources :articles do
+      resources :revisions
+      resources :comments, :controller => "workflow_comments"
+      resources :authors
     end
   end
 

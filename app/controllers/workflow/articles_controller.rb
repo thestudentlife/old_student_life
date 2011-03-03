@@ -1,4 +1,4 @@
-class ArticlesController < ApplicationController
+class Workflow::ArticlesController < ApplicationController
   
   before_filter :require_user
   
@@ -15,7 +15,7 @@ class ArticlesController < ApplicationController
     @article = Article.new params[:article]
     
     if @article.save
-      redirect_to @article, :notice => "Article was successfully created"
+      redirect_to workflow_article_path(@article), :notice => "Article was successfully created"
     else
       render :action => "new"
     end
@@ -44,7 +44,7 @@ class ArticlesController < ApplicationController
   def update
     @article = Article.find params[:id]
     if @article.update_attributes params[:article]
-      redirect_to @article, :notice => "Article was successfully updated"
+      redirect_to workflow_article_path(@article), :notice => "Article was successfully updated"
     else
       render :action => "edit"
     end

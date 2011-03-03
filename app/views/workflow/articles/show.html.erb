@@ -7,11 +7,11 @@
 
 <p>
   <% if @editable %>
-    <%= link_to 'Edit', edit_article_path(@article) %> |
+    <%= link_to 'Edit', edit_workflow_article_path(@article) %> |
   <% end %>
   <% if @postable %>
-    <%= link_to 'Post revision', new_revision_path (@article) %> |
-    <%= link_to 'Post comment', new_article_comment_path (@article) %>
+    <%= link_to 'Post revision', new_workflow_article_revision_path (@article) %> |
+    <%= link_to 'Post comment', new_workflow_article_comment_path (@article) %>
   <% end %>
 </p>
 
@@ -21,7 +21,7 @@
 		<li>
 		  <%= author %>
 		  <% if @editable %>
-  		  <% form_tag (article_author_path(@article, author), :method => :delete) do %>
+  		  <% form_tag (workflow_article_author_path(@article, author), :method => :delete) do %>
   		    <%= hidden_field_tag :author_id, author.id%>
   		    <%= submit_tag ("Remove") %>
   		  <% end %>
@@ -30,7 +30,7 @@
 	<% end %>
 </ul>
 <% if @editable %>
-  <%= link_to "Add author", new_article_author_path (@article) %>
+  <%= link_to "Add author", new_workflow_article_author_path (@article) %>
 <% end %>
 
 <p>History:</p>
@@ -40,4 +40,4 @@
   <% end %>
 </ol>
 
-<%= link_to 'Back', articles_path %>
+<%= link_to 'Back', workflow_articles_path %>
