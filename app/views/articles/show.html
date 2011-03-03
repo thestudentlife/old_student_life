@@ -1,0 +1,4 @@
+<h1><%= @revision.title %></h1>
+<h2><%= @article.section %></h2>
+<p><%= @revision.published_online_at %></p>
+<p>Authors: <%= @article.authors.map(&:to_s).join(", ") %>

@@ -21,6 +21,8 @@ TslRails::Application.routes.draw do
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
   
+  resources :articles
+  
   namespace :workflow do
     resources :articles do
       resources :revisions
