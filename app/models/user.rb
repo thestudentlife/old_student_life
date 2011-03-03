@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   
   attr_protected :id, :salt
   
+  has_one :staff_member
+  
   def self.random_string (len)
     #generate a random password consisting of strings and digits
     chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
