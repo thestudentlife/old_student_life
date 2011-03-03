@@ -2,10 +2,10 @@
 
 smiley:
   working_name: "Smiley 80s"
-  workflow_status: open
-  section: news
+  workflow_status_id: 1 # open
+  section_id: 1 # news
 
 billgates:
   working_name: "Bill Gates"
-  workflow_status: open
-  section: news
+  workflow_status_id: 1 # open
+  section_id: 1 # news

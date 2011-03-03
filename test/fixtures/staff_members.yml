@@ -2,13 +2,15 @@
 
 writer:
     user: writer
+    articles: [smiley]
 
 writer2:
     user: writer2
+    articles: [billgates]
     
 editor:
     user: editor
-    sections: [news]
+    sections: news
 
 admin:
     user: admin
