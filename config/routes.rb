@@ -22,6 +22,7 @@ TslRails::Application.routes.draw do
     resources :articles do
       resources :authors
       resources :comments, :controller => "workflow_comments"
+      resources :images
       resources :revisions
     end
     resources :headlines, :except => [:new]
@@ -29,7 +30,6 @@ TslRails::Application.routes.draw do
     resources :sections do
       resources :editors
     end
-    resources :images
     resources :users, :except => [:create]
     match "users/new" => "users#create", :via => :post
     match "users/:id/reset" => "users#reset", :via => :post

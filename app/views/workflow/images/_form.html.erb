@@ -1,4 +1,4 @@
-<%= form_for [:workflow, @image], :html => {:multipart => true} do |f| %>
+<%= form_for [:workflow, @article, @image], :html => {:multipart => true} do |f| %>
   <% if @image.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved:</h2>
@@ -14,6 +14,15 @@
   <div class="field">
     <%= f.label :file %><br />
     <%= f.file_field :file %>
+  </div>
+  <div class="">
+  <div class="field">
+  	<%= f.label :published_online %><br />
+  	<%= f.check_box :published_online %>
+  </div>
+  <div class="field">
+  	<%= f.label :published_in_print %><br />
+  	<%= f.check_box :published_in_print %>
   </div>
 
   <div class="actions">

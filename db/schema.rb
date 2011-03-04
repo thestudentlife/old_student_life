@@ -37,6 +37,9 @@ ActiveRecord::Schema.define(:version => 20110304062456) do
   end
 
   create_table "images", :force => true do |t|
+    t.integer  "article_id"
+    t.boolean  "published_online"
+    t.boolean  "published_in_print"
     t.string   "file_file_name"
     t.string   "file_content_type"
     t.integer  "file_file_size"

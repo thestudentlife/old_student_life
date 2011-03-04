@@ -1,4 +1,8 @@
 <h1><%= @revision.title %></h1>
 <h2><%= @article.section %></h2>
 <p><%= @revision.published_online_at %></p>
+<% @article.images.each do |image| %>
+	<%= image_tag image.file.url(:small) %>
+<% end %>
+<p><%= @revision.body %></p>
 <p>Authors: <%= @article.authors.map(&:to_s).join(", ") %>

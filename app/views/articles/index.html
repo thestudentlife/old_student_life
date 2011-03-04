@@ -1,7 +1,7 @@
 <% @headlines.each do |revision| %>
-	<h2><%= revision.title %></h2>
+	<h2><%= link_to revision.title, revision.article %></h2>
 <% end %>
 
 <% @revisions.each do |revision| %>
-	<li><%= revision.title %></li>
+	<li><%= link_to revision.title, revision.article %></li>
 <% end %>

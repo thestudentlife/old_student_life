@@ -2,5 +2,5 @@
 
 <%= image_tag @image.file.url %>
 
-<%= link_to 'Edit', edit_workflow_image_path(@image) %> |
-<%= link_to 'Back', workflow_images_path %>
+<%= link_to 'Edit', edit_workflow_article_image_path(@article, @image) %> |
+<%= link_to 'Back', workflow_article_images_path(@article) %>
