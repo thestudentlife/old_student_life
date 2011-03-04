@@ -14,7 +14,7 @@
 
 	<div class="field">
 		<%= label_tag :author_id %>
-		<%= select_tag :author_id, options_from_collection_for_select(@authors, :id, :email) %>
+		<%= select_tag :author_id, options_from_collection_for_select(@authors, :id, :to_s) %>
 	</div>
 	<div class="actions">
 		<%= submit_tag "Add author" %>

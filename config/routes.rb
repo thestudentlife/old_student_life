@@ -27,7 +27,9 @@ TslRails::Application.routes.draw do
       resources :comments, :controller => "workflow_comments"
       resources :revisions
     end
-    resources :sections
+    resources :sections do
+      resources :editors
+    end
   end
 
   # Sample of named route:

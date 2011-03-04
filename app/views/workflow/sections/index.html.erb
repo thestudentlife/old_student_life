@@ -1,24 +1,27 @@
 <h1>Listing sections</h1>
 
-<table>
-  <tr style="text-align:left;">
-    <th>Name</th>
-    <th>Priority</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
 <% @sections.each do |section| %>
-  <tr>
-    <td><%= section %></td>
-    <td style="text-align: right;"><%= section.priority %></td>
-    <td><%= link_to 'Edit', edit_workflow_section_path(section) %></td>
-    <td><%= link_to 'Destroy', workflow_section_path(section), :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+  <section class="section" style="margin: 0.9em; border-bottom: 1px solid #EEE;">
+    <h2 style="display: inline;"><%= section %></h2>
+    <%= link_to 'Edit', edit_workflow_section_path(section) %>
+    <%= link_to 'Destroy', workflow_section_path(section), :confirm => 'Are you sure?', :method => :delete %>
+    <p><strong>Priority:</strong> <%= section.priority %></p>
+    <p>
+      <strong>Editors:</strong>
+      <% if section.editors.empty? %>None!<% end %>
+      <%= link_to 'Add', new_workflow_section_editor_path(section) %></p>
+    <ul>
+      <% section.editors.each do |editor| %>
+      <li>
+        <%= editor %>
+        <% form_tag (workflow_section_editor_path(section, editor), :method => :delete, :style => "display: inline;") do %>
+  		    <%= hidden_field_tag :editor_id, editor.id%>
+  		    <%= submit_tag ("Remove") %>
+  		  <% end %>
+      </li>
+      <% end %>
+    </ul>
+  </section> 
 <% end %>
-</table>
-
-<br />
 
 <%= link_to 'New Section', new_workflow_section_path %>
