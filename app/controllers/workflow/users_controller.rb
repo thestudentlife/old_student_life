@@ -14,10 +14,9 @@ class Workflow::UsersController < ApplicationController
     begin
       ActiveRecord::Base.transaction do
         @user = User.new(
-          :email => params[:email],
-          :password => User.dummy_password,
-          :password_confirmation => User.dummy_password
+          :email => params[:email]
         )
+        @password = @user.reset_password
         @user.save!
     
         @staff_member = StaffMember.create(
@@ -29,13 +28,7 @@ class Workflow::UsersController < ApplicationController
     rescue
       render :action => "new"
     else
-      redirect_to(
-        workflow_users_path,
-        :flash => {
-          :notice => "Account registered!",
-          :password => @password
-        }
-      )
+      render :action => "reset"
     end
   end
   
