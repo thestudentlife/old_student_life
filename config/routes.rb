@@ -1,5 +1,7 @@
 TslRails::Application.routes.draw do
   
+  resources :images
+
   namespace :workflow do
     match '/login' => 'user_sessions#new', :via => :get, :as => "login"
     match '/login' => 'user_sessions#create', :via => :post, :as => "login"
@@ -27,6 +29,7 @@ TslRails::Application.routes.draw do
     resources :sections do
       resources :editors
     end
+    resources :images
     resources :users, :except => [:create]
     match "users/new" => "users#create", :via => :post
     match "users/:id/reset" => "users#reset", :via => :post

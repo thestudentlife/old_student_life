@@ -31,3 +31,4 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 # end
 
 gem "authlogic"
+gem "paperclip", "~> 2.3"
