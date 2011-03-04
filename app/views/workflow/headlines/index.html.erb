@@ -1,0 +1,10 @@
+<h1>Listing headlines</h1>
+
+<% @headlines.each do |headline| %>
+  <section class="headline" style="margin: 0.9em; border-bottom: 1px solid #EEE;">
+    <h2 style="display: inline;"><%= headline.article.latest_published_revision.title %></h2>
+    <%= link_to 'Edit', edit_workflow_headline_path(headline) %>
+    <%= link_to 'Destroy', workflow_headline_path(headline), :confirm => 'Are you sure?', :method => :delete %>
+    <p><strong>Priority:</strong> <%= headline.priority %></p>
+  </section> 
+<% end %>

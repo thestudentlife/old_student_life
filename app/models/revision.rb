@@ -7,7 +7,7 @@ class Revision < ActiveRecord::Base
     self.group("article_id"
     ).where(:published_online => true
     ).where("published_online_at < ?", Time.now
-    ).order("published_online_at")
+    )
   end
   
   def self.latest_headlines
@@ -18,7 +18,8 @@ class Revision < ActiveRecord::Base
   
   def self.latest_published_not_in_headlines
     latest_published.joins(:article
-    ).where(:articles => {:headline_id => nil})
+    ).where(:articles => {:headline_id => nil}
+    ).order("published_online_at")
   end
   
   def to_s

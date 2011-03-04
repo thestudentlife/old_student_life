@@ -9,7 +9,11 @@ class Workflow::ArticlesController < ApplicationController
   def new
     @article = Article.new
     @workflow_statuses = WorkflowStatus.all
-    @sections = current_user.staff_member.sections
+    if current_staff_member.is_admin
+      @sections = Section.all
+    else
+      @sections = current_staff_member.sections
+    end
   end
   def create
     @article = Article.new params[:article]

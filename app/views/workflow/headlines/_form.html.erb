@@ -1,0 +1,28 @@
+<%= form_for([:workflow, @headline]) do |f| %>
+  <% if @article %><%= hidden_field_tag :article_id, @article.id %><% end %>
+  <% if @headline.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@headline.errors.count, "error") %> prohibited this headline from being saved:</h2>
+
+      <ul>
+      <% @headline.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <% if @article %>
+    <div class="field">
+      <%= label_tag :article %>:<br />
+      <%= @article.latest_published_revision.title %>
+    </div>
+  <% end %>
+	<div class="field">
+		<%= f.label :priority %><br />
+		<%= f.text_field :priority %>
+	</div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -35,7 +35,8 @@ namespace :dummy do
     geeky = Revision.create(
       :article => billgates,
       :author => writer2,
-      :title => "Bill Gates Remains Geeky and Uncool Despite Personal Fortune Larger Than GDP of Small Country, Say Experts"
+      :title => "Bill Gates Remains Geeky and Uncool Despite Personal Fortune Larger Than GDP of Small Country, Say Experts",
+      :body => "Hahah **hah**",
       :published_online => true,
       :published_online_at => Time.now)
     

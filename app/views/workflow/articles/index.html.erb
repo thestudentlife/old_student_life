@@ -2,6 +2,7 @@
 
 <table>
   <tr style="text-align: left;">
+  <th></th>
 	<th>Working Name</th>
 	<th>Workflow</th>
 	<th>Status</th>
@@ -13,13 +14,21 @@
 
 <% @articles.each do |article| %>
   <tr>
+  <td style="font-variant: small-caps; text-transform: lowercase; font-weight: bold;">
+    <% if article.headline %>
+      Headline
+    <% end %>
+  </td>
 	<td><%= article.working_name %></td>
 	<td><%= article.workflow_status %></td>
 	<td><%= article.status_message %></td>
 	<td><%= article.section %></td>
 	<td><%= article.created_at %></td>
 	<td><%= article.authors.map(&:to_s).join(", ") %></td>
-    <td><%= link_to 'Show', workflow_article_path(article) %></td>
+  <td><%= link_to 'Show', workflow_article_path(article) %></td>
+  <td>
+    <%= link_to 'Make headline', workflow_article_headline_path(article) unless article.headline %>
+  </td>
   </tr>
 <% end %>
 </table>

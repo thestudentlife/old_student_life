@@ -22,6 +22,8 @@ TslRails::Application.routes.draw do
       resources :comments, :controller => "workflow_comments"
       resources :revisions
     end
+    resources :headlines, :except => [:new]
+    match "articles/:id/headline" => "headlines#show", :via => :get
     resources :sections do
       resources :editors
     end
@@ -29,6 +31,12 @@ TslRails::Application.routes.draw do
     match "users/new" => "users#create", :via => :post
     match "users/:id/reset" => "users#reset", :via => :post
     resources :statuses, :controller => "workflow_statuses"
+  end
+  
+  module ArticlesHelper
+    def workflow_article_headline_path(article)
+      workflow_article_path(article) + "/headline"
+    end
   end
   
   module UsersHelper
