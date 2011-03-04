@@ -1,11 +1,17 @@
 <h1>Editing user</h1>
 
-<%= form_for([:workflow,@user], :url => workflow_user_path(@user), :as => :user) do |f| %>
-  <% if @user.errors.any? %>
+<%= form_for(
+  [:workflow,@staff_member],
+  :url => workflow_user_path(@staff_member),
+  :as => :user) do |f| %>
+  <% if @staff_member.errors.any? or @user.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <h2><%= pluralize(@staff_member.errors.count + @user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
       <ul>
+      <% @staff_member.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
       <% @user.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
@@ -17,10 +23,22 @@
 		<%= f.label :email %><br />
 		<%= f.text_field :email %>
 	</div>
-	<div class="field">
-		<%= f.label :is_admin %><br />
-		<%= f.check_box :is_admin %>
-	</div>
+	<% if @staff_member.can_edit_users %>
+  	<div class="field">
+  		<%= f.label :is_admin %><br />
+  		<%= f.check_box :is_admin %>
+  	</div>
+	<% end %>
+	<% if @staff_member == current_staff_member %>
+	  <div class="field">
+	    <%= label_tag :password %><br />
+	    <%= password_field_tag :password %>
+    </div>
+    <div class="field">
+	    <%= label_tag :password_confirmation %><br />
+	    <%= password_field_tag :password_confirmation %>
+    </div>
+  <% end %>
   <div class="actions">
     <%= f.submit %>
   </div>

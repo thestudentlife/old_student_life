@@ -1,0 +1,7 @@
+<%= link_to "Articles", workflow_articles_path %> |
+<%= link_to "Sections", workflow_sections_path %> |
+<%= link_to "Workflow Statuses", workflow_statuses_path %> |
+<% if current_staff_member.can_edit_users %>
+  <%= link_to "Users", workflow_users_path %> |
+<% end %>
+<%= link_to "My account", edit_workflow_user_path(current_user) %>

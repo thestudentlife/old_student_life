@@ -6,8 +6,6 @@ TslRails::Application.routes.draw do
     match '/logout' => 'user_sessions#destroy', :as => "logout"
   end
 
-  resources :workflow_statuses
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -17,6 +15,7 @@ TslRails::Application.routes.draw do
   
   resources :articles
   
+  match 'workflow/' => "workflow#index"
   namespace :workflow do
     resources :articles do
       resources :authors
@@ -28,6 +27,7 @@ TslRails::Application.routes.draw do
     end
     resources :users, :except => [:create]
     match "users/new" => "users#create", :via => :post
+    resources :statuses, :controller => "workflow_statuses"
   end
 
   # Sample of named route:

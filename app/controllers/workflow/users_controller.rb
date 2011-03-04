@@ -1,5 +1,6 @@
 class Workflow::UsersController < ApplicationController
-  before_filter :require_user, :only => [:show, :edit, :update]
+  before_filter :require_user
+  before_filter :require_privileges, :except => [:edit, :update]
   
   def index
     @users = StaffMember.all
@@ -40,29 +41,53 @@ class Workflow::UsersController < ApplicationController
   end
   
   def edit
-    @user = StaffMember.find params[:id]
+    unless current_staff_member.can_edit_users or current_staff_member.id = params[:id]
+      raise ActionController::RoutingError.new('Not Found')
+    end
+    @staff_member = StaffMember.find params[:id]
+    @user = @staff_member.user
   end
   
   def update
-    @user = StaffMember.find params[:id]
-    @auth_user = @user.user
+    unless current_staff_member.can_edit_users or current_staff_member.id = params[:id]
+      raise ActionController::RoutingError.new('Not Found')
+    end
+    @staff_member = StaffMember.find params[:id]
+    @user = @staff_member.user
     begin
       ActiveRecord::Base.transaction do
-        @auth_user.email = params[:user][:email]
-        @auth_user.save!
-        
-        @user.is_admin = params[:user][:is_admin]
+        @user.email = params[:user][:email]
         @user.save!
+        
+        @staff_member.is_admin = params[:user][:is_admin]
+        @staff_member.save!
+        
+        if current_user == @user and not params[:password].empty?
+          @user.update_attributes!(
+            :password => params[:password],
+            :password_confirmation => params[:password_confirmation]
+          )
+        end
       end
     rescue
       render :action => :edit
     else
       flash[:notice] = "Account updated!"
-      redirect_to workflow_users_path
+      if current_staff_member.can_edit_users
+        redirect_to workflow_users_path
+      else
+        redirect_to workflow_path
+      end
     end
   end
   
   private
+  def require_privileges
+    unless current_user.staff_member.can_edit_users
+      raise ActionController::RoutingError.new('Not Found')
+    end
+  end
+  
   def random_string(len)
     #generate a random password consisting of strings and digits
     chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
