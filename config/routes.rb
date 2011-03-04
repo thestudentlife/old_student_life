@@ -10,8 +10,6 @@ TslRails::Application.routes.draw do
   
   resources :users
 
-  resources :sections
-
   resources :workflow_statuses
 
   # The priority is based upon order of creation:
@@ -25,10 +23,11 @@ TslRails::Application.routes.draw do
   
   namespace :workflow do
     resources :articles do
-      resources :revisions
-      resources :comments, :controller => "workflow_comments"
       resources :authors
+      resources :comments, :controller => "workflow_comments"
+      resources :revisions
     end
+    resources :sections
   end
 
   # Sample of named route:
