@@ -1,4 +1,11 @@
 namespace :dummy do
+  task :admin do
+    StaffMember.create :user => User.create(
+      :email => "admin@tsl.pomona.edu",
+      :password => "password",
+      :password_confirmation => "password"),
+      :is_admin => true
+  end
   task :load => :environment do
     news = Section.create(:name => "News", :priority => 10)
     opinions = Section.create(:name => "Opinions", :priority => 100)
