@@ -11,13 +11,12 @@ class Workflow::UsersController < ApplicationController
   end
   
   def create
-    @password = random_string(8)
     begin
       ActiveRecord::Base.transaction do
         @user = User.new(
           :email => params[:email],
-          :password => @password,
-          :password_confirmation => @password
+          :password => User.dummy_password,
+          :password_confirmation => User.dummy_password
         )
         @user.save!
     
@@ -38,6 +37,11 @@ class Workflow::UsersController < ApplicationController
         }
       )
     end
+  end
+  
+  def reset
+    @user = User.find params[:id]
+    @password = @user.reset_password
   end
   
   def edit
@@ -86,13 +90,5 @@ class Workflow::UsersController < ApplicationController
     unless current_user.staff_member.can_edit_users
       raise ActionController::RoutingError.new('Not Found')
     end
-  end
-  
-  def random_string(len)
-    #generate a random password consisting of strings and digits
-    chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
-    newpass = ""
-    1.upto(len) { |i| newpass << chars[rand(chars.size-1)] }
-    return newpass
   end
 end

@@ -27,7 +27,14 @@ TslRails::Application.routes.draw do
     end
     resources :users, :except => [:create]
     match "users/new" => "users#create", :via => :post
+    match "users/:id/reset" => "users#reset", :via => :post
     resources :statuses, :controller => "workflow_statuses"
+  end
+  
+  module UsersHelper
+    def reset_workflow_user_path(user)
+      workflow_user_path(user) + "/reset"
+    end
   end
 
   # Sample of named route:
