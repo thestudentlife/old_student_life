@@ -8,7 +8,7 @@ class CreateArticles < ActiveRecord::Migration
       t.boolean :publishable, :default => false
       t.boolean :visible, :default => true
       
-      t.belongs_to :front_page_article, :null => true
+      t.belongs_to :headline, :null => true
       
       t.timestamps
     end

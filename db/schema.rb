@@ -15,10 +15,10 @@ ActiveRecord::Schema.define(:version => 20110304044131) do
   create_table "articles", :force => true do |t|
     t.string   "working_name"
     t.string   "status_message"
-    t.boolean  "open_to_author",        :default => true
-    t.boolean  "publishable",           :default => false
-    t.boolean  "visible",               :default => true
-    t.integer  "front_page_article_id"
+    t.boolean  "open_to_author",     :default => true
+    t.boolean  "publishable",        :default => false
+    t.boolean  "visible",            :default => true
+    t.integer  "headline_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "workflow_status_id"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20110304044131) do
     t.integer "staff_member_id", :null => false
   end
 
-  create_table "front_page_articles", :force => true do |t|
+  create_table "headlines", :force => true do |t|
     t.integer  "priority"
     t.datetime "created_at"
     t.datetime "updated_at"

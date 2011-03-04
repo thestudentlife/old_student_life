@@ -32,13 +32,20 @@ namespace :dummy do
       :workflow_status => open,
       :authors => [writer2])
     
+    geeky = Revision.create(
+      :article => billgates,
+      :author => writer2,
+      :title => "Bill Gates Remains Geeky and Uncool Despite Personal Fortune Larger Than GDP of Small Country, Say Experts"
+      :published_online => true,
+      :published_online_at => Time.now)
+    
     smiley = Article.create(
       :working_name => "Smiley 80s",
       :section => news,
       :workflow_status => open,
       :authors => [writer, editor],
       :open_to_author => false)
-    smiley_fp = FrontPageArticle.create(
+    smiley_head = Headline.create(
       :article => smiley,
       :priority => 10)
     

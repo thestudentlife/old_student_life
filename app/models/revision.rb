@@ -10,15 +10,15 @@ class Revision < ActiveRecord::Base
     ).order("published_online_at")
   end
   
-  def self.latest_published_on_front_page
-    latest_published.joins(:article => [:front_page_article]
-    ).where("articles.front_page_article_id"
-    ).order("front_page_articles.priority")
+  def self.latest_headlines
+    latest_published.joins(:article => [:headline]
+    ).where("articles.headline_id"
+    ).order("headlines.priority")
   end
   
-  def self.latest_published_not_on_front_page
+  def self.latest_published_not_in_headlines
     latest_published.joins(:article
-    ).where(:articles => {:front_page_article_id => nil})
+    ).where(:articles => {:headline_id => nil})
   end
   
   def to_s

@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
   def index
-    @front_page_revisions = Revision.latest_published_on_front_page.includes(:article)
-    @revisions = Revision.latest_published_not_on_front_page.includes(:article)
+    @headlines = Revision.latest_headlines.includes(:article)
+    @revisions = Revision.latest_published_not_in_headlines.includes(:article)
   end
   def show
     @article = Article.find params[:id]
