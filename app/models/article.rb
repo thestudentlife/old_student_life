@@ -4,6 +4,7 @@ class Article < ActiveRecord::Base
   has_and_belongs_to_many :authors, :class_name => "StaffMember"
   has_many :workflow_comments
   has_many :revisions
+  belongs_to :front_page_article
   
   validates_presence_of :workflow_status, :section
   

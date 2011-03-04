@@ -26,17 +26,22 @@ namespace :dummy do
       :password_confirmation => "password"),
       :is_admin => true
     
-    smiley = Article.create(
-      :working_name => "Smiley 80s",
-      :section => news,
-      :workflow_status => open,
-      :authors => [writer, editor])
     billgates = Article.create(
       :working_name => "Bill Gates",
       :section => news,
       :workflow_status => open,
       :authors => [writer2])
-     
+    
+    smiley = Article.create(
+      :working_name => "Smiley 80s",
+      :section => news,
+      :workflow_status => open,
+      :authors => [writer, editor],
+      :open_to_author => false)
+    smiley_fp = FrontPageArticle.create(
+      :article => smiley,
+      :priority => 10)
+    
     ellie = WorkflowComment.create(
       :article => smiley,
       :author => editor,
@@ -48,7 +53,9 @@ namespace :dummy do
       :author => writer,
       :visible_to_article_author => true,
       :title => "Smiley 80s should be fun",
-      :body => "This is body text")
+      :body => "This is body text",
+      :published_online => true,
+      :published_online_at => Time.now)
     
     meeting = WorkflowComment.create(
       :article => smiley,

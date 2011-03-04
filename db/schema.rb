@@ -10,14 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110303034926) do
+ActiveRecord::Schema.define(:version => 20110304044131) do
 
   create_table "articles", :force => true do |t|
     t.string   "working_name"
     t.string   "status_message"
-    t.boolean  "open_to_author",     :default => true
-    t.boolean  "publishable",        :default => false
-    t.boolean  "visible",            :default => true
+    t.boolean  "open_to_author",        :default => true
+    t.boolean  "publishable",           :default => false
+    t.boolean  "visible",               :default => true
+    t.integer  "front_page_article_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "workflow_status_id"
@@ -27,6 +28,12 @@ ActiveRecord::Schema.define(:version => 20110303034926) do
   create_table "articles_staff_members", :id => false, :force => true do |t|
     t.integer "article_id",      :null => false
     t.integer "staff_member_id", :null => false
+  end
+
+  create_table "front_page_articles", :force => true do |t|
+    t.integer  "priority"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "revisions", :force => true do |t|
@@ -56,7 +63,7 @@ ActiveRecord::Schema.define(:version => 20110303034926) do
   end
 
   create_table "staff_members", :force => true do |t|
-    t.integer  "user_id",                       :null => false
+    t.integer  "user_id"
     t.boolean  "is_admin",   :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
