@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(:version => 20110303034926) do
   end
 
   create_table "staff_members", :force => true do |t|
-    t.integer  "user_id"
+    t.integer  "user_id",                       :null => false
     t.boolean  "is_admin",   :default => false
     t.datetime "created_at"
     t.datetime "updated_at"

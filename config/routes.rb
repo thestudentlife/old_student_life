@@ -1,14 +1,10 @@
 TslRails::Application.routes.draw do
-
-  resource :account, :controller => "users"
   
   namespace :workflow do
     match '/login' => 'user_sessions#new', :via => :get, :as => "login"
     match '/login' => 'user_sessions#create', :via => :post, :as => "login"
     match '/logout' => 'user_sessions#destroy', :as => "logout"
   end
-  
-  resources :users
 
   resources :workflow_statuses
 
@@ -30,6 +26,8 @@ TslRails::Application.routes.draw do
     resources :sections do
       resources :editors
     end
+    resources :users, :except => [:create]
+    match "users/new" => "users#create", :via => :post
   end
 
   # Sample of named route:

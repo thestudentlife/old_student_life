@@ -1,7 +1,7 @@
 class CreateStaffMembers < ActiveRecord::Migration
   def self.up
     create_table :staff_members do |t|
-      t.belongs_to :user
+      t.belongs_to :user, :null => false
       t.boolean :is_admin, :default => false
 
       t.timestamps

@@ -1,5 +1,30 @@
 <h1>New user</h1>
 
-<%= render 'form' %>
+<%= form_tag(new_workflow_user_path) do %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-<%= link_to 'Back', users_path %>
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+		<%= label_tag :email %><br />
+		<%= text_field_tag :email %>
+	</div>
+	<div class="field">
+		<%= label_tag :is_admin %><br />
+		<%= check_box_tag :is_admin %>
+	</div>
+  <div class="actions">
+    <%= submit_tag %>
+  </div>
+<% end %>
+
+
+<%= link_to 'Back', workflow_users_path %>
