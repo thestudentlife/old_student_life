@@ -45,16 +45,16 @@ class Workflow::UsersController < ApplicationController
   end
   
   def edit
-    unless current_staff_member.can_edit_users or current_staff_member.id = params[:id]
-      raise ActionController::RoutingError.new('Not Found')
+    unless current_staff_member.can_edit_users or current_staff_member.id == params[:id].to_i
+      raise ActiveRecord::RecordNotFound.new
     end
     @staff_member = StaffMember.find params[:id]
     @user = @staff_member.user
   end
   
   def update
-    unless current_staff_member.can_edit_users or current_staff_member.id = params[:id]
-      raise ActionController::RoutingError.new('Not Found')
+    unless current_staff_member.can_edit_users or current_staff_member.id == params[:id].to_i
+      raise ActiveRecord::RecordNotFound.new
     end
     @staff_member = StaffMember.find params[:id]
     @user = @staff_member.user

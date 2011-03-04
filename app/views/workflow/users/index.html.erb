@@ -20,12 +20,6 @@
     </td>
     <td><%= user.email %></td>
     <td><%= link_to 'Edit', edit_workflow_user_path(user) %></td>
-    <td>
-      <% form_tag (reset_workflow_user_path(user), :style => "display: inline;") do %>
-	      <%= hidden_field_tag :user_id, user.id%>
-	      <%= submit_tag ("Reset password") %>
-	    <% end %>
-	  </td>
   </tr>
 <% end %>
 </table>

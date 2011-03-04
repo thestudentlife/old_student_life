@@ -58,7 +58,7 @@ class StaffMember < ActiveRecord::Base
   end
   
   def can_edit_users
-    self.is_admin
+    is_admin
   end
   
   def email

@@ -23,13 +23,13 @@
 		<%= f.label :email %><br />
 		<%= f.text_field :email %>
 	</div>
-	<% if @staff_member.can_edit_users %>
+	<% if current_staff_member.can_edit_users %>
   	<div class="field">
   		<%= f.label :is_admin %><br />
   		<%= f.check_box :is_admin %>
   	</div>
 	<% end %>
-	<% if @staff_member == current_staff_member %>
+	<% if current_staff_member == @staff_member %>
 	  <div class="field">
 	    <%= label_tag :password %><br />
 	    <%= password_field_tag :password %>
@@ -44,5 +44,10 @@
   </div>
 <% end %>
 
+<% if current_staff_member.can_edit_users and current_staff_member != @staff_member %>
+  <%= button_to "Reset password", reset_workflow_user_path(@user) %>
+<% end %>
 
-<%= link_to 'Back', workflow_users_path %>
+<p>
+<%= link_to 'Back', current_staff_member.can_edit_users ? workflow_users_path : workflow_path %>
+</p>
