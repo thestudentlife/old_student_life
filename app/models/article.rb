@@ -6,6 +6,7 @@ class Article < ActiveRecord::Base
   has_many :revisions
   has_many :images
   belongs_to :headline
+  has_many :viewed_articles
   
   validates_presence_of :workflow_status, :section
   
