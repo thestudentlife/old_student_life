@@ -16,7 +16,7 @@ class Workflow::ImagesController < WorkflowController
     @image.article = @article
 
     if @image.save
-      redirect_to workflow_article_image_path(@article, @image), :notice => 'Image was successfully created.'
+      redirect_to workflow_article_path(@article), :notice => 'Image was successfully created.'
     else
       render :action => "new"
     end
