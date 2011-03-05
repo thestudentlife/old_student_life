@@ -1,5 +1,5 @@
 namespace :dummy do
-  task :admin do
+  task :admin => :environment do
     StaffMember.create :user => User.create(
       :email => "admin@tsl.pomona.edu",
       :password => "password",
