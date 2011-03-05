@@ -1,3 +1,29 @@
-<h1>New workflow_comment</h1>
+<header>
+  <h1>Post comment</h1>
+  <div style="clear: both"></div>
+</header>
 
-<%= render 'form' %>
+<div id="content">
+<%= form_for :workflow_comment,
+             :url => workflow_article_comments_path(@article) do |f| %>
+  <% if @workflow_comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@workflow_comment.errors.count, "error") %> prohibited this workflow_comment from being saved:</h2>
+
+      <ul>
+      <% @workflow_comment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field wide-field">
+		<%= f.label :text %>
+		<%= f.text_area :text %>
+	</div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+</div>

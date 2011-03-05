@@ -1,22 +1,27 @@
-<h1>Adding author</h1>
+<header>
+	<h1>Adding author</h1>
+	<div style="clear: both;"></div>
+</header>
 
-<%= form_tag(workflow_article_authors_path(@article), :method => :post) do %>
-	<% if @article.errors.any? %>
-		<div id="errorExplanation">
-			<h2><%= pluralize(@article.errors.count, "error") %> prohibited this article from being saved:</h2>
-			<ul>
-				<% @article.errors.full_messages.each do |msg| %>
-				<li><%= msg %></li>
-				<% end %>
-			</ul>
+<div id="content">
+	<%= form_tag(workflow_article_authors_path(@article), :method => :post) do %>
+		<% if @article.errors.any? %>
+			<div id="errorExplanation">
+				<h2><%= pluralize(@article.errors.count, "error") %> prohibited this article from being saved:</h2>
+				<ul>
+					<% @article.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+					<% end %>
+				</ul>
+			</div>
+		<% end %>
+
+		<div class="field">
+			<%= label_tag :author_id %>
+			<%= select_tag :author_id, options_from_collection_for_select(@authors, :id, :to_s) %>
+		</div>
+		<div class="actions">
+			<%= submit_tag "Add author" %>
 		</div>
 	<% end %>
-
-	<div class="field">
-		<%= label_tag :author_id %>
-		<%= select_tag :author_id, options_from_collection_for_select(@authors, :id, :to_s) %>
-	</div>
-	<div class="actions">
-		<%= submit_tag "Add author" %>
-	</div>
-<% end %>
+</div>

@@ -34,9 +34,6 @@
   <div class="content">
   <p>
     Authors
-    <% if @article.authors.empty? %>
-      None
-    <% end %>
     <% if @editable %>
       <%= link_to "Add author", new_workflow_article_author_path (@article) %>
     <% end %>
@@ -57,16 +54,31 @@
   <% if current_staff_member.can_see_article_images @article %>
     <p>
       Images
-      <% if @article.images.empty? %>
-        None
-      <% end %>
       <% if @editable %>
         <%= link_to "Upload image", new_workflow_article_image_path (@article) %>
       <% end %>
     </p>
-    <ul>
+    <ul style="display: block; float: left; width: 100%">
       <% @article.images.each do |image| %>
-        <li style="margin-left: 0.5em"><%= link_to image_tag(image.file.url(:thumb)), workflow_article_image_path(@article, image) %></li>
+        <li style="margin-left: 0.5em; display: block; width: 100%; margin-bottom: 2em; padding-bottom: 1em; border-bottom: 1px #fff solid">
+          <div style="float: right">  
+            <%= image_tag(
+              image.file.url(:thumb),
+              :style => "border: 1px white solid; margin-left: 1em; margin-right: 1em") %>
+          </div>
+          <div>
+            <p style="margin-top: 0; margin-bottom: 0;">Credit</p>
+            <p style="margin-top: 0; color: white"><%= image.credit %></p>
+            <p style="margin-top: 0; margin-bottom: 0;">Caption</p>
+            <p style="margin-top: 0; color: white"><%= image.caption %></p>
+            <p style="margin-top: 0; margin-bottom: 0">
+              <%= link_to "Edit", edit_workflow_article_image_path(@article, image) %>
+              <%= link_to "Remove", workflow_article_image_path(@article, image),
+                :confirm => "Are you sure you want to remove this image?", :method => :delete %>
+            </p>
+          </div>
+          <div style="clear: both;"></div>
+        </li>
       <% end %>
     </ul>
   <% end %>

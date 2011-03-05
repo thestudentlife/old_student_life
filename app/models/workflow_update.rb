@@ -8,7 +8,7 @@ class WorkflowUpdate < ActiveRecord::Base
     workflow_update = WorkflowUpdate.new :article => article, :updates => {}
     workflow_update.visible_to_article_author = (article.open_to_author or article.workflow_status.open_to_author)
     
-    if article.status_message != params[:status_message]
+    if article.status_message.to_s != params[:status_message].to_
       workflow_update.updates["Status message"] = [article.status_message, params[:status_message]]
     end
     if article.workflow_status_id != params[:workflow_status_id].to_i

@@ -1,5 +1,9 @@
-<h1>Editing article</h1>
+<header>
+  <h1>Editing article</h1>
+  <div style="clear: both"></div>
+</header>
 
+<div id="content">
 <%= form_for(@article, :url => workflow_article_path(@article)) do |f| %>
 	<% if @article.errors.any? %>
 		<div id="errorExplanation">
@@ -13,7 +17,7 @@
 	<% end %>
 
 	<div class="field">
-		<%= f.label :status_message %><br />
+		<%= f.label :status_message %>
 		<%= f.text_field :status_message %>
 	</div>
 	<% if @workflow_statuses %>
@@ -28,11 +32,11 @@
   </div>
   <% if current_staff_member.can_override_workflow %>
   	<div class="field">
-      OVERRIDE: <%= f.label :open_to_author %>
+      <%= f.label :open_to_author %>
       <%= f.check_box :open_to_author %>
     </div>
     <div class="field">
-      OVERRIDE: <%= f.label :publishable %>
+      <%= f.label :publishable %>
       <%= f.check_box :publishable %>
     </div>
   <% end %>
@@ -42,3 +46,4 @@
 <% end %>
 
 <%= link_to 'Back', workflow_article_path(@article) %>
+</div>

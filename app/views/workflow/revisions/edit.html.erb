@@ -1,5 +1,9 @@
-<h1>Editing revision</h1>
+<header>
+  <h1>Editing revision</h1>
+  <div style="clear: both"></div>
+</header>
 
+<div id="content">
 <%= form_for(@revision, :url => workflow_article_revision_path(@article, @revision)) do |f| %>
   <% if @revision.errors.any? %>
     <div id="error_explanation">
@@ -15,7 +19,7 @@
 
   <% if current_staff_member.can_publish_article @article %>
     <div class="field">
-  		<%= f.label :published_online %><br />
+  		<%= f.label :published_online %>
   		<%= f.check_box :published_online %>
   	</div>
   	<div class="field">
@@ -24,7 +28,7 @@
   	</div>
 	
   	<div class="field">
-  		<%= f.label :published_in_print %><br />
+  		<%= f.label :published_in_print %>
   		<%= f.check_box :published_in_print %>
   	</div>
   	<div class="field">
@@ -37,3 +41,4 @@
     <%= f.submit %>
   </div>
 <% end %>
+</div>

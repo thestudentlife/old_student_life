@@ -1,6 +1,14 @@
-<h1>Editing image</h1>
+<header>
+  <h1>Editing image</h1>
+  <div style="clear: both"></div>
+</header>
 
+<div id="content">
+  <p style="text-align: center">
+    <%= image_tag @image.file.url %>
+  </p>
+  
 <%= render 'form' %>
 
-<%= link_to 'Show', workflow_article_image_path(@article, @image) %> |
-<%= link_to 'Back', workflow_article_images_path(@article) %>
+<%= link_to 'Back', workflow_article_path(@article) %>
+</div>

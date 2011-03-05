@@ -3,14 +3,6 @@ class Workflow::ImagesController < WorkflowController
   before_filter :require_user, :find_article
   before_filter {current_staff_member.can_edit_article! @article}
 
-  def index
-    @images = @article.images
-  end
-
-  def show
-    @image = @article.images.find params[:id]
-  end
-
   def new
     @image = Image.new
   end
@@ -34,7 +26,7 @@ class Workflow::ImagesController < WorkflowController
     @image = Image.find(params[:id])
 
     if @image.update_attributes(params[:image])
-      redirect_to workflow_article_image_path(@article, @image), :notice => 'Image was successfully updated.'
+      redirect_to workflow_article_path(@article, @image), :notice => 'Image was successfully updated.'
     else
       render :action => "edit"
     end
@@ -44,7 +36,7 @@ class Workflow::ImagesController < WorkflowController
     @image = Image.find(params[:id])
     @image.destroy
 
-    redirect_to workflow_article_images_url(@article)
+    redirect_to workflow_article_path(@article)
   end
   
   private
