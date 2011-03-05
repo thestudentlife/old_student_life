@@ -1,3 +1,11 @@
+<header>
+  <h1>Password reset</h1>
+  <div style="clear: both"></div>
+</header>
+
+<div id="content">
 <p>The new password for <strong><%= @user %></strong> is:</p>
 <p><strong><%= @password %></strong></p>
-<p>Please tell them to log in and change it!</p>
+<p>Please give it to them, then tell them to log in and change it!</p>
+<p><%= link_to "Back to user list", workflow_users_path %></p>
+</div>

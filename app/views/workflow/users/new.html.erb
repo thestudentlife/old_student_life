@@ -1,5 +1,9 @@
-<h1>New user</h1>
+<header>
+  <h1>New user</h1>
+  <div style="clear: both"></div>
+</header>
 
+<div id="content">
 <%= form_tag(new_workflow_user_path) do %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
@@ -14,11 +18,11 @@
   <% end %>
   
   <div class="field">
-		<%= label_tag :email %><br />
+		<%= label_tag :email %>
 		<%= text_field_tag :email %>
 	</div>
 	<div class="field">
-		<%= label_tag :is_admin %><br />
+		<%= label_tag :is_admin %>
 		<%= check_box_tag :is_admin %>
 	</div>
   <div class="actions">
@@ -28,3 +32,5 @@
 
 
 <%= link_to 'Back', workflow_users_path %>
+
+</div>

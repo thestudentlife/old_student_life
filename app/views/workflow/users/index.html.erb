@@ -1,15 +1,17 @@
-<h1>Listing users</h1>
+<header>
+  <h1>Users</h1>
+  
+  <span class="actions">
+    <%= link_to 'New user', new_workflow_user_path %>
+  </span>
+  <div style="clear: both;"></div>
+</header>
 
-<table>
-  <tr>
-    <th style="text-align: left;">Role</td>
-    <th style="text-align: left;">Email</th>
-    <th></th>
-  </tr>
-
+<div id="content">
 <% @users.each do |user| %>
-  <tr>
-    <td style="font-variant: small-caps; text-transform: lowercase; font-weight: bold;">
+  <article>
+    <div class="left">
+      <p style="margin-top: 0; text-align: center; line-height:18px; padding-top: 3px; font-weight: bold; text-transform: uppercase; letter-spacing: 0px">
       <% if user.is_admin %>
         Admin
       <% elsif not user.sections.empty? %>
@@ -17,13 +19,18 @@
       <% else %>
         Staff
       <% end %>
-    </td>
-    <td><%= user.email %></td>
-    <td><%= link_to 'Edit', edit_workflow_user_path(user) %></td>
-  </tr>
+      </p>
+    </div>
+    <div class="mid">
+  	  <header><h1><%= user %></h1></header>
+  	</div>
+  	<div class="right">
+      <%= link_to 'Edit', edit_workflow_user_path(user) %>
+      <% if current_staff_member.can_edit_users and current_staff_member != user %>
+        | <%= link_to "Reset password", reset_workflow_user_path(user), :method => :post, :confirm => "Are you sure?" %>
+      <% end %>
+    </div>
+    <div style="clear: both;"></div>
+  </article>
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New User', new_workflow_user_path %>
+</div>

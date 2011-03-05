@@ -1,7 +1,11 @@
-<h1>Editing user</h1>
+<header>
+  <h1>Editing user</h1>
+  <div style="clear: both"></div>
+</header>
 
+<div id="content">
 <%= form_for(
-  [:workflow,@staff_member],
+  [:workflow, @staff_member],
   :url => workflow_user_path(@staff_member),
   :as => :user) do |f| %>
   <% if @staff_member.errors.any? or @user.errors.any? %>
@@ -20,22 +24,22 @@
   <% end %>
   
   <div class="field">
-		<%= f.label :email %><br />
+		<%= f.label :email %>
 		<%= f.text_field :email %>
 	</div>
 	<% if current_staff_member.can_edit_users %>
   	<div class="field">
-  		<%= f.label :is_admin %><br />
+  		<%= f.label :is_admin %>
   		<%= f.check_box :is_admin %>
   	</div>
 	<% end %>
 	<% if current_staff_member == @staff_member %>
 	  <div class="field">
-	    <%= label_tag :password %><br />
+	    <%= label_tag :password %>
 	    <%= password_field_tag :password %>
     </div>
     <div class="field">
-	    <%= label_tag :password_confirmation %><br />
+	    <%= label_tag :password_confirmation %>
 	    <%= password_field_tag :password_confirmation %>
     </div>
   <% end %>
@@ -44,10 +48,7 @@
   </div>
 <% end %>
 
-<% if current_staff_member.can_edit_users and current_staff_member != @staff_member %>
-  <%= button_to "Reset password", reset_workflow_user_path(@user) %>
-<% end %>
-
 <p>
 <%= link_to 'Back', current_staff_member.can_edit_users ? workflow_users_path : workflow_path %>
 </p>
+</div>

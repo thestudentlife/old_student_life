@@ -236,6 +236,9 @@
 			clear: both;
 			margin-bottom: 1em;
 		}
+		#main form .actions {
+			margin-left: 20%;
+		}
 		#main form .wide-field label {
 			text-align: left;
 			width: 100%;
@@ -271,12 +274,13 @@
 			<strong>Workflow</strong>
 			<%= link_to "The Student Life", workflow_path %>
 		</h1>
-		<span id="user-info">
-			Logged in as <%= current_staff_member %>.
-			<%= link_to "My account", workflow_user_path (current_user) %> |
-			<%= link_to "Log out", workflow_logout_path %>
-			<a href="/workflow/help" id="help">Help</a>
-		</span>
+		<% if current_staff_member %>
+			<span id="user-info">
+				Logged in as <%= current_staff_member %>.
+				<%= link_to "My account", edit_workflow_user_path (current_user) %> |
+				<%= link_to "Log out", workflow_logout_path %>
+				<a href="/workflow/help" id="help">Help</a>
+			</span>
 		<nav>
 			<ul>
 				<%= li_tag link_to("Home", workflow_path), :class => ("selected" if request.request_uri == workflow_path) %>
@@ -295,12 +299,13 @@
 				<% end %>
 			</ul>
 		</nav>
+		<% end %>
 	</header>
 	
 	<section id="main">
-		<% flash.each do |k, v| %>
+		<!--<% flash.each do |k, v| %>
 			<p><strong><%= k.to_s.capitalize %>:</strong> <%= v %></p>
-		<% end %>
+		<% end %>-->
 		<%= yield %>
 	</section>
 	<section id="side">

@@ -1,6 +1,8 @@
 class Workflow::UserSessionsController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
   
+  layout "workflow"
+  
   def new
     @user_session = UserSession.new
   end

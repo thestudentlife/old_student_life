@@ -1,5 +1,9 @@
-<h1>Login</h1>
+<header>
+  <h1>Login</h1>
+  <div style="clear: both"></div>
+</header>
 
+<div id="content">
 <%= form_for :user_session, :url => workflow_login_path do |f| %>
   <% if @user_session.errors.any? %>
     <div id="error_explanation">
@@ -13,13 +17,23 @@
     </div>
   <% end %>
 
-  <%= f.label :email %><br />
-  <%= f.text_field :email %><br />
-  <br />
-  <%= f.label :password %><br />
-  <%= f.password_field :password %><br />
-  <br />
-  <%= f.check_box :remember_me %><%= f.label :remember_me %><br />
-  <br />
-  <%= f.submit "Login" %>
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :remember_me %>
+    <%= f.check_box :remember_me %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit "Login" %>
+  </div>
 <% end %>
+</div>

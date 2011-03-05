@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
     end
     
     def current_staff_member
-      current_user.staff_member
+      current_user.staff_member if current_user
     end
     
     def require_user
