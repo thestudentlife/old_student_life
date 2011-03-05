@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110305013343) do
+ActiveRecord::Schema.define(:version => 20110305041612) do
 
   create_table "articles", :force => true do |t|
     t.string   "working_name"
@@ -123,6 +123,15 @@ ActiveRecord::Schema.define(:version => 20110305013343) do
     t.boolean  "requires_admin", :default => false
     t.boolean  "open_to_author", :default => true
     t.boolean  "publishable",    :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "workflow_updates", :force => true do |t|
+    t.integer  "article_id",                                  :null => false
+    t.integer  "author_id",                                   :null => false
+    t.boolean  "visible_to_article_author", :default => true
+    t.string   "updates"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

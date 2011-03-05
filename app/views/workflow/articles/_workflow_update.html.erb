@@ -1,0 +1,19 @@
+<div class="update" style="font-family: 'Helvetica Neue', 'Lucida Grande', Arial, sans-serif;">
+  <h4 style="font-size: 13px; font-weight: bold; margin: 0;">
+    <%= workflow_update.author %>
+    <span class="date" style="font-size: 12px; color: #888; display: block; font-weight: normal;">
+      <%= workflow_update.created_at %>
+    </span>
+  </h4>
+  <ul style="font-size: 12px;">
+    <% workflow_update.updates.each do |property, value| %>
+      <li>
+      <% if value.class == Array %>
+        <%= property %> changed from “<%= value[0] %>” to “<%= value[1] %>”
+      <% else %>
+        “<%= property %>” <%= value %>
+      <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>

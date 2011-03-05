@@ -3,8 +3,9 @@ class Article < ActiveRecord::Base
   belongs_to :section
   belongs_to :subsection
   has_and_belongs_to_many :authors, :class_name => "StaffMember"
-  has_many :workflow_comments
   has_many :revisions
+  has_many :workflow_comments
+  has_many :workflow_updates
   has_many :images
   belongs_to :headline
   has_many :viewed_articles
@@ -19,7 +20,7 @@ class Article < ActiveRecord::Base
   end
   
   def workflow_history
-    (self.workflow_comments + self.revisions).sort_by &:created_at
+    (self.workflow_comments + self.revisions + self.workflow_updates).sort_by &:created_at
   end
   
   def workflow_history_visible_to_article_author

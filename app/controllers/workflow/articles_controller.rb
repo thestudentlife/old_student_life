@@ -54,7 +54,10 @@ class Workflow::ArticlesController < ApplicationController
       params[:article].delete :workflow_status_id
     end
     
-    if @article.errors.empty? and @article.update_attributes params[:article]
+    workflow_update = WorkflowUpdate.new_for_article_params(@article, params[:article])
+    workflow_update.author = current_staff_member
+    
+    if @article.update_attributes params[:article] and (workflow_update.updates.any? ? workflow_update.save : true)
       redirect_to workflow_article_path(@article), :notice => "Article was successfully updated"
     else
       @subsections = current_staff_member.open_sections.map(&:subsections).flatten
