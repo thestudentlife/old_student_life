@@ -7,10 +7,6 @@ class Workflow::WorkflowStatusesController < ApplicationController
     @workflow_statuses = WorkflowStatus.all
   end
 
-  def show
-    @workflow_status = WorkflowStatus.find params[:id]
-  end
-
   def new
     @workflow_status = WorkflowStatus.new
   end
