@@ -13,7 +13,7 @@ class Workflow::WorkflowCommentsController < WorkflowController
     params[:workflow_comment][:author_id] = current_user.staff_member.id
     @workflow_comment = WorkflowComment.new(params[:workflow_comment])
     @workflow_comment.article = @article
-    @workflow_comment.visible_to_article_author = @article.open_to_author or @article.workflow_status.open_to_author
+    @workflow_comment.visible_to_article_author = (@article.open_to_author or @article.workflow_status.open_to_author)
     
     if @workflow_comment.save
       redirect_to workflow_article_path(@article), :notice => 'Comment was successfully created.'

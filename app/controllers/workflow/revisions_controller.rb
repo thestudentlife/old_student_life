@@ -16,7 +16,7 @@ class Workflow::RevisionsController < WorkflowController
     @revision = Revision.new(params[:revision])
     @revision.article = @article
     @revision.author = current_user.staff_member
-    @revision.visible_to_article_author = @article.open_to_author or @article.workflow_status.open_to_author
+    @revision.visible_to_article_author = (@article.open_to_author or @article.workflow_status.open_to_author)
     
     if @revision.save
       redirect_to workflow_article_path(@article), :notice => 'Revision was successfully created.'
