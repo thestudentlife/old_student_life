@@ -4,6 +4,6 @@ class Subsection < ActiveRecord::Base
   def to_s; name; end
   
   def full_name
-    "#{section.name}/#{name}"
+    "#{section.name} – #{name}"
   end
 end

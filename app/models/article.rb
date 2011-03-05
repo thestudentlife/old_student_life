@@ -12,6 +12,18 @@ class Article < ActiveRecord::Base
   
   validates_presence_of :workflow_status, :section
   
+  def status
+    if revisions.where(:published_online => true).exists?
+      "Published"
+    else
+      workflow_status.to_s
+    end
+  end
+  
+  def full_section_name
+    subsection ? subsection.full_name : section.name
+  end
+  
   def latest_published_revision
     revisions.where(:published_online => true
     ).where("published_online_at < ?", Time.now

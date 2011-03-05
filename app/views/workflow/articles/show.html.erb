@@ -1,44 +1,84 @@
-<p id="notice"><%= notice %></p>
-
-<p>Article working name: <%= @article.working_name %></p>
-<p>Section: <%= @article.section %></p>
-<p>Subsection: <%= @article.subsection or "None" %></p>
-<p>Status: <%= @article.status_message %></p>
-<p>Current workflow status: <%= @article.workflow_status %></p>
-
-<p>
-  <% if @editable %>
-    <%= link_to 'Edit', edit_workflow_article_path(@article) %> |
+<header>
+  <h1><%= @article.working_name %></h1>
+  
+  <span class="actions">
+    <% if @editable %>
+      <%= link_to 'Edit', edit_workflow_article_path(@article) %> |
+    <% end %>
+    <% if @postable %>
+      <%= link_to 'Post revision', new_workflow_article_revision_path (@article) %> |
+      <%= link_to 'Post comment', new_workflow_article_comment_path (@article) %>
+    <% end %>
+  </span>
+  <div style="clear: both;"></div>
+  <span style="color: #5F87A5;"><%= time_ago_in_words(@article.created_at) %> ago</span>
+  <p style="margin-bottom: 0;"><strong>Status message:</strong>
+  <% if @article.status_message and not @article.status_message.empty? %>
+    <%= @article.status_message %>
+  <% else %>
+    None
   <% end %>
-  <% if @postable %>
-    <%= link_to 'Post revision', new_workflow_article_revision_path (@article) %> |
-    <%= link_to 'Post comment', new_workflow_article_comment_path (@article) %>
-  <% end %>
-</p>
+  </p>
+</header>
+<div id="content">
+  
+<% content_for :side do %>
+  <header>
+    <p style="margin-top: 0; margin-bottom: 0; color: #c4d67a;">Workflow status</p>
+    <p style="margin-top: 0; font-weight: bold; font-size: 18px; color: white"><%= @article.workflow_status %></p>
 
-<p>Authors:</p>
-<ul>
-	<% @article.authors.each do |author| %>
-		<li>
-		  <%= author %>
-		  <% if @editable %>
-  		  <% form_tag (workflow_article_author_path(@article, author), :method => :delete) do %>
-  		    <%= hidden_field_tag :author_id, author.id%>
-  		    <%= submit_tag ("Remove") %>
+    <p style="margin-bottom: 0; color: #c4d67a">Section</p>
+    <p style="margin-top: 0; font-weight: bold; font-size: 18px; color: white"><%= @article.full_section_name %></p>
+  </header>
+  
+  <div class="content">
+  <p>
+    Authors
+    <% if @article.authors.empty? %>
+      None
+    <% end %>
+    <% if @editable %>
+      <%= link_to "Add author", new_workflow_article_author_path (@article) %>
+    <% end %>
+  </p>
+  <ul>
+  	<% @article.authors.each do |author| %>
+  		<li style="margin-bottom: 0.5em; margin-left: 0.5em">
+  		  <span style="color: white"><%= author %></span>
+  		  <% if @editable %>
+  		    <%= link_to 'Remove',
+  		        workflow_article_author_path(@article, author),
+  		        :confirm => 'Are you sure?',
+  		        :method => :delete %>
   		  <% end %>
-  		<% end %>
-		</li>
-	<% end %>
-</ul>
-<% if @editable %>
-  <%= link_to "Add author", new_workflow_article_author_path (@article) %>
+  		</li>
+  	<% end %>
+  </ul>
+  <% if current_staff_member.can_see_article_images @article %>
+    <p>
+      Images
+      <% if @article.images.empty? %>
+        None
+      <% end %>
+      <% if @editable %>
+        <%= link_to "Upload image", new_workflow_article_image_path (@article) %>
+      <% end %>
+    </p>
+    <ul>
+      <% @article.images.each do |image| %>
+        <li style="margin-left: 0.5em"><%= link_to image_tag(image.file.url(:thumb)), workflow_article_image_path(@article, image) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  </div>
 <% end %>
 
-<p>History:</p>
-<ol style="list-style-type: none; margin-left: 0; padding-left: 0;">
-  <% @workflow_history_views.each do |view| %>
-    <li style="border-bottom: 1px solid #DDD; padding: 9px;"><%= view %></li>
-  <% end %>
-</ol>
+<h2>History for this article</h2>
+<% @workflow_history_views.each do |view| %>
+  <article class="workflow-item">
+    <%= view %>
+  </article>
+<% end %>
 
 <%= link_to 'Back', workflow_articles_path %>
+</div>

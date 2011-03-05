@@ -1,9 +1,12 @@
-<div class="comment" style="font-family: 'Helvetica Neue', 'Lucida Grande', Arial, sans-serif;">
-  <h4 style="font-size: 13px; font-weight: bold; margin: 0;">
+<header>
+  <h1 style="font-size: 13px; font-weight: bold;" class="left">
     <%= workflow_comment.author %>
-    <span class="date" style="font-size: 12px; color: #888; display: block; font-weight: normal;">
-      <%= workflow_comment.created_at %>
+    <span class="date" style="color: #888; display: block; font-weight: normal;">
+      <%= time_ago_in_words(workflow_comment.created_at) %> ago
     </span>
-  </h4>
-  <p style="font-size: 12px;"><%= workflow_comment %></p>
+  </h1>
+</header>
+<div class="mid">
+  <p style="margin-top: 10px; color: #555;"><%= workflow_comment %></p>
 </div>
+<div style="clear: both;"></div>

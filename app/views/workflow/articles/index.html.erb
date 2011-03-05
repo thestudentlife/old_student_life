@@ -1,40 +1,42 @@
-<h1>Listing articles</h1>
+<header>
+  <h1>Articles</h1>
+  
+  <span class="actions">
+    <%= link_to 'New Article', new_workflow_article_path %>
+  </span>
+  <div style="clear: both;"></div>
+</header>
 
-<table>
-  <tr style="text-align: left;">
-  <th></th>
-	<th>Working Name</th>
-	<th>Workflow</th>
-	<th>Status</th>
-	<th>Section</th>
-	<th>Subsection</th>
-	<th>Creation Date</th>
-	<th>Authors</th>
-    <th></th>
-  </tr>
-
+<div id="content">
 <% @articles.each do |article| %>
-  <tr>
-  <td style="font-variant: small-caps; text-transform: lowercase; font-weight: bold;">
-    <% if article.headline %>
-      Headline
-    <% end %>
-  </td>
-	<td><%= article.working_name %></td>
-	<td><%= article.workflow_status %></td>
-	<td><%= article.status_message %></td>
-	<td><%= article.section %></td>
-	<td><%= article.subsection %></td>
-	<td><%= article.created_at %></td>
-	<td><%= article.authors.map(&:to_s).join(", ") %></td>
-  <td><%= link_to 'Show', workflow_article_path(article) %></td>
-  <td>
-    <%= link_to 'Make headline', workflow_article_headline_path(article) if current_staff_member.can_edit_headlines unless article.headline %>
-  </td>
-  </tr>
+    <article>
+      <div class="left">
+        <p style="margin-top: 0; text-align: center; line-height:18px; padding-top: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0px"><%= article.status %></p>
+      </div>
+      <div class="mid">
+      <header>
+        <h1 style="line-height: 1em; margin: 0; display: inline;"><%= link_to article.working_name, workflow_article_path(article) %></h1>
+        <% if article.headline %>
+          <span class="tag">Headline</span>
+        <% end %>
+        <span style="color: #666; margin-top: 0;">
+          <%= time_ago_in_words(article.created_at) %> old.
+        </span>
+      </header>
+      <p style="margin-top: 0; margin-bottom: 0; color: #666">
+        Assigned to
+        <%= article.authors.any? ? article.authors.to_sentence : "nobody" %>.
+      </p>
+      <p style="">
+        <% if article.status_message and not article.status_message.empty? %>
+          <q><%= article.status_message %></q>
+        <% end %>
+      </p>
+      </div>
+      <div class="right" style="font-size: 14px">
+        <p style="margin-top:0; padding-top: 8px;"><strong>Section:</strong> <%= article.full_section_name %></p>
+      </div>
+      <div style="clear: both;"></div>
+    </article>
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Article', new_workflow_article_path %>
+</div>

@@ -12,41 +12,44 @@
 		body {
 			margin: 0;
 			padding: 0;
-			font-family: 'Helvetica Neue', 'Lucida Grande', Arial, sans-serif;
+			font-family: 'Lucida Grande', Arial, sans-serif;
 			font-size: 12px;
-			background-color: #e6e6e6;
+			background-color: #5A9ECF;
 			min-width: 950px;
 		}
-		header {
-			background: #5A9ECF;
+		body > header {
 			color: white;
+			font-size: 12px;
 		}
-		header h1 {
+		body > header h1 {
 			font-weight: normal;
 			font-size: 24px;
 			float: left;
 			display: block;
 			margin-left: 21px;
 		}
-		header a, header a:active, header a:hover, header a:visited {
+		body > header a,
+		body > header a:active,
+		body > header a:hover,
+		body > header a:visited {
 			color: white;
 		}
-		header h1 a {
+		body > header h1 a {
 			text-decoration: none;
 		}
-		header h1 strong {
+		body > header h1 strong {
 			text-transform: uppercase;
 			display: block;
 			font-weight: bold;
 			font-size: 12px;
 			color: #069;
 		}
-		header span#user-info {
+		body > header span#user-info {
 			display: block;
 			float: right;
 			padding: 10px;
 		}
-		header a#help {
+		body > header a#help {
 			background-color: #D70;
 			padding: 2px;
 			-webkit-border-radius: 2px;
@@ -54,13 +57,13 @@
 			-o-border-radius: 2px;
 			border-radius: 2px;
 		}
-		header nav {
+		body > header nav {
 			clear: both;
 			background-color: #069;
 			margin-bottom: 0;
 			padding-bottom: 0;
 		}
-		header nav ul {
+		body > header nav ul {
 			list-style: none;
 			margin-left: 0;
 			padding-left: 21px;
@@ -68,33 +71,33 @@
 			padding-bottom: 0;
 			border-bottom: 3px solid white;
 		}
-		header nav li {
+		body > header nav li {
 			display: inline-block;
 			font-weight: bold;
 			margin: 0;
 			padding: 0;
 		}
-		header nav li.selected {
+		body > header nav li.selected {
 			background-color: white;
 			border-bottom: 3px;
 			margin-bottom: -3px;
 		}
-		header nav a {
+		body > header nav a {
 			display: block;
 			line-height: 32px;
 			padding-left: 20px;
 			padding-right: 20px;
 		}
-		header nav a:hover {
+		body > header nav a:hover {
 			background-color: #07b;
 		}
-		header nav li.selected a:hover {
+		body > header nav li.selected a:hover {
 			background-color: white;
 		}
-		header nav li.selected a {
+		body > header nav li.selected a {
 			color: #5fa82c;
 		}
-		header nav a {
+		body > header nav a {
 			text-decoration: none;
 		}
 		
@@ -103,12 +106,131 @@
 			width: 70%;
 			margin: 9px 0 0 21px;
 			float: left;
+			
+			-moz-box-shadow: 1px 1px 2px #555;
+			-webkit-box-shadow: 1px 1px 2px #555;
+			box-shadow: 1px 1px 2px #555;
+			
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			-o-border-radius: 5px;
+			border-radius: 5px;
+		}
+		#main > header {
+			background-color: #f2f2f2;
+			display: block;
+			border-bottom: solid 2px #e6e6e6;
+			padding: 9px;
+			
+			-webkit-border-radius: 5px 5px 0 0;
+			-moz-border-radius: 5px 5px 0 0;
+			-o-border-radius: 5px 5px 0 0;
+			border-radius: 5px 5px 0 0;
+		}
+		#main > header h1 {
+			margin: 0;
+			font-size: 28px;
+			font-family: Helvetica, sans-serif;
+			color: #333;
+			display: block;
+			float: left;
+		}
+		#main > header .actions {
+			display: block;
+			float: right;
+		}
+		#main #content {
 			padding: 9px;
 		}
+		#main article h1 a {
+			font-size: 18px;
+			color: #007aaa;
+			text-decoration: none;
+		}
+		#main article h1 a:hover {
+			text-decoration: underline;
+		}
+		.tag {
+			font-variant: small-caps;
+			text-transform: uppercase;
+			font-weight: bold;
+			font-size: 16px;
+			color: #555;
+		}
+		q {
+			color: white;
+			quotes: none;
+			font-size: 13px;
+			background-color: #5fa82c;
+			padding: 3px;
+			
+			-webkit-border-radius: 2px;
+			-moz-border-radius: 2px;
+			-o-border-radius: 2px;
+			border-radius: 2px;
+		}
+		q:before { content: ""; }
+		q:after { content: "";}
+		
+		
+		#main article .left {
+			float: left;
+			width: 10%;
+		}
+		#main article .mid {
+			float: left;
+			width: 60%;
+		}
+		#main article .right {
+			float: right;
+			width: 20%;
+		}
+		#main h2 {
+			font-size: 14px;
+			color: #333;
+		}
+		#main .workflow-item {
+			border-bottom: 1px solid #DDD;
+		}
+		#main .workflow-item header h1 {
+			font-size: 13px; font-weight: bold;
+		}
+		#main .workflow-item header .date {
+			color: #888;
+			display: block;
+			font-weight: normal;
+		}
+		#main .workflow-item .left {
+			width: 25%;
+		}
+		#main .workflow-item .mid {
+			width: 60%;
+		}
+		#main .workflow-item .right {
+			width: 5%;
+			text-align: right;
+		}
+		.change {
+			background-color: #eee;
+			padding: 2px;
+			-webkit-border-radius: 2px;
+			-moz-border-radius: 2px;
+			-o-border-radius: 2px;
+			border-radius: 2px;
+		}
+		
 		#side {
 			position: relative;
-			margin: 0 15px 0 73%;
-			padding-top: 9px;
+			margin: 9px 15px 0 73%;
+			font-size: 13px;
+			padding: 9px;
+			
+			color: #c4d67a;
+		}
+		#side ul {
+			margin-left: 0;
+			padding-left: 0em;
+			list-style: none;
 		}
 	</style>
 </head>

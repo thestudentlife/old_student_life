@@ -36,6 +36,10 @@ class Workflow::ArticlesController < WorkflowController
       slug = item.class.name.underscore
       render_to_string :partial => slug, :locals => {slug.to_sym => item}
     end
+    
+    if current_staff_member.can_see_article_images @article
+      @images = @article.images
+    end
   end
   def edit
     @article = Article.find params[:id]

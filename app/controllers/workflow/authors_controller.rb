@@ -23,7 +23,7 @@ class Workflow::AuthorsController < WorkflowController
     end
   end
   def destroy
-    @author = @article.authors.find params[:author_id]
+    @author = @article.authors.find params[:id]
     
     workflow_update = WorkflowUpdate.new_for_removing_author_from_article (@author, @article)
     workflow_update.author = current_staff_member

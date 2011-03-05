@@ -69,6 +69,13 @@ class StaffMember < ActiveRecord::Base
     can_create_article_with_params(params) or raise NotAuthorized
   end
   
+  def can_see_article_images (article)
+    return true if self.is_admin
+    # TODO return true if self.is_editor (article)
+    return true if self.sections.include? article.section
+    false
+  end
+  
   def can_see_article (article)
     return true if self.is_admin
     return true if article.authors.include? self
