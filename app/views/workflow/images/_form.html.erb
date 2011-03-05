@@ -24,6 +24,14 @@
   	<%= f.label :published_in_print %><br />
   	<%= f.check_box :published_in_print %>
   </div>
+  <div class="field">
+  	<%= f.label :caption %><br />
+  	<%= f.text_area :caption %>
+  </div>
+  <div class="field">
+  	<%= f.label :credit %><br />
+  	<%= f.text_field :credit %>
+  </div>
 
   <div class="actions">
     <%= f.submit %>

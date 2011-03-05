@@ -4,5 +4,5 @@
 <% @article.images.each do |image| %>
 	<%= image_tag image.file.url(:small) %>
 <% end %>
-<p><%= @revision.body %></p>
+<p><%= @revision.body.html_safe %></p>
 <p>Authors: <%= @article.authors.map(&:to_s).join(", ") %>

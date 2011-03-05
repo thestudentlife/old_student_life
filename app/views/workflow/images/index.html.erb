@@ -15,6 +15,7 @@
       <% if image.published_in_print %>In-print<% end %>
     </td>
     <td><%= link_to image_tag(image.file.url(:thumb)), workflow_article_image_path(@article, image) %></td>
+    <td><%= image.credit %></td>
     <td><%= link_to 'Edit', edit_workflow_article_image_path(@article, image) %></td>
     <td><%= link_to 'Destroy', workflow_article_image_path(@article, image), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>

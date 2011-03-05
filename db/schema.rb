@@ -40,6 +40,8 @@ ActiveRecord::Schema.define(:version => 20110304062456) do
     t.integer  "article_id",                            :null => false
     t.boolean  "published_online",   :default => false
     t.boolean  "published_in_print", :default => false
+    t.string   "caption"
+    t.string   "credit"
     t.string   "file_file_name"
     t.string   "file_content_type"
     t.integer  "file_file_size"
