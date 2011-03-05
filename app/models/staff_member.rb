@@ -14,6 +14,14 @@ class StaffMember < ActiveRecord::Base
     ).where("staff_members.id" => id)
   end
   
+  def available_workflow_statuses
+    if is_admin
+      return WorkflowStatus.all
+    else
+      return WorkflowStatus.where(:requires_admin => false)
+    end
+  end
+  
   def visible_articles
     if is_admin
       return Article.all
@@ -81,9 +89,19 @@ class StaffMember < ActiveRecord::Base
     can_edit_article(article) or raise NotAuthorized
   end
   
+  def can_publish_article (article)
+    return true if is_admin
+    return true if article.publishable or article.workflow_status.publishable
+    return false
+  end
+  
+  def can_override_workflow
+    is_admin
+  end
+  
   def can_post_to_article (article)
-    return true if self.is_admin
-    return true if article.open_to_author
+    return true if self.is_admin 
+    return true if article.open_to_author or article.workflow_status.open_to_author
     return true if self.sections.include? article.section
     false
   end

@@ -24,14 +24,16 @@
 	  <%= f.label :subsection %>
 	  <%= collection_select :article, :subsection_id, @subsections, :id, :full_name, :include_blank => "(none)" %>
   </div>
-	<div class="field">
-    <%= f.label :open_to_author %>
-    <%= f.check_box :open_to_author %>
-  </div>
-  <div class="field">
-    <%= f.label :publishable %>
-    <%= f.check_box :publishable %>
-  </div>
+  <% if current_staff_member.can_override_workflow %>
+  	<div class="field">
+      OVERRIDE: <%= f.label :open_to_author %>
+      <%= f.check_box :open_to_author %>
+    </div>
+    <div class="field">
+      OVERRIDE: <%= f.label :publishable %>
+      <%= f.check_box :publishable %>
+    </div>
+  <% end %>
 	<div class="actions">
 		<%= f.submit %>
 	</div>

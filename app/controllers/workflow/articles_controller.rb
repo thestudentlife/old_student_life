@@ -8,7 +8,7 @@ class Workflow::ArticlesController < ApplicationController
   def new
     current_staff_member.can_create_articles!
     @article = Article.new
-    @workflow_statuses = WorkflowStatus.all
+    @workflow_statuses = current_staff_member.available_workflow_statuses
     @sections = current_staff_member.open_sections.includes(:subsections)
     @subsections = @sections.map(&:subsections)
   end
@@ -41,14 +41,18 @@ class Workflow::ArticlesController < ApplicationController
     @article = Article.find params[:id]
     current_staff_member.can_edit_article! @article
     
-    @workflow_statuses = WorkflowStatus.all
+    @workflow_statuses = current_staff_member.available_workflow_statuses
     @subsections = @article.section.subsections
   end
   def update
     @article = Article.find params[:id]
     current_staff_member.can_edit_article! @article
+    workflow_statuses = current_staff_member.available_workflow_statuses.map(&:id)
+    if not workflow_statuses.include? params[:article][:workflow_status_id].to_i
+      @article.errors.add :workflow_status_id, "is not available to this user"
+    end
     
-    if @article.update_attributes params[:article]
+    if @article.errors.empty? and @article.update_attributes params[:article]
       redirect_to workflow_article_path(@article), :notice => "Article was successfully updated"
     else
       render :action => "edit"

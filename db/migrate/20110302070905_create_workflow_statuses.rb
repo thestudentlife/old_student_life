@@ -2,7 +2,11 @@ class CreateWorkflowStatuses < ActiveRecord::Migration
   def self.up
     create_table :workflow_statuses do |t|
       t.string :name
-      t.integer :priority, :unique => true, :null => false
+      
+      t.boolean :requires_admin, :default => false
+      
+      t.boolean :open_to_author, :default => true
+      t.boolean :publishable, :default => false
       
       t.timestamps
     end

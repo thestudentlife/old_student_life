@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(:version => 20110305013343) do
   create_table "articles", :force => true do |t|
     t.string   "working_name"
     t.string   "status_message"
-    t.boolean  "open_to_author",     :default => true
+    t.boolean  "open_to_author",     :default => false
     t.boolean  "publishable",        :default => false
     t.boolean  "visible",            :default => true
     t.integer  "headline_id"
@@ -120,7 +120,9 @@ ActiveRecord::Schema.define(:version => 20110305013343) do
 
   create_table "workflow_statuses", :force => true do |t|
     t.string   "name"
-    t.integer  "priority",   :null => false
+    t.boolean  "requires_admin", :default => false
+    t.boolean  "open_to_author", :default => true
+    t.boolean  "publishable",    :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

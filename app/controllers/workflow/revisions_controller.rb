@@ -3,23 +3,20 @@ class Workflow::RevisionsController < ApplicationController
   before_filter :require_user, :find_article
   before_filter {current_staff_member.can_post_to_article! @article}
 
-  # GET /revisions/new
   def new
     @revision = Revision.new
   end
 
-  # GET /revisions/1/edit
   def edit
     @revision = @article.revisions.find(params[:id])
   end
 
-  # POST /revisions
   def create
     params[:revision][:body] = params["wmd-input"]
     @revision = Revision.new(params[:revision])
     @revision.article = @article
     @revision.author = current_user.staff_member
-    @revision.visible_to_article_author = @article.open_to_author
+    @revision.visible_to_article_author = @article.open_to_author or @article.workflow_status.open_to_author
     
     if @revision.save
       redirect_to workflow_article_path(@article), :notice => 'Revision was successfully created.'
@@ -28,8 +25,6 @@ class Workflow::RevisionsController < ApplicationController
     end
   end
 
-  # PUT /revisions/1
-  # PUT /revisions/1.xml
   def update
     @revision = Revision.find(params[:id])
 

@@ -2,17 +2,13 @@
 
 <table>
   <tr>
-	<th>Status</th>
-	<th>Priority</th>
-    <th></th>
-    <th></th>
+	  <th>Status</th>
     <th></th>
   </tr>
 
 <% @workflow_statuses.each do |workflow_status| %>
   <tr>
 	<td><%= workflow_status %></td>
-	<td><%= workflow_status.priority %></td>
   <td><%= link_to 'Edit', edit_workflow_status_path(workflow_status) %></td>
   </tr>
 <% end %>

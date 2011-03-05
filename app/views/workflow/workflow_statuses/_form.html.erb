@@ -16,8 +16,16 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :priority %>
-    <%= f.text_field :priority %>
+    <%= f.label :requires_admin %>
+    <%= f.check_box :requires_admin %>
+  </div>
+  <div class="field">
+    <%= f.label :open_to_author %>
+    <%= f.check_box :open_to_author %>
+  </div>
+  <div class="field">
+    <%= f.label :publishable %>
+    <%= f.check_box :publishable %>
   </div>
   <div class="actions">
     <%= f.submit %>
