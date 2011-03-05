@@ -1,19 +1,36 @@
-<h1>Listing workflow_statuses</h1>
+<header>
+  <h1>Workflow Statuses</h1>
+  
+  <span class="actions">
+    <%= link_to 'New workflow status', new_workflow_status_path %>
+  </span>
+  <div style="clear: both;"></div>
+</header>
 
-<table>
-  <tr>
-	  <th>Status</th>
-    <th></th>
-  </tr>
-
+<div id="content">
 <% @workflow_statuses.each do |workflow_status| %>
-  <tr>
-	<td><%= workflow_status %></td>
-  <td><%= link_to 'Edit', edit_workflow_status_path(workflow_status) %></td>
-  </tr>
+  <article>
+    <div class="left">
+    </div>
+    <div class="mid">
+  	  <header><h1><%= workflow_status %></h1></header>
+  	  <p>
+  	    Requires admin:
+  	    <span class="change"><%= workflow_status.requires_admin %></span>
+  	  </p>
+  	  <p>
+  	    Open to author:
+  	    <span class="change"><%= workflow_status.open_to_author %></span>
+  	  </p>
+  	  <p>
+  	    Publishable:
+  	    <span class="change"><%= workflow_status.publishable %></span>
+  	  </p>
+  	</div>
+  	<div class="right">
+      <%= link_to 'Edit', edit_workflow_status_path(workflow_status) %>
+    </div>
+    <div style="clear: both;"></div>
+  </article>
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Workflow status', new_workflow_status_path %>
+</div>

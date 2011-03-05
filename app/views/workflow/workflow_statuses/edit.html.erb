@@ -1,6 +1,10 @@
-<h1>Editing workflow_status</h1>
+<header>
+  <h1>Editing workflow_status</h1>
+  <div style="clear: both;"></div>
+</header>
 
+<div id="content">
 <%= render :partial => 'form', :locals => {:url => workflow_status_path(@workflow_status)} %>
 
-<%= link_to 'Show', @workflow_status %> |
 <%= link_to 'Back', workflow_statuses_path %>
+</div>
