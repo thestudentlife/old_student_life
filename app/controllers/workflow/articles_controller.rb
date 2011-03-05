@@ -9,7 +9,8 @@ class Workflow::ArticlesController < ApplicationController
     current_staff_member.can_create_articles!
     @article = Article.new
     @workflow_statuses = WorkflowStatus.all
-    @sections = current_staff_member.open_sections
+    @sections = current_staff_member.open_sections.includes(:subsections)
+    @subsections = @sections.map(&:subsections)
   end
   def create
     current_staff_member.can_create_articles!
@@ -41,6 +42,7 @@ class Workflow::ArticlesController < ApplicationController
     current_staff_member.can_edit_article! @article
     
     @workflow_statuses = WorkflowStatus.all
+    @subsections = @article.section.subsections
   end
   def update
     @article = Article.find params[:id]

@@ -29,6 +29,7 @@ TslRails::Application.routes.draw do
     match "articles/:id/headline" => "headlines#show", :via => :get
     resources :sections do
       resources :editors
+      resources :subsections
     end
     resources :users, :except => [:create]
     match "users/new" => "users#create", :via => :post

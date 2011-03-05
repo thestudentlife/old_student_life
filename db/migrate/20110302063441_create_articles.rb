@@ -9,6 +9,8 @@ class CreateArticles < ActiveRecord::Migration
       t.boolean :visible, :default => true
       
       t.belongs_to :headline, :null => true
+      t.belongs_to :section, :null => true
+      t.belongs_to :subsection
       
       t.timestamps
     end

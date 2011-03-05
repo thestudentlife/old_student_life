@@ -6,15 +6,9 @@ class CreateSections < ActiveRecord::Migration
 
       t.timestamps
     end
-    change_table :articles do |t|
-      t.belongs_to :section
-    end
   end
 
   def self.down
-    change_table :articles do |t|
-      t.remove :section
-    end
     drop_table :sections
   end
 end

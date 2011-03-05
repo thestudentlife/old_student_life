@@ -21,6 +21,18 @@
       </li>
       <% end %>
     </ul>
+    <p>
+      <strong>Subsections:</strong>
+      <% if section.subsections.empty? %>None!<% end %>
+      <%= link_to 'Add', new_workflow_section_subsection_path(section) %></p>
+    <ul>
+      <% section.subsections.each do |subsection| %>
+      <li>
+        <%= subsection %>
+        <%= button_to "Remove", workflow_section_subsection_path(section, subsection), :method => :delete, :style => "display: inline;" %>
+      </li>
+      <% end %>
+    </ul>
   </section> 
 <% end %>
 

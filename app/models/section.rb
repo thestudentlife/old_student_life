@@ -4,6 +4,7 @@ class Section < ActiveRecord::Base
 
   has_many :articles
   has_and_belongs_to_many :editors, :class_name => "StaffMember"
+  has_many :subsections
 
   default_scope :order => "priority"
 
