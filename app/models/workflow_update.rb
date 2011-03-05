@@ -6,7 +6,7 @@ class WorkflowUpdate < ActiveRecord::Base
   
   def self.new_for_article_params (article, params)
     workflow_update = WorkflowUpdate.new :article => article, :updates => {}
-    workflow_update.visible_to_article_author = (@article.open_to_author or @article.workflow_status.open_to_author)
+    workflow_update.visible_to_article_author = (article.open_to_author or article.workflow_status.open_to_author)
     
     if article.status_message != params[:status_message]
       workflow_update.updates["Status message"] = [article.status_message, params[:status_message]]
@@ -36,12 +36,12 @@ class WorkflowUpdate < ActiveRecord::Base
     return WorkflowUpdate.new(
       :article => article,
       :updates => {author.to_s => 'was added to authors'},
-      :visible_to_article_author => (@article.open_to_author or @article.workflow_status.open_to_author))
+      :visible_to_article_author => (article.open_to_author or article.workflow_status.open_to_author))
   end
   def self.new_for_removing_author_from_article (author, article)
     return WorkflowUpdate.new(
       :article => article,
       :updates => {author.to_s => 'was removed from authors'},
-      :visible_to_article_author => (@article.open_to_author or @article.workflow_status.open_to_author))
+      :visible_to_article_author => (article.open_to_author or article.workflow_status.open_to_author))
   end
 end
