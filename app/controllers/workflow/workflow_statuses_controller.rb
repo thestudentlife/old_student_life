@@ -19,7 +19,7 @@ class Workflow::WorkflowStatusesController < ApplicationController
     @workflow_status = WorkflowStatus.new params[:workflow_status]
 
     if @workflow_status.save
-      redirect_to @workflow_status, :notice => 'Workflow status was successfully created.'
+      redirect_to workflow_statuses_path, :notice => 'Workflow status was successfully created.'
     else
       render :action => "new"
     end
@@ -29,7 +29,7 @@ class Workflow::WorkflowStatusesController < ApplicationController
     @workflow_status = WorkflowStatus.find params[:id]
 
     if @workflow_status.update_attributes params[:workflow_status]
-      redirect_to @workflow_status, :notice => 'Workflow status was successfully updated.'
+      redirect_to workflow_statuses_path, :notice => 'Workflow status was successfully updated.'
     else
       render :action => "edit"
     end
