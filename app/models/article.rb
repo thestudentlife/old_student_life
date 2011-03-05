@@ -12,6 +12,13 @@ class Article < ActiveRecord::Base
   
   validates_presence_of :workflow_status, :section
   
+  include ActionView::Helpers::SanitizeHelper
+  include ActionView::Helpers::TextHelper
+  def teaser
+    
+    truncate strip_tags(latest_published_revision.body), :omission => "...", :length => 400
+  end
+  
   def status
     if revisions.where(:published_online => true).exists?
       "Published"

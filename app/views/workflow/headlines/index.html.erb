@@ -1,10 +1,31 @@
-<h1>Listing headlines</h1>
+<header>
+  <h1>Headlines</h1>
+  <div style="clear: both;"></div>
+</header>
 
-<% @headlines.each do |headline| %>
-  <section class="headline" style="margin: 0.9em; border-bottom: 1px solid #EEE;">
-    <h2 style="display: inline;"><%= headline.article.latest_published_revision.title %></h2>
-    <%= link_to 'Edit', edit_workflow_headline_path(headline) %>
-    <%= link_to 'Destroy', workflow_headline_path(headline), :confirm => 'Are you sure?', :method => :delete %>
-    <p><strong>Priority:</strong> <%= headline.priority %></p>
-  </section> 
-<% end %>
+<div id="content">
+  <% @headlines.each do |headline| %>
+    <article class="headline">
+      <div class="left">
+        <p style="margin-top: 0; text-align: center; line-height:18px; padding-top: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0px">P<%= headline.priority %></p>
+      </div>
+      <div class="mid">
+        <header>
+          <h1 style="line-height: 1em; margin: 0; display: inline;">
+            <%= link_to headline.article.latest_published_revision.title, workflow_article_path(headline.article) %>
+          </h1>
+          <span style="color: #666; margin-top: 0;">
+            Published <q><%= time_ago_in_words(headline.article.latest_published_revision.published_online_at) %> ago</q>
+          </span>
+        </header>
+        <p style="color: #555"><%= headline.article.teaser %></p>
+      </div>
+      <div class="right">
+        <p style="font-size: 14px; margin-top:0; padding-top: 8px;"><strong>Section:</strong> <%= headline.article.full_section_name %></p>
+        <p><%= link_to 'Edit', edit_workflow_headline_path(headline) %>
+        <%= link_to 'Destroy', workflow_headline_path(headline), :confirm => 'Are you sure?', :method => :delete %></p>
+      </div>
+      <div style="clear: both;"></div>
+    </article> 
+  <% end %>
+</div>

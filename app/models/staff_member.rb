@@ -24,14 +24,14 @@ class StaffMember < ActiveRecord::Base
   
   def visible_articles
     if is_admin
-      return Article.all
+      Article.order("created_at DESC")
     else
       visible_articles = articles
       if not sections.empty?
         sections.map {|s| visible_articles += s.articles }
         visible_articles.uniq!
       end
-      return visible_articles
+      visible_articles.sort_by(&:created_at).reverse
     end
   end
   

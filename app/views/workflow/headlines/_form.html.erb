@@ -12,14 +12,19 @@
     </div>
   <% end %>
   
-  <% if @article %>
-    <div class="field">
-      <%= label_tag :article %>:<br />
+  <div class="field">
+    <%= label_tag :article %>
+    <div style="float: left; width: 75%">
+    <% if @article %>
       <%= @article.latest_published_revision.title %>
+    <% else %>
+      <%= @headline.article.latest_published_revision.title %>
+    <% end %>
     </div>
-  <% end %>
+    <div style="clear: both"></div>
+  </div>
 	<div class="field">
-		<%= f.label :priority %><br />
+		<%= f.label :priority %>
 		<%= f.text_field :priority %>
 	</div>
   <div class="actions">

@@ -23,9 +23,9 @@
           <%= time_ago_in_words(article.created_at) %> old.
         </span>
       </header>
-      <p style="margin-top: 0; margin-bottom: 0; color: #666">
+      <p style="margin-top: 0; margin-bottom: 0; line-height: 1.5em; color: #666">
         Assigned to
-        <%= article.authors.any? ? article.authors.to_sentence : "nobody" %>.
+        <%= article.authors.any? ? article.authors.map{|a|"<span class='change'>#{a}</span>"}.to_sentence.html_safe : "nobody" %>.
       </p>
       <p style="">
         <% if article.status_message and not article.status_message.empty? %>

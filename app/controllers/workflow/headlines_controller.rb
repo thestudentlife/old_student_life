@@ -4,7 +4,7 @@ class Workflow::HeadlinesController < WorkflowController
   before_filter {current_staff_member.can_edit_headlines!}
 
   def index
-    @headlines = Headline.all
+    @headlines = Headline.order(:priority)
   end
 
   # GET: articles/:id/headline
