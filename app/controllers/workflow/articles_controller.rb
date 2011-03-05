@@ -9,7 +9,7 @@ class Workflow::ArticlesController < WorkflowController
     current_staff_member.can_create_articles!
     @article = Article.new
     @workflow_statuses = current_staff_member.available_workflow_statuses
-    @sections = current_staff_member.open_sections.includes(:subsections)
+    @sections = current_staff_member.open_sections
     @subsections = @sections.map(&:subsections).flatten
   end
   def create
