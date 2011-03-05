@@ -1,6 +1,6 @@
 class Workflow::UsersController < ApplicationController
   before_filter :require_user
-  before_filter :require_privileges, :except => [:edit, :update]
+  before_filter(:except => [:edit, :update]) {current_staff_member.can_edit_users!}
   
   def index
     @users = StaffMember.all
@@ -38,8 +38,8 @@ class Workflow::UsersController < ApplicationController
   end
   
   def edit
-    unless current_staff_member.can_edit_users or current_staff_member.id == params[:id].to_i
-      raise ActiveRecord::RecordNotFound.new
+    unless current_staff_member.id == params[:id].to_i
+      current_staff_member.can_edit_users!
     end
     @staff_member = StaffMember.find params[:id]
     @user = @staff_member.user
@@ -47,7 +47,7 @@ class Workflow::UsersController < ApplicationController
   
   def update
     unless current_staff_member.can_edit_users or current_staff_member.id == params[:id].to_i
-      raise ActiveRecord::RecordNotFound.new
+      current_staff_member.can_edit_users!
     end
     @staff_member = StaffMember.find params[:id]
     @user = @staff_member.user
@@ -75,13 +75,6 @@ class Workflow::UsersController < ApplicationController
       else
         redirect_to workflow_path
       end
-    end
-  end
-  
-  private
-  def require_privileges
-    unless current_user.staff_member.can_edit_users
-      raise ActionController::RoutingError.new('Not Found')
     end
   end
 end

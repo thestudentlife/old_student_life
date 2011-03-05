@@ -1,5 +1,8 @@
 class Workflow::SectionsController < ApplicationController
 
+  before_filter :require_user
+  before_filter {current_staff_member.can_edit_sections!}
+
   def index
     @sections = Section.all
   end

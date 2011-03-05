@@ -1,15 +1,12 @@
 class Workflow::WorkflowCommentsController < ApplicationController
   
-  before_filter :find_article
+  before_filter :require_user, :find_article
+  before_filter {current_staff_member.can_post_to_article! @article}
   
   # GET /workflow_comments/new
   # GET /workflow_comments/new.xml
   def new
     @workflow_comment = WorkflowComment.new
-  end
-
-  def edit
-    @workflow_comment = @article.workflow_comments.find(params[:id])
   end
 
   def create
@@ -23,18 +20,6 @@ class Workflow::WorkflowCommentsController < ApplicationController
     else
       render :action => "new"
     end
-  end
-
-  # PUT /workflow_comments/1
-  # PUT /workflow_comments/1.xml
-  def update
-    @workflow_comment = WorkflowComment.find(params[:id])
-
-      if @workflow_comment.update_attributes params[:workflow_comment]
-        redirect_to @workflow_comment, :notice => 'Workflow comment was successfully updated.'
-      else
-        render :action => "edit"
-      end
   end
   
   private

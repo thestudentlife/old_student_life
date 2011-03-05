@@ -28,15 +28,6 @@ class ApplicationController < ActionController::Base
         return false
       end
     end
-
-    def require_no_user
-      if current_user
-        store_location
-        flash[:notice] = "You are already logged in!"
-        redirect_to '/workflow/articles'
-        return false
-      end
-    end
     
     def store_location
       session[:return_to] = request.request_uri

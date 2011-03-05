@@ -24,4 +24,13 @@ class Workflow::UserSessionsController < ApplicationController
       redirect_to workflow_login_path
     end
   end
+  
+  private
+  def require_no_user
+    if current_user
+      flash[:notice] = "You are already logged in!"
+      redirect_to workflow_path
+      return false
+    end
+  end
 end

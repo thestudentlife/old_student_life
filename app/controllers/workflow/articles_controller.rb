@@ -3,19 +3,17 @@ class Workflow::ArticlesController < ApplicationController
   before_filter :require_user
   
   def index
-    staff_member = current_user.staff_member
-    @articles = staff_member.visible_articles
+    @articles = current_staff_member.visible_articles
   end
   def new
+    current_staff_member.can_create_articles!
     @article = Article.new
     @workflow_statuses = WorkflowStatus.all
-    if current_staff_member.is_admin
-      @sections = Section.all
-    else
-      @sections = current_staff_member.sections
-    end
+    @sections = current_staff_member.open_sections
   end
   def create
+    current_staff_member.can_create_articles!
+    current_staff_member.can_create_article_with_params! params[:article]
     @article = Article.new params[:article]
     
     if @article.save
@@ -26,27 +24,28 @@ class Workflow::ArticlesController < ApplicationController
   end
   def show
     @article = Article.find params[:id]
-    staff_member = current_user.staff_member
-    if not staff_member.can_see_article @article
-      raise ActiveRecord::RecordNotFound
-    end
+    current_staff_member.can_see_article! @article
     
-    @editable = staff_member.can_edit_article @article
-    @postable = staff_member.can_post_to_article @article
+    @editable = current_staff_member.can_edit_article @article
+    @postable = current_staff_member.can_post_to_article @article
     
     @workflow_history_views = \
-    staff_member.visible_workflow_history_for (@article).map do |item|
+    current_staff_member.visible_workflow_history_for(@article
+    ).map do |item|
       slug = item.class.name.underscore
       render_to_string :partial => slug, :locals => {slug.to_sym => item}
     end
   end
   def edit
     @article = Article.find params[:id]
+    current_staff_member.can_edit_article! @article
+    
     @workflow_statuses = WorkflowStatus.all
-    @sections = Section.all
   end
   def update
     @article = Article.find params[:id]
+    current_staff_member.can_edit_article! @article
+    
     if @article.update_attributes params[:article]
       redirect_to workflow_article_path(@article), :notice => "Article was successfully updated"
     else

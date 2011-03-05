@@ -1,6 +1,7 @@
 class Workflow::ImagesController < ApplicationController
   
-  before_filter :find_article
+  before_filter :require_user, :find_article
+  before_filter {current_staff_member.can_edit_article! @article}
 
   def index
     @images = @article.images

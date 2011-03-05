@@ -1,4 +1,6 @@
 class StaffMember < ActiveRecord::Base
+  class NotAuthorized < Exception; end
+  
   belongs_to :user
   
   has_and_belongs_to_many :sections
@@ -37,6 +39,28 @@ class StaffMember < ActiveRecord::Base
     end
   end
   
+  def open_sections
+    is_admin ? Section.all : sections
+  end
+  
+  def can_create_articles
+    return true if is_admin
+    return true if sections.any?
+    false
+  end
+  def can_create_articles!
+    can_create_articles or raise NotAuthorized
+  end
+  
+  def can_create_article_with_params (params)
+    return true if is_admin
+    open_sections.map(&:id).include? params[:section_id].to_i
+  end
+  
+  def can_create_article_with_params! (params)
+    can_create_article_with_params(params) or raise NotAuthorized
+  end
+  
   def can_see_article (article)
     return true if self.is_admin
     return true if article.authors.include? self
@@ -44,10 +68,17 @@ class StaffMember < ActiveRecord::Base
     false
   end
   
+  def can_see_article! (article)
+    can_see_article(article) or raise NotAuthorized
+  end
+  
   def can_edit_article (article)
     return true if self.is_admin
     return true if self.sections.include? article.section
     false
+  end
+  def can_edit_article! (article)
+    can_edit_article(article) or raise NotAuthorized
   end
   
   def can_post_to_article (article)
@@ -57,8 +88,24 @@ class StaffMember < ActiveRecord::Base
     false
   end
   
-  def can_edit_users
-    is_admin
+  def can_post_to_article! (article)
+    can_post_to_article(article) or raise NotAuthorized
+  end
+  
+  [
+    :headlines,
+    :sections,
+    :workflow_statuses,
+    :users
+  ].map{ |m|
+    "can_edit_#{m}"
+  }.each do |permission|
+    define_method(permission) do 
+      is_admin
+    end
+    define_method("#{permission}!") do
+      send(permission) or raise NotAuthorized
+    end
   end
   
   def email

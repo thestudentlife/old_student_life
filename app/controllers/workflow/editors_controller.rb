@@ -1,6 +1,7 @@
 class Workflow::EditorsController < ApplicationController
   
   before_filter :require_user, :find_section
+  before_filter {current_staff_member.can_edit_sections!}
   
   def new
     @editors = StaffMember.all

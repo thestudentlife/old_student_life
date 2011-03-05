@@ -1,25 +1,24 @@
 class Workflow::WorkflowStatusesController < ApplicationController
-  # GET /workflow_statuses
+  
+  before_filter :require_user
+  before_filter {current_staff_member.can_edit_workflow_statuses!}
+  
   def index
     @workflow_statuses = WorkflowStatus.all
   end
 
-  # GET /workflow_statuses/1
   def show
     @workflow_status = WorkflowStatus.find params[:id]
   end
 
-  # GET /workflow_statuses/new
   def new
     @workflow_status = WorkflowStatus.new
   end
 
-  # GET /workflow_statuses/1/edit
   def edit
     @workflow_status = WorkflowStatus.find params[:id]
   end
 
-  # POST /workflow_statuses
   def create
     @workflow_status = WorkflowStatus.new params[:workflow_status]
 
@@ -30,7 +29,6 @@ class Workflow::WorkflowStatusesController < ApplicationController
     end
   end
 
-  # PUT /workflow_statuses/1
   def update
     @workflow_status = WorkflowStatus.find params[:id]
 
