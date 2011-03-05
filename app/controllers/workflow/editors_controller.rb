@@ -18,7 +18,7 @@ class Workflow::EditorsController < WorkflowController
     end
   end
   def destroy
-    @editor = @section.editors.find params[:editor_id]
+    @editor = @section.editors.find params[:id]
     
     if @section.editors.delete @editor
       redirect_to workflow_sections_path, :notice => 'Editor was successfully removed'

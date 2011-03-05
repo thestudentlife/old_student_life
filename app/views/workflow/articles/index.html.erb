@@ -16,9 +16,6 @@
       <div class="mid">
       <header>
         <h1 style="line-height: 1em; margin: 0; display: inline;"><%= link_to article.working_name, workflow_article_path(article) %></h1>
-        <% if article.headline %>
-          <span class="tag">Headline</span>
-        <% end %>
         <span style="color: #666; margin-top: 0;">
           <%= time_ago_in_words(article.created_at) %> old.
         </span>

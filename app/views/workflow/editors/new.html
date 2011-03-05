@@ -1,5 +1,9 @@
-<h1>Adding editor</h1>
+<header>
+	<h1>Adding editor</h1>
+	<div style="clear: both"></div>
+</header>
 
+<div id="content">
 <%= form_tag(workflow_section_editors_path(@section)) do %>
 	<% if @section.errors.any? %>
 		<div id="errorExplanation">
@@ -20,3 +24,4 @@
 		<%= submit_tag "Add editor" %>
 	</div>
 <% end %>
+</div>
