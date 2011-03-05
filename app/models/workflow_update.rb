@@ -14,9 +14,9 @@ class WorkflowUpdate < ActiveRecord::Base
       workflow_status = WorkflowStatus.find params[:workflow_status_id]
       workflow_update.updates["Workflow status"] = [article.workflow_status.to_s, workflow_status.to_s]
     end
-    if not params[:subsection_id].empty? and article.subsection_id != params[:subsection_id].to_i
+    if params[:subsection_id] and article.subsection_id != params[:subsection_id].to_i
       new_subsection = Subsection.find(params[:subsection_id]).to_s
-      old_subsection = (a = @article.subsection) ? a.to_s : "(none)"
+      old_subsection = (a = article.subsection) ? a.to_s : "(none)"
       workflow_update.updates["Subsection"] = [old_subsection, new_subsection]
     end
     bool_open_to_author = params[:open_to_author] == '0' ? false : true
