@@ -1,4 +1,4 @@
-class Workflow::HeadlinesController < ApplicationController
+class Workflow::HeadlinesController < WorkflowController
 
   before_filter :require_user
   before_filter {current_staff_member.can_edit_headlines!}

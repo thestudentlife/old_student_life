@@ -1,4 +1,4 @@
-class Workflow::EditorsController < ApplicationController
+class Workflow::EditorsController < WorkflowController
   
   before_filter :require_user, :find_section
   before_filter {current_staff_member.can_edit_sections!}

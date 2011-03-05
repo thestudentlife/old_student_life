@@ -1,4 +1,4 @@
-class Workflow::SubsectionsController < ApplicationController
+class Workflow::SubsectionsController < WorkflowController
 
   before_filter :require_user
   before_filter { @section = Section.find params[:section_id] }

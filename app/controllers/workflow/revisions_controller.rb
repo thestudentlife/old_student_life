@@ -1,4 +1,4 @@
-class Workflow::RevisionsController < ApplicationController
+class Workflow::RevisionsController < WorkflowController
 
   before_filter :require_user, :find_article
   before_filter {current_staff_member.can_post_to_article! @article}

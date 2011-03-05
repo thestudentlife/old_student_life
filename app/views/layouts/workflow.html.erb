@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>TslRails</title>
+	<%= javascript_include_tag :defaults %>
+	<script type="text/javascript" src="/wmd/showdown.js"></script>
+	<link rel="stylesheet" type="text/css" href="/wmd/wmd.css" />
+	<%= csrf_meta_tag %>
+
+	<style type="text/css">
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: 'Helvetica Neue', 'Lucida Grande', Arial, sans-serif;
+			font-size: 12px;
+			background-color: #e6e6e6;
+			min-width: 950px;
+		}
+		header {
+			background: #5A9ECF;
+			color: white;
+		}
+		header h1 {
+			font-weight: normal;
+			font-size: 24px;
+			float: left;
+			display: block;
+			margin-left: 21px;
+		}
+		header a, header a:active, header a:hover, header a:visited {
+			color: white;
+		}
+		header h1 a {
+			text-decoration: none;
+		}
+		header h1 strong {
+			text-transform: uppercase;
+			display: block;
+			font-weight: bold;
+			font-size: 12px;
+			color: #069;
+		}
+		header span#user-info {
+			display: block;
+			float: right;
+			padding: 10px;
+		}
+		header a#help {
+			background-color: #D70;
+			padding: 2px;
+			-webkit-border-radius: 2px;
+			-moz-border-radius: 2px;
+			-o-border-radius: 2px;
+			border-radius: 2px;
+		}
+		header nav {
+			clear: both;
+			background-color: #069;
+			margin-bottom: 0;
+			padding-bottom: 0;
+		}
+		header nav ul {
+			list-style: none;
+			margin-left: 0;
+			padding-left: 21px;
+			margin-bottom: 0;
+			padding-bottom: 0;
+			border-bottom: 3px solid white;
+		}
+		header nav li {
+			display: inline-block;
+			font-weight: bold;
+			margin: 0;
+			padding: 0;
+		}
+		header nav li.selected {
+			background-color: white;
+			border-bottom: 3px;
+			margin-bottom: -3px;
+		}
+		header nav a {
+			display: block;
+			line-height: 32px;
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+		header nav a:hover {
+			background-color: #07b;
+		}
+		header nav li.selected a:hover {
+			background-color: white;
+		}
+		header nav li.selected a {
+			color: #5fa82c;
+		}
+		header nav a {
+			text-decoration: none;
+		}
+		
+		#main {
+			background-color: white;
+			width: 70%;
+			margin: 9px 0 0 21px;
+			float: left;
+			padding: 9px;
+		}
+		#side {
+			position: relative;
+			margin: 0 15px 0 73%;
+			padding-top: 9px;
+		}
+	</style>
+</head>
+<body>
+	
+	<header>
+		<h1>
+			<strong>Workflow</strong>
+			<%= link_to "The Student Life", workflow_path %>
+		</h1>
+		<span id="user-info">
+			Logged in as <%= current_staff_member %>.
+			<%= link_to "My account", workflow_user_path (current_user) %> |
+			<%= link_to "Log out", workflow_logout_path %>
+			<a href="/workflow/help" id="help">Help</a>
+		</span>
+		<nav>
+			<ul>
+				<%= li_tag link_to("Home", workflow_path), :class => ("selected" if request.request_uri == workflow_path) %>
+				<%= li_tag link_to("Articles", workflow_articles_path), :class => is_selected?('articles') %>
+				<% if current_staff_member.can_edit_headlines %>
+					<%= li_tag link_to("Headlines", workflow_headlines_path), :class => is_selected?('headlines') %>
+				<% end %>
+				<% if current_staff_member.can_edit_sections %>
+					<%= li_tag link_to("Sections", workflow_sections_path), :class => is_selected?('sections') %>
+				<% end %>
+				<% if current_staff_member.can_edit_workflow_statuses %>
+					<%= li_tag link_to("Workflow Statuses", workflow_statuses_path), :class => is_selected?('statuses') %>
+				<% end %>
+				<% if current_staff_member.can_edit_users %>
+					<%= li_tag link_to("Users", workflow_users_path), :class => is_selected?('users') %>
+				<% end %>
+			</ul>
+		</nav>
+	</header>
+	
+	<section id="main">
+		<% flash.each do |k, v| %>
+			<p><strong><%= k.to_s.capitalize %>:</strong> <%= v %></p>
+		<% end %>
+		<%= yield %>
+	</section>
+	<section id="side">
+		<%= yield :side %>
+	</section>
+
+</body>
+</html>

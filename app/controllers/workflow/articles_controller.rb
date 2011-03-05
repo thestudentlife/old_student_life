@@ -1,4 +1,4 @@
-class Workflow::ArticlesController < ApplicationController
+class Workflow::ArticlesController < WorkflowController
   
   before_filter :require_user
   

@@ -1,4 +1,4 @@
-class Workflow::UsersController < ApplicationController
+class Workflow::UsersController < WorkflowController
   before_filter :require_user
   before_filter(:except => [:edit, :update]) {current_staff_member.can_edit_users!}
   

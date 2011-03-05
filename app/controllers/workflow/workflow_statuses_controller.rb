@@ -1,4 +1,4 @@
-class Workflow::WorkflowStatusesController < ApplicationController
+class Workflow::WorkflowStatusesController < WorkflowController
   
   before_filter :require_user
   before_filter {current_staff_member.can_edit_workflow_statuses!}

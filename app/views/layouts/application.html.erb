@@ -13,13 +13,6 @@
 	<% flash.each do |k, v| %>
 		<p><strong><%= k.to_s.capitalize %>:</strong> <%= v %></p>
 	<% end %>
-	
-	<% if current_user %>
-		<p>
-			Currently logged in as <%= current_user %>.
-			<%= link_to "Logout", workflow_logout_path %>
-		</p>
-	<% end %>
 
 <%= yield %>
 
