@@ -15,7 +15,7 @@
             <%= link_to headline.article.latest_published_revision.title, workflow_article_path(headline.article) %>
           </h1>
           <span style="color: #666; margin-top: 0;">
-            Published <q><%= time_ago_in_words(headline.article.latest_published_revision.published_online_at) %> ago</q>
+            <q>Published <%= time_ago_in_words(headline.article.latest_published_revision.published_online_at) %> ago</q>
           </span>
         </header>
         <p style="color: #555"><%= headline.article.summary %></p>
