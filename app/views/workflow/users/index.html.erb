@@ -9,7 +9,7 @@
 
 <div id="content">
 <% @users.each do |user| %>
-  <article>
+  <article style="padding-bottom: 4px">
     <div class="left">
       <p style="margin-top: 0; text-align: center; line-height:18px; padding-top: 3px; font-weight: bold; text-transform: uppercase; letter-spacing: 0px">
       <% if user.is_admin %>
@@ -21,9 +21,9 @@
     </div>
     <div class="mid">
   	  <header>
-  	    <h1><%= user %></h1>
+  	    <h1 style="display: inline"><%= user %></h1>
   	    <% if user.author %>
-  	      <%= user.author %>
+  	      <span class="change"><%= user.author %></span>
   	    <% end %>
   	  </header>
   	</div>
