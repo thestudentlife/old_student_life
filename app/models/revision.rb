@@ -38,7 +38,8 @@ class Revision < ActiveRecord::Base
     while sum =~ /((Jan)|(Feb)|(Mar)|(Apr)|(Aug)|(Sep)|(Oct)|(Nov)|(Dec))\.$/ and sentences.first
       sum = sum + sentences.shift
     end
-    return sum
+    # why wasn't it already stripping? hmm
+    return strip_tags(sum)
   end
   
   def long_summary
