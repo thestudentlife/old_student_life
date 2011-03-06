@@ -2,7 +2,7 @@ class Workflow::SubsectionsController < WorkflowController
 
   before_filter :require_user
   before_filter { @section = Section.find params[:section_id] }
-  before_filter {current_staff_member.can_edit_sections!}
+  before_filter {current_user.can_edit_sections!}
 
   def new
     @subsection = Subsection.new

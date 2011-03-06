@@ -1,7 +1,7 @@
 class Workflow::HeadlinesController < WorkflowController
 
   before_filter :require_user
-  before_filter {current_staff_member.can_edit_headlines!}
+  before_filter {current_user.can_edit_headlines!}
 
   def index
     @headlines = Headline.order(:priority)

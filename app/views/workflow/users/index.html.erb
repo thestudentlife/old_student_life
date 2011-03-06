@@ -16,17 +16,20 @@
         Admin
       <% elsif not user.sections.empty? %>
         Editor: <%= user.sections.map(&:to_s).join(", ") %>
-      <% else %>
-        Staff
       <% end %>
       </p>
     </div>
     <div class="mid">
-  	  <header><h1><%= user %></h1></header>
+  	  <header>
+  	    <h1><%= user %></h1>
+  	    <% if user.author %>
+  	      <%= user.author %>
+  	    <% end %>
+  	  </header>
   	</div>
   	<div class="right">
       <%= link_to 'Edit', edit_workflow_user_path(user) %>
-      <% if current_staff_member.can_edit_users and current_staff_member != user %>
+      <% if current_user.can_edit_users and current_user != user %>
         | <%= link_to "Reset password", reset_workflow_user_path(user), :method => :post, :confirm => "Are you sure?" %>
       <% end %>
     </div>

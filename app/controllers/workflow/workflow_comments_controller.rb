@@ -1,7 +1,7 @@
 class Workflow::WorkflowCommentsController < WorkflowController
   
   before_filter :require_user, :find_article
-  before_filter {current_staff_member.can_post_to_article! @article}
+  before_filter {current_user.can_post_to_article! @article}
   
   # GET /workflow_comments/new
   # GET /workflow_comments/new.xml
@@ -10,7 +10,7 @@ class Workflow::WorkflowCommentsController < WorkflowController
   end
 
   def create
-    params[:workflow_comment][:author_id] = current_user.staff_member.id
+    params[:workflow_comment][:author_id] = current_user.id
     @workflow_comment = WorkflowComment.new(params[:workflow_comment])
     @workflow_comment.article = @article
     @workflow_comment.visible_to_article_author = (@article.open_to_author or @article.workflow_status.open_to_author)

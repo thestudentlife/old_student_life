@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110306195728) do
+ActiveRecord::Schema.define(:version => 20110306210442) do
 
   create_table "articles", :force => true do |t|
     t.string   "working_name"
@@ -26,9 +26,19 @@ ActiveRecord::Schema.define(:version => 20110306195728) do
     t.integer  "workflow_status_id"
   end
 
+  create_table "articles_authors", :id => false, :force => true do |t|
+    t.integer "article_id", :null => false
+    t.integer "author_id",  :null => false
+  end
+
   create_table "articles_staff_members", :id => false, :force => true do |t|
     t.integer "article_id",      :null => false
     t.integer "staff_member_id", :null => false
+  end
+
+  create_table "authors", :force => true do |t|
+    t.integer "staff_member_id"
+    t.string  "name"
   end
 
   create_table "headlines", :force => true do |t|
@@ -71,17 +81,9 @@ ActiveRecord::Schema.define(:version => 20110306195728) do
     t.string   "url"
   end
 
-  create_table "sections_staff_members", :id => false, :force => true do |t|
-    t.integer "section_id",      :null => false
-    t.integer "staff_member_id", :null => false
-  end
-
-  create_table "staff_members", :force => true do |t|
-    t.integer  "user_id"
-    t.boolean  "is_admin",   :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "name"
+  create_table "sections_users", :id => false, :force => true do |t|
+    t.integer "section_id", :null => false
+    t.integer "user_id",    :null => false
   end
 
   create_table "subsections", :force => true do |t|
@@ -99,12 +101,13 @@ ActiveRecord::Schema.define(:version => 20110306195728) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",             :null => false
-    t.string   "crypted_password",  :null => false
-    t.string   "password_salt",     :null => false
-    t.string   "persistence_token", :null => false
+    t.string   "email",                                :null => false
+    t.string   "crypted_password",                     :null => false
+    t.string   "password_salt",                        :null => false
+    t.string   "persistence_token",                    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_admin",          :default => false
   end
 
   create_table "viewed_articles", :force => true do |t|

@@ -1,6 +1,6 @@
 class WorkflowUpdate < ActiveRecord::Base
   belongs_to :article
-  belongs_to :author, :class_name => "StaffMember"
+  belongs_to :author, :class_name => "User"
 
   serialize :updates, Hash
   

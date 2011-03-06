@@ -1,0 +1,26 @@
+<header>
+  <h1>Authors</h1>
+  <div style="clear: both"></div>
+</header>
+
+<div id="content">
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @authors.each do |author| %>
+  <tr>
+    <td><%= author %></td>
+    <td><%= link_to 'Edit', edit_workflow_author_path(author) %></td>
+    <td><%= link_to 'Destroy', workflow_author_path(author), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Author', new_workflow_author_path %>
+</div>

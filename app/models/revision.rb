@@ -1,6 +1,6 @@
 class Revision < ActiveRecord::Base
   belongs_to :article
-  belongs_to :author, :class_name => "StaffMember"
+  belongs_to :author, :class_name => "User"
   validates_presence_of :body
   
   def self.latest_published

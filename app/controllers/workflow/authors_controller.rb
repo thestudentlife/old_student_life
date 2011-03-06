@@ -1,44 +1,44 @@
 class Workflow::AuthorsController < WorkflowController
-  
-  before_filter :require_user, :find_article
-  before_filter {current_staff_member.can_edit_article! @article}
-  
+  def index
+    @authors = Author.all
+  end
+
+  def show
+    @author = Author.find(params[:id])
+  end
+
   def new
-    @authors = StaffMember.all
+    @author = Author.new
   end
+
+  def edit
+    @author = Author.find(params[:id])
+  end
+
   def create
-    @author = StaffMember.find params[:author_id]
-    
-    workflow_update = WorkflowUpdate.new_for_adding_author_to_article (@author, @article)
-    workflow_update.author = current_staff_member
-      
-    if @article.authors.include? @author
-      redirect_to new_workflow_article_author_path(@article), :notice => "Author already exists"
-    elsif @article.authors << @author
-      # TODO: Transaction
-      workflow_update.save
-      redirect_to workflow_article_path(@article), :notice => 'Author was successfully added'
+    @author = Author.new(params[:author])
+
+    if @author.save
+      redirect_to(workflow_authors_path, :notice => 'Author was successfully created.')
     else
-      redirect_to new_workflow_article_author_path(@article), :notice => 'Author was not added'
+      render :action => "new"
     end
   end
+
+  def update
+    @author = Author.find(params[:id])
+
+    if @author.update_attributes(params[:author])
+      redirect_to(workflow_authors_path, :notice => 'Author was successfully updated.')
+    else
+      render :action => "edit"
+    end
+  end
+
   def destroy
-    @author = @article.authors.find params[:id]
-    
-    workflow_update = WorkflowUpdate.new_for_removing_author_from_article (@author, @article)
-    workflow_update.author = current_staff_member
-      
-    if @article.authors.delete @author
-      # TODO: Transaction
-      workflow_update.save
-      redirect_to workflow_article_path(@article), :notice => 'Author was successfully removed'
-    else
-      redirect_to workflow_article_path(@article), :notice => 'Author was not removed'
-    end
-  end
-  
-  private
-  def find_article
-    @article = Article.find params[:article_id]
+    @author = Author.find(params[:id])
+    @author.destroy
+
+    redirect_to(workflow_authors_path)
   end
 end

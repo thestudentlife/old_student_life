@@ -1,83 +1,78 @@
 class Workflow::UsersController < WorkflowController
   before_filter :require_user
-  before_filter(:except => [:edit, :update]) {current_staff_member.can_edit_users!}
+  before_filter(:except => [:edit, :update]) {current_user.can_edit_users!}
   
   def index
-    @users = StaffMember.all
+    @users = User.all
   end
   
   def new
-    @user = StaffMember.new
+    @user = User.new
+    @authors = Author.open_authors
   end
   
   def create
-    begin
-      ActiveRecord::Base.transaction do
-        @user = User.new(
-          :email => params[:email]
-        )
-        @password = @user.reset_password
-        @user.save!
-    
-        @staff_member = StaffMember.create(
-          :user => @user,
-          :name => params[:name],
-          :is_admin => params[:is_admin]
-        )
-        @staff_member.save!
-      end
-    rescue
-      render :action => "new"
-    else
+    @user = User.new(
+      :email => params[:email],
+      :is_admin => params[:is_admin],
+      :author => (Author.find(params[:author_id]) unless params[:author_id].empty?)
+    )
+    @password = @user.reset_password
+    if @user.save
       render :action => "reset"
+    else
+      @authors = Author.open_authors
+      render :action => "new"
     end
   end
   
   def reset
     @user = User.find params[:id]
     @password = @user.reset_password
+    @user.save!
   end
   
   def edit
-    unless current_staff_member.id == params[:id].to_i
-      current_staff_member.can_edit_users!
+    unless current_user.id == params[:id].to_i
+      current_user.can_edit_users!
     end
-    @staff_member = StaffMember.find params[:id]
-    @user = @staff_member.user
+    @user = User.find params[:id]
+    if current_user.can_edit_users
+      @authors = Author.open_authors
+      @authors << @user.author if @user.author
+    end
   end
   
   def update
-    unless current_staff_member.can_edit_users or current_staff_member.id == params[:id].to_i
-      current_staff_member.can_edit_users!
+    unless current_user.id == params[:id].to_i
+      current_user.can_edit_users!
     end
-    @staff_member = StaffMember.find params[:id]
-    @user = @staff_member.user
-    begin
-      ActiveRecord::Base.transaction do
-        @user.email = params[:user][:email]
-        @user.save!
-        
-        @staff_member.is_admin = params[:user][:is_admin]
-        @staff_member.name = params[:user][:name]
-        logger.debug params.inspect
-        @staff_member.save!
-        
-        if current_user == @user and not params[:password].empty?
-          @user.update_attributes!(
-            :password => params[:password],
-            :password_confirmation => params[:password_confirmation]
-          )
-        end
+    @user = User.find params[:id]
+    @user.email = params[:user][:email]
+    if params[:author_id]
+      if params[:author_id].empty?
+        @user.author = nil
+      else
+        @user.author = Author.find params[:author_id] 
       end
-    rescue
-      render :action => :edit
-    else
+    end
+    if current_user.is_admin
+      @user.is_admin = params[:user][:is_admin]
+    end
+    if current_user == @user and not params[:password].strip.empty?
+      @user.attributes = {:password => params[:password],
+        :password_confirmation => params[:password_confirmation]}
+    end
+    
+    if @user.save
       flash[:notice] = "Account updated!"
-      if current_staff_member.can_edit_users
+      if current_user.can_edit_users
         redirect_to workflow_users_path
       else
         redirect_to workflow_path
       end
+    else
+      render :action => :edit
     end
   end
 end

@@ -17,7 +17,7 @@
     </div>
   <% end %>
 
-  <% if current_staff_member.can_publish_article @article %>
+  <% if current_user.can_publish_article @article %>
     <div class="field">
   		<%= f.label :published_online %>
   		<%= f.check_box :published_online %>

@@ -1,5 +1,7 @@
 TslRails::Application.routes.draw do
   
+  namespace :workflow do resources :authors end
+
   resources :images
 
   namespace :workflow do
@@ -31,11 +33,12 @@ TslRails::Application.routes.draw do
   match 'workflow/' => "workflow#index"
   namespace :workflow do
     resources :articles do
-      resources :authors
+      resources :authors, :controller => "article_authors"
       resources :comments, :controller => "workflow_comments"
       resources :images
       resources :revisions
     end
+    resources :authors
     resources :headlines, :except => [:new]
     match "articles/:id/headline" => "headlines#show", :via => :get
     resources :sections do

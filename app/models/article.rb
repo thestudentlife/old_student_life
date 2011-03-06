@@ -2,7 +2,7 @@ class Article < ActiveRecord::Base
   belongs_to :workflow_status
   belongs_to :section
   belongs_to :subsection
-  has_and_belongs_to_many :authors, :class_name => "StaffMember"
+  has_and_belongs_to_many :authors
   has_many :revisions
   has_many :workflow_comments
   has_many :workflow_updates

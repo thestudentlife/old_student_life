@@ -1,13 +1,13 @@
 class Workflow::EditorsController < WorkflowController
   
   before_filter :require_user, :find_section
-  before_filter {current_staff_member.can_edit_sections!}
+  before_filter {current_user.can_edit_sections!}
   
   def new
-    @editors = StaffMember.all
+    @editors = User.all
   end
   def create
-    @editor = StaffMember.find params[:editor_id]
+    @editor = User.find params[:editor_id]
     
     if @section.editors.include? @editor
       redirect_to new_workflow_section_editor_path(@section), :notice => "Editor already exists"

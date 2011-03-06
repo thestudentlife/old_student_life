@@ -9,7 +9,7 @@
   </h1>
   
   <span class="actions">
-    <% if not @article.headline and @article.latest_published_revision and current_staff_member.can_edit_headlines %>
+    <% if not @article.headline and @article.latest_published_revision and current_user.can_edit_headlines %>
       <%= link_to "Make headline", workflow_headline_path(@article) %> |
     <% end %>
     <% if @editable %>
@@ -61,7 +61,7 @@
   		</li>
   	<% end %>
   </ul>
-  <% if current_staff_member.can_see_article_images @article %>
+  <% if current_user.can_see_article_images @article %>
     <p>
       Image
       <% if @editable and @article.images.empty? %>

@@ -1,7 +1,7 @@
 class Workflow::RevisionsController < WorkflowController
 
   before_filter :require_user, :find_article
-  before_filter {current_staff_member.can_post_to_article! @article}
+  before_filter {current_user.can_post_to_article! @article}
 
   def new
     @revision = Revision.new
@@ -15,7 +15,7 @@ class Workflow::RevisionsController < WorkflowController
     params[:revision][:body] = params["wmd-input"]
     @revision = Revision.new(params[:revision])
     @revision.article = @article
-    @revision.author = current_user.staff_member
+    @revision.author = current_user
     @revision.visible_to_article_author = (@article.open_to_author or @article.workflow_status.open_to_author)
     
     if @revision.save

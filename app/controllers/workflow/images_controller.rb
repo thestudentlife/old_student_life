@@ -1,7 +1,7 @@
 class Workflow::ImagesController < WorkflowController
   
   before_filter :require_user, :find_article
-  before_filter {current_staff_member.can_edit_article! @article}
+  before_filter {current_user.can_edit_article! @article}
 
   def new
     @image = Image.new
