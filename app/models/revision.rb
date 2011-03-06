@@ -19,7 +19,7 @@ class Revision < ActiveRecord::Base
   def self.latest_published_not_in_headlines
     latest_published.joins(:article
     ).where(:articles => {:headline_id => nil}
-    ).order("published_online_at")
+    ).order("published_online_at DESC")
   end
   
   include ActionView::Helpers::SanitizeHelper
