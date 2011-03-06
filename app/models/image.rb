@@ -3,7 +3,7 @@ class Image < ActiveRecord::Base
     :path => ":rails_root/public/uploads/article_images/:id:style.:extension",
     :url => "/uploads/article_images/:id:style.:extension",
     :styles => {
-      :thumb => "100x100#",
+      :thumb => "75x75#",
       :small => "150x150>"
     }
   belongs_to :article
