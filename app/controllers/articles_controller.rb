@@ -55,5 +55,7 @@ class ArticlesController < ApplicationController
     @subsection = @section.subsections.find_by_url! params[:subsection]
     
     @revisions = @subsection.latest_published_revisions
+    
+    render :action => "section"
   end
 end

@@ -41,6 +41,10 @@ TslRails::Application.routes.draw do
     def section_path(section)
       File.join articles_path, section.url
     end
+    
+    def subsection_path(subsection)
+      File.join section_path(subsection.section), subsection.url
+    end
   end
   
   match 'workflow/' => "workflow#index"
