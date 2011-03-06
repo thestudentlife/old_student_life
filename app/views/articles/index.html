@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<script src="/slides/slides.jquery.js"></script>
+	<script src="/slides/jquery.easing.1.3.js"></script>
 	<style type="text/css">
 		a {
 			text-decoration: none;
@@ -79,6 +82,17 @@
 			margin: 0;
 			padding: 0;
 		}
+		
+		article {
+			display: block;
+		}
+		
+		#slides_container,
+		article.lede {
+			width: 600px;
+			height: 269px;
+		}
+		
 		article.lede h1 {
 			font-size: 20px;
 			line-height: 23px;
@@ -165,18 +179,26 @@
 			text-transform: uppercase;
 			font-weight: bold;
 		}
+		ul.pagination {
+			margin-top: 0;
+			color: #333;
+		}
+		ul.pagination,
 		.mostPopular ol {
 			font-size: 13px;
 			line-height: 16px;
 			margin-left: 26px;
 			padding-left: 0;
 		}
+		.pagination li,
 		.mostPopular li {
 			padding: 3px 0;
 		}
+		.pagination a,
 		.mostPopular a {
 			color: #004276;
 		}
+		.pagination a,
 		.mostPopular a:visited {
 			color: #669;
 		}
@@ -217,6 +239,7 @@
 	</nav>
 	<div id="main">
 		<div id="aColumn">
+			<div id="ledes"><div class="slides_container">
 			<% @headlines.each do |headline| %>
 				<article class="lede">
 					<header>
@@ -250,9 +273,17 @@
 					<span class="actions">
 						<%= link_to "Read more", article_path(headline.article) %>
 					</span>
-					<div class="doubleRuleDivide">&nbsp;</div>
+					<div style="clear: both;"></div>
 				</article>
 			<% end %>
+			</div>
+			<ul class="pagination">
+				<% @headlines.each_with_index do |headline, i| %>
+					<li><%= link_to headline.title, "##{i}" %></li>
+				<% end %>
+			</ul>
+			</div>
+			<div class="doubleRuleDivide">&nbsp;</div>
 			<% @revisions.each do |revision| %>
 				<article class="teaser">
 					<% if revision.article.images.any? %>
@@ -298,5 +329,19 @@
 	<footer>
 		&copy; 2011 <a href="/">The Student Life</a> | <a href="/pages/contact">Contact us</a>
 	</footer>
+	<script>
+	  $(document).ready (function(){
+	    $("#ledes").slides({
+			preload: true,
+			generatePagination: false,
+			hoverPause: true,
+			play: 5000,
+			pause: 5000,
+			slideSpeed: 1000,
+			fadeEasing: "easeInOutQuad",
+			effect: "fade"
+		});
+	  });
+	</script>
 </body>
 </html>
