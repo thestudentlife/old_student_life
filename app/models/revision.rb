@@ -22,6 +22,10 @@ class Revision < ActiveRecord::Base
     ).order("published_online_at DESC")
   end
   
+  def self.latest_published_for_article (article_id)
+    latest_published.where(:article_id => article_id).first
+  end
+  
   include ActionView::Helpers::SanitizeHelper
   include ActionView::Helpers::TextHelper
   def summary(length=100)
