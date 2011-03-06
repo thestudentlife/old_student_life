@@ -12,4 +12,12 @@ class Subsection < ActiveRecord::Base
   def full_name
     "#{section.name} – #{name}"
   end
+  
+  def latest_published_revisions
+    Revision.latest_published.joins(:article
+    ).where(:articles => {
+        :subsection_id => id
+    })
+  end
+  
 end

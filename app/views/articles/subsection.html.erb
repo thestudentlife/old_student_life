@@ -1,0 +1,33 @@
+<section id="aColumn" class="section">
+  <header>
+    <h1><%= @subsection %></h1>
+  </header>  
+	<% @revisions.each do |revision| %>
+		<article class="teaser">
+			<% if revision.article.images.any? %>
+				<div class="thumbnail">
+					<%= link_to(
+						image_tag(
+							revision.article.images.first.file.url(:thumb),
+							:width => 75,
+							:height => 75), 
+					    article_path(revision.article)) %>
+				</div>
+			<% end %>
+			<header>
+				<h1><%= link_to revision.title, article_path(revision.article) %></h1>
+				<span class="byline">
+					By
+					<%= revision.article.authors.map{|a|
+						content_tag :span, a, :class=>'author'
+					}.to_sentence.html_safe %>
+					<span class="timestamp">
+						<%= time_ago_in_words revision.published_online_at %> ago
+					</span>
+				</span>
+			</header>
+			<p class="summary"><%= revision.summary %></p>
+		</article>
+	<% end %>
+</section>
+<%= render "articles/most_popular_and_facebook" %>

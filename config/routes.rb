@@ -15,7 +15,17 @@ TslRails::Application.routes.draw do
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
   
-  resources :articles
+  resources :articles, :except => [:show]
+  match '/articles/:section/:id' => "articles#article", :id => /\d.*/
+  match '/articles/:section/:subsection/:id' => "articles#article"
+  match '/articles/:section/:subsection' => "articles#subsection", :subsection => /\w.*/
+  match '/articles/:section' => "articles#section"
+  
+  module ArticlesHelper
+    def article_path(article)
+      File.join articles_path, article.section.url, article.subsection ? article.subsection.url : "", article.id.to_s
+    end
+  end
   
   match 'workflow/' => "workflow#index"
   namespace :workflow do
