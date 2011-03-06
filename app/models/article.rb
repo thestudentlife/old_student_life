@@ -12,6 +12,10 @@ class Article < ActiveRecord::Base
   
   validates_presence_of :workflow_status, :section
   
+  def slug
+    "#{id}-#{latest_published_revision.title.to_slug}"
+  end
+  
   def summary
     latest_published_revision.summary
   end

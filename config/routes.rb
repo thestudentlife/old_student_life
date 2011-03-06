@@ -15,7 +15,8 @@ TslRails::Application.routes.draw do
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
   
-  resources :articles, :except => [:show]
+  root :to => "articles#index"
+  match '/articles' => redirect("/")
   match '/articles/:section/:id' => "articles#article", :id => /\d.*/
   match '/articles/:section/:subsection/:id' => "articles#article"
   match '/articles/:section/:subsection' => "articles#subsection", :subsection => /\w.*/
@@ -23,7 +24,7 @@ TslRails::Application.routes.draw do
   
   module ArticlesHelper
     def article_path(article)
-      File.join articles_path, article.section.url, article.subsection ? article.subsection.url : "", article.id.to_s
+      File.join articles_path, article.section.url, article.subsection ? article.subsection.url : "", article.slug
     end
   end
   
@@ -58,8 +59,6 @@ TslRails::Application.routes.draw do
       workflow_user_path(user) + "/reset"
     end
   end
-
-  root :to => "articles#index"
 
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase

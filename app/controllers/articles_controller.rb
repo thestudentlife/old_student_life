@@ -1,4 +1,6 @@
 class ArticlesController < ApplicationController
+  
+  helper :all
   layout "front"
   
   before_filter do @most_viewed = ViewedArticle.latest_most_viewed(10) end
@@ -20,6 +22,11 @@ class ArticlesController < ApplicationController
       @article = @section.articles.find params[:id]
       raise ActiveRecord::RecordNotFound if @article.subsection
     end
+    
+    if request.fullpath != view_context.article_path(@article)
+      redirect_to view_context.article_path(@article), :status => :moved_permanently
+    end
+    
     @revision = @article.latest_published_revision
     
     # This might fail. If it does, it shouldn't effect the render.
