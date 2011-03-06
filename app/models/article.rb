@@ -18,6 +18,18 @@ class Article < ActiveRecord::Base
     "#{id}#{t}"
   end
   
+  def title
+    if latest_published_revision
+      return latest_published_revision.title
+    end
+    latest_revision = revisions.order("created_at DESC").find(:first)
+    if latest_revision and not latest_revision.title.empty?
+      return latest_revision.title
+    else
+      return working_name
+    end
+  end
+  
   def summary
     latest_published_revision.summary
   end
