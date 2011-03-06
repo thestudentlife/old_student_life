@@ -39,7 +39,7 @@ class Workflow::SubsectionsController < WorkflowController
       @subsection.destroy
       flash[:notice] = 'Subsubsection was successfully destroyed'
     else
-      flash[:notice] = "Can't delete subsection with articles"
+      flash[:warning] = "Can't delete subsection with articles"
     end
     redirect_to(workflow_sections_path)
   end

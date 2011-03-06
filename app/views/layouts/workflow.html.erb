@@ -288,6 +288,28 @@
 		.timestamp {
 			color: #681817;
 		}
+		.flash {
+			-webkit-border-radius: 2px;
+			-moz-border-radius: 2px;
+			-o-border-radius: 2px;
+			padding: 9px;
+		}
+		.flash_warning p {
+			background-color: red;
+		}
+		.flash_notice p {
+			background-color: #5fa82c;
+		}
+		.flash p {
+			margin: 0;
+			color: white;
+			padding: 2px;
+			-webkit-border-radius: 2px;
+			-moz-border-radius: 2px;
+			-o-border-radius: 2px;
+			border-radius: 2px;
+			display: inline-block;
+		}
 	</style>
 </head>
 <body>
@@ -326,9 +348,11 @@
 	</header>
 	
 	<section id="main">
-		<!--<% flash.each do |k, v| %>
-			<p><strong><%= k.to_s.capitalize %>:</strong> <%= v %></p>
-		<% end %>-->
+		<% flash.each do |k, v| %>
+			<div class="flash flash_<%= k %>">
+				<p><strong><%= k.to_s.capitalize %>:</strong> <%= v %></p>
+			</div>
+		<% end %>
 		<%= yield %>
 	</section>
 	<section id="side">

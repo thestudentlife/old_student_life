@@ -16,6 +16,8 @@
       <div class="mid">
       <header>
         <h1 style="line-height: 1em; margin: 0; display: inline;"><%= section %></h1>
+        —
+        <h1 style="margin: 0; display: inline">/articles/<%= section.url %></h1>
         <span style="color: #666; margin-top: 0;">
         </span>
       </header>
@@ -41,6 +43,8 @@
           <li style="line-height: 1.5em">
             P<%= subsection.priority %>
             <span class="change"><%= subsection %></span>
+            —
+            <span class="change">/articles/<%= section.url %>/<%= subsection.url %></span>
             <%= link_to 'Edit', edit_workflow_section_subsection_path(section, subsection) %>
             <%= link_to 'Remove', workflow_section_subsection_path(section, subsection),
               :confirm => 'Are you sure?', :method => :delete %>

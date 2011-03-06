@@ -42,7 +42,7 @@ class Workflow::SectionsController < WorkflowController
       @section.destroy
       flash[:notice] = 'Section was successfully destroyed'
     else
-      flash[:notice] = "Can't delete section with articles"
+      flash[:warning] = "Can't delete section with articles"
     end
     redirect_to(workflow_sections_url)
   end
