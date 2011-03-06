@@ -33,8 +33,13 @@ TslRails::Application.routes.draw do
     def authors_path
       "/authors"
     end
+    
     def author_path(author)
       File.join authors_path, author.slug
+    end
+    
+    def section_path(section)
+      File.join articles_path, section.url
     end
   end
   

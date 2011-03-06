@@ -47,7 +47,8 @@
 		body > nav li.selected {
 			background-color: #f4f4f4;
 		}
-		body > nav a {
+		body > nav a,
+		body > nav a:visited {
 			color: #333;
 			text-decoration: none;
 		}
@@ -260,11 +261,9 @@
 	</header>
 	<nav>
 		<ul>
-			<li class="selected"><a href="/articles/news">News</a></li>
-			<li><a href="/articles/lifeandstyle">Life &amp; Style</a></li>
-			<li><a href="/articles/sports">Sports</a></li>
-			<li><a href="/articles/opinion">Opinion</a></li>
-			<li><a href="/articles/editorial">Editorial</a></li>
+			<% @sections.each do |section| %>
+				<%= li_tag link_to(section.name, section_path(section)), :class => section_is_selected?(section)%>
+			<% end %>
 			<li><a href="/blogs">Blogs</a></li>
 			<li><a href="/staff">Staff</a></li>
 			<li><a href="/pages/subscriptions">Subscriptions</a></li>
