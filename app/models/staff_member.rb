@@ -137,6 +137,10 @@ class StaffMember < ActiveRecord::Base
     user.email
   end
   def to_s
-    email
+    unless name.nil? or name.empty?
+      name
+    else
+      email
+    end
   end
 end

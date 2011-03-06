@@ -21,6 +21,7 @@ class Workflow::UsersController < WorkflowController
     
         @staff_member = StaffMember.create(
           :user => @user,
+          :name => params[:name],
           :is_admin => params[:is_admin]
         )
         @staff_member.save!
@@ -57,6 +58,8 @@ class Workflow::UsersController < WorkflowController
         @user.save!
         
         @staff_member.is_admin = params[:user][:is_admin]
+        @staff_member.name = params[:user][:name]
+        logger.debug params.inspect
         @staff_member.save!
         
         if current_user == @user and not params[:password].empty?

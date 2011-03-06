@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   end
   
   def to_s
-    self.email
+    email
   end
   
   private
