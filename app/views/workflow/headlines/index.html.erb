@@ -18,7 +18,7 @@
             Published <q><%= time_ago_in_words(headline.article.latest_published_revision.published_online_at) %> ago</q>
           </span>
         </header>
-        <p style="color: #555"><%= headline.article.teaser %></p>
+        <p style="color: #555"><%= headline.article.summary %></p>
       </div>
       <div class="right">
         <p style="font-size: 14px; margin-top:0; padding-top: 8px;"><strong>Section:</strong> <%= headline.article.full_section_name %></p>

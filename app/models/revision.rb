@@ -22,6 +22,25 @@ class Revision < ActiveRecord::Base
     ).order("published_online_at")
   end
   
+  include ActionView::Helpers::SanitizeHelper
+  include ActionView::Helpers::TextHelper
+  def summary(length=100)
+    sentences = strip_tags(body).scan(/.*?[\.\!\?]/)
+    sum = sentences.shift
+    sum = body if not sum
+    while sum.length < length and sentences.first
+      sum = sum + sentences.shift
+    end
+    while sum =~ /((Jan)|(Feb)|(Mar)|(Apr)|(Aug)|(Sep)|(Oct)|(Nov)|(Dec))\.$/ and sentences.first
+      sum = sum + sentences.shift
+    end
+    return sum
+  end
+  
+  def long_summary
+    summary 300
+  end
+  
   def diff(previous)
     return self.body unless previous
     require 'htmldiff'
