@@ -1,0 +1,13 @@
+<div id="cColumn">
+	<section class="columnGroup mostPopular">
+		<h1>Most popular</h1>
+		<ol>
+			<% @most_viewed.each do |viewed| %>
+				<li><%= link_to viewed.title, article_path(viewed.article) %></li>
+			<% end %>
+		</ol>
+	</section>
+	<section class="columnGroup">
+		<iframe src="http://www.facebook.com/plugins/likebox.php?id=26158013294&amp;width=330&amp;connections=10&amp;stream=false&amp;header=false&amp;height=287&amp;border=none" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width: 330px; height:287px;" allowtransparency="false"></iframe>
+	</section>
+</div>

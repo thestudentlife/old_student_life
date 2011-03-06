@@ -1,8 +1,20 @@
-<h1><%= @revision.title %></h1>
-<h2><%= @article.section %></h2>
-<p><%= @revision.published_online_at %></p>
-<% @article.images.each do |image| %>
-	<%= image_tag image.file.url(:small) %>
-<% end %>
-<p><%= @revision.body.html_safe %></p>
-<p>Authors: <%= @article.authors.map(&:to_s).join(", ") %>
+<article id="aColumn" class="fullArticle">
+	<header>
+		<h1><%= @revision.title %></h1>
+		<% if @article.images.any? %>
+			<%= image_tag @article.images.first.file.url, :width => "100%" %>
+			<div class="credit"><%= @article.images.first.credit %></div>
+			<div class="caption"><%= @article.images.first.caption %></div>
+		<% end %>
+		<div class="byline">
+			By <%= @article.authors.map{|a|
+					content_tag :span, a, :class=>'author'
+				}.to_sentence.html_safe %>
+			<div class="timestamp">
+				Published <%= time_ago_in_words @revision.published_online_at %> ago
+			</div>
+		</div>
+	</header>
+	<p><%= @revision.body.html_safe %></p>
+</article>
+<%= render "most_popular_and_facebook" %>

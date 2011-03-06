@@ -1,9 +1,11 @@
 class ArticlesController < ApplicationController
+  layout "front"
+  
+  before_filter do @most_viewed = ViewedArticle.latest_most_viewed(10) end
+  
   def index
     @headlines = Revision.latest_headlines.includes(:article)
     @revisions = Revision.latest_published_not_in_headlines.includes(:article)
-    
-    @most_viewed = ViewedArticle.latest_most_viewed(10)
   end
   def show
     @article = Article.find params[:id]

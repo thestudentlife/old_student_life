@@ -1,349 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-	<script src="/slides/slides.jquery.js"></script>
-	<script src="/slides/jquery.easing.1.3.js"></script>
-	<style type="text/css">
-		a {
-			text-decoration: none;
-		}
-		a:hover {
-			text-decoration: underline;
-		}
-		body {
-			width: 972px;
-			margin: 0 auto;
-			padding: 13px 0;
-			font-family: 'Georgia', 'times new roman', times, serif;
-		}
-		body > header {
-			border-bottom: 2px solid black;
-			padding: 7px 7px 0;
-		}
-		body > nav ul {
-			list-style: none;
-			margin-left: 0;
-			padding-left: 0;
-			margin-top: 0;
-			font-size: 12px;
-			line-height: 13px;
-			text-transform: uppercase;
-			text-align: center;
-			border-bottom: 1px solid #d3d3d3;
-		}
-		body > nav li {
-			display: inline-block;
-			float: left;
-			padding: 7px 15px 0 15px;
-			margin: 0;
-			height: 18px;
-			border-left: 1px solid #d3d3d3;
-		}
-		body > nav li:first-child {
-			border-left: 0;
-		}
-		body > nav li.selected {
-			background-color: #f4f4f4;
-		}
-		body > nav a {
-			color: #333;
-			text-decoration: none;
-		}
-		body > nav a:hover {
-			text-decoration: underline;
-		}
-		
-		#main {
-			clear: both;
-		}
-		#aColumn {
-			float: left;
-			width: 600px;
-			border-right: 1px solid #cbcbcb;
-			padding: 9px;
-		}
-		#cColumn {
-			float: right;
-			width: 334px;
-			padding: 9px;
-		}
-		
-		article.teaser {
-			margin-bottom: 8px;
-			clear: both;
-		}
-		article h1 {
-			font-size: 15px;
-			font-weight: bold;
-			line-height: 17px;
-			font-family: Palatino, Georgia, serif;
-			margin: 0;
-			padding: 0;
-		}
-		
-		article {
-			display: block;
-		}
-		
-		#slides_container,
-		article.lede {
-			width: 600px;
-			height: 269px;
-		}
-		
-		article.lede h1 {
-			font-size: 20px;
-			line-height: 23px;
-		}
-		article h1 a {
-			color: #004276;
-			text-decoration: none;
-		}
-		article h1 a:visited {
-			color: #669;
-		}
-		article h1 a:hover {
-			text-decoration: underline;
-		}
-		article .byline {
-			color: #808080;
-			font-family: arial, helvetica, sans-serif;
-			font-size: 10px;
-			line-height: 12px;
-			margin: 2px 0;
-			padding: 0;
-		}
-		article .byline .author {
-			text-transform: uppercase;
-		}
-		article .byline .timestamp {
-			color: #a81817;
-		}
-		article .summary {
-			font-size: 13px;
-			line-height: 16px;
-			margin: 0;
-			padding: 0;
-			color: #333;
-		}
-		article.teaser .thumbnail {
-			margin: 0 0 6px 6px;
-			float: right;
-		}
-		.thumbnail img {
-			border: 1px #e2e2e2 solid;
-		}
-		.ledephoto {
-			margin: 0 6px 6px 0;
-			float: left;
-		}
-		.ledephoto img {
-			border: 1px #e2e2e2 solid;
-		}
-		.ledephoto .credit {
-			text-align: right;
-			color: #909090;
-			font: 9px/11px arial,helvetica,sans-serif;
-		}
-		.ledephoto .caption {
-			color: #666;
-			font-size: 11px;
-			line-height: 14px;
-		}
-		article .actions {
-			color: #004276;
-			font: 11px/13px arial,helvetica,sans-serif;
-		}
-		article .actions a {
-			color: #004276;
-			text-decoration: none;
-		}
-		article .actions a:hover {
-			text-decoration: underline;
-		}
-		.doubleRuleDivide {
-			background: url("/images/doubleRule.gif") repeat-x;
-			height: 4px;
-			margin-top: 12px;
-			margin-bottom: 8px;
-			clear: both;
-		}
-		.columnGroup {
-			
-		}
-		.columnGroup h1 {
-			font: 11px/14px arial,helvetica,sans-serif;
-			margin-bottom: 8px;
-			text-transform: uppercase;
-			font-weight: bold;
-		}
-		ul.pagination {
-			margin-top: 0;
-			color: #333;
-			display: none;
-		}
-		ul.pagination,
-		.mostPopular ol {
-			font-size: 13px;
-			line-height: 16px;
-			margin-left: 26px;
-			padding-left: 0;
-		}
-		.pagination li,
-		.mostPopular li {
-			padding: 3px 0;
-		}
-		.pagination a,
-		.mostPopular a {
-			color: #004276;
-		}
-		.pagination a,
-		.mostPopular a:visited {
-			color: #669;
-		}
-		footer {
-			clear: both;
-			background: url("/images/doubleRule.gif") repeat-x;
-			font-size: 11px;
-			line-height: 13px;
-			color: #666;
-			text-align: center;
-			padding: 9px;
-		}
-		footer a,
-		footer a:hover,
-		footer a:visited {
-			text-decoration: underline;
-			color: #666;
-		}
-	</style>
-</head>
-<body>
-	<header>
-		<img src="http://tsl.pomona.edu/new/images/tslbanner2.jpg" />
-	</header>
-	<nav>
-		<ul>
-			<li class="selected"><a href="/articles/news">News</a></li>
-			<li><a href="/articles/lifeandstyle">Life &amp; Style</a></li>
-			<li><a href="/articles/sports">Sports</a></li>
-			<li><a href="/articles/opinion">Opinion</a></li>
-			<li><a href="/articles/editorial">Editorial</a></li>
-			<li><a href="/blogs">Blogs</a></li>
-			<li><a href="/staff">Staff</a></li>
-			<li><a href="/pages/subscriptions">Subscriptions</a></li>
-			<li><a href="/pages/about">About</a></li>
-			<div style="clear: both;"></div>
-		</ul>
-	</nav>
-	<div id="main">
-		<div id="aColumn">
-			<div id="ledes"><div class="slides_container">
-			<% @headlines.each do |headline| %>
-				<article class="lede">
-					<header>
-						<h1><%= link_to headline.title, article_path(headline.article) %></h1>
-						<span class="byline">
-							By
-							<%= headline.article.authors.map{|a|
-									content_tag :span, a, :class=>'author'
-								}.to_sentence.html_safe %>
-							<span class="timestamp">
-								<%= time_ago_in_words headline.published_online_at %> ago
-							</span>
-						</span>
-					</header>
-					<% if headline.article.images.any? %>
-						<div class="ledephoto">
-							<%= link_to(
-								image_tag(
-									headline.article.images.first.file.url,
-									:height => 200), 
-							    article_path(headline.article)) %>
-							<div class="credit">
-								<%= headline.article.images.first.credit %>
-							</div>
-							<!--<div class="caption">
-								<%= headline.article.images.first.caption %>
-							</div>-->
-						</div>
-					<% end %>
-					<p class="summary"><%= headline.long_summary %></p>
-					<span class="actions">
-						<%= link_to "Read more", article_path(headline.article) %>
+<div id="aColumn">
+	<div id="ledes"><div class="slides_container">
+	<% @headlines.each do |headline| %>
+		<article class="lede">
+			<header>
+				<h1><%= link_to headline.title, article_path(headline.article) %></h1>
+				<span class="byline">
+					By
+					<%= headline.article.authors.map{|a|
+							content_tag :span, a, :class=>'author'
+						}.to_sentence.html_safe %>
+					<span class="timestamp">
+						<%= time_ago_in_words headline.published_online_at %> ago
 					</span>
-					<div style="clear: both;"></div>
-				</article>
+				</span>
+			</header>
+			<% if headline.article.images.any? %>
+				<div class="ledephoto">
+					<%= link_to(
+						image_tag(
+							headline.article.images.first.file.url,
+							:height => 200), 
+					    article_path(headline.article)) %>
+					<div class="credit">
+						<%= headline.article.images.first.credit %>
+					</div>
+					<!--<div class="caption">
+						<%= headline.article.images.first.caption %>
+					</div>-->
+				</div>
 			<% end %>
-			</div>
-			<ul class="pagination">
-				<% @headlines.each_with_index do |headline, i| %>
-					<li><%= link_to headline.title, "##{i}" %></li>
-				<% end %>
-			</ul>
-			</div>
-			<div class="doubleRuleDivide">&nbsp;</div>
-			<% @revisions.each do |revision| %>
-				<article class="teaser">
-					<% if revision.article.images.any? %>
-						<div class="thumbnail">
-							<%= link_to(
-								image_tag(
-									revision.article.images.first.file.url(:thumb),
-									:width => 75,
-									:height => 75), 
-							    article_path(revision.article)) %>
-						</div>
-					<% end %>
-					<header>
-						<h1><%= link_to revision.title, article_path(revision.article) %></h1>
-						<span class="byline">
-							By
-							<%= revision.article.authors.map{|a|
-								content_tag :span, a, :class=>'author'
-							}.to_sentence.html_safe %>
-							<span class="timestamp">
-								<%= time_ago_in_words revision.published_online_at %> ago
-							</span>
-						</span>
-					</header>
-					<p class="summary"><%= revision.summary %></p>
-				</article>
-			<% end %>
-		</div>
-		<div id="cColumn">
-			<section class="columnGroup mostPopular">
-				<h1>Most popular</h1>
-				<ol>
-					<% @most_viewed.each do |viewed| %>
-						<li><%= link_to viewed.title, article_path(viewed.article) %></li>
-					<% end %>
-				</ol>
-			</section>
-			<section class="columnGroup">
-				<iframe src="http://www.facebook.com/plugins/likebox.php?id=26158013294&amp;width=330&amp;connections=10&amp;stream=false&amp;header=false&amp;height=287&amp;border=none" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width: 330px; height:287px;" allowtransparency="false"></iframe>
-			</section>
-		</div>
+			<p class="summary"><%= headline.long_summary %></p>
+			<span class="actions">
+				<%= link_to "Read more", article_path(headline.article) %>
+			</span>
+			<div style="clear: both;"></div>
+		</article>
+	<% end %>
 	</div>
-	<footer>
-		&copy; 2011 <a href="/">The Student Life</a> | <a href="/pages/contact">Contact us</a>
-	</footer>
-	<script>
-	  $(document).ready (function(){
-	    $("#ledes").slides({
-			preload: true,
-			generatePagination: false,
-			hoverPause: true,
-			play: 5000,
-			pause: 5000,
-			slideSpeed: 1000,
-			fadeEasing: "easeInOutQuad",
-			effect: "fade"
-		});
-		$(".pagination").show();
-	  });
-	</script>
-</body>
-</html>
+	<ul class="pagination">
+		<% @headlines.each_with_index do |headline, i| %>
+			<li>
+				<%= link_to headline.title, "##{i}" %>
+			</li>
+		<% end %>
+	</ul>
+	</div>
+	<div class="doubleRuleDivide">&nbsp;</div>
+	<% @revisions.each do |revision| %>
+		<article class="teaser">
+			<% if revision.article.images.any? %>
+				<div class="thumbnail">
+					<%= link_to(
+						image_tag(
+							revision.article.images.first.file.url(:thumb),
+							:width => 75,
+							:height => 75), 
+					    article_path(revision.article)) %>
+				</div>
+			<% end %>
+			<header>
+				<h1><%= link_to revision.title, article_path(revision.article) %></h1>
+				<span class="byline">
+					By
+					<%= revision.article.authors.map{|a|
+						content_tag :span, a, :class=>'author'
+					}.to_sentence.html_safe %>
+					<span class="timestamp">
+						<%= time_ago_in_words revision.published_online_at %> ago
+					</span>
+				</span>
+			</header>
+			<p class="summary"><%= revision.summary %></p>
+		</article>
+	<% end %>
+</div>
+<%= render "most_popular_and_facebook" %>
+<script>
+  $(document).ready (function(){
+    $("#ledes").slides({
+		preload: true,
+		generatePagination: false,
+		hoverPause: true,
+		play: 5000,
+		pause: 5000,
+		slideSpeed: 1000,
+		fadeEasing: "easeInOutQuad",
+		effect: "fade"
+	});
+	$(".pagination").show();
+  });
+</script>
