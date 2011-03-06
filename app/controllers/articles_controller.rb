@@ -34,6 +34,15 @@ class ArticlesController < ApplicationController
     ViewedArticle.new(:article => @article).save
   end
   
+  def author
+    @author = Author.find params[:author]
+    if request.fullpath != view_context.author_path(@author)
+      redirect_to view_context.author_path(@author), :status => :moved_permanently
+    end
+    
+    @revisions = @author.latest_published_revisions
+  end
+  
   def section
     @section = Section.find_by_url! params[:section]
     

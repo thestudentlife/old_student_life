@@ -16,6 +16,10 @@ class Author < ActiveRecord::Base
     find_all_by_user_id nil
   end
 
+  def slug
+    "#{id}#{name.gsub(/\s/,'').gsub(/\./,'').downcase}"
+  end
+
   def to_s
     name
   end

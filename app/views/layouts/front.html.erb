@@ -146,8 +146,7 @@
 		}
 		.caption {
 			color: #666;
-			font-size: 11px;
-			line-height: 14px;
+			font: 11px/14px arial,helvetica,sans-serif;
 		}
 		.actions {
 			color: #004276;
@@ -230,15 +229,28 @@
 			font-size: 15px;
 			line-height: 22px;
 		}
+		.section > header,
+		.author > header {
+			background: url('/images/doubleRule.gif') repeat-x bottom;
+		}
 		.section > header h1 {
 			margin: 0;
 			font: 29px/32px Palatino,serif;
 		}
-		.section > header {
+		.author > header h1 {
+			margin: 0;
+			font: 24px/27px Palatino,serif;
+		}
+		#aColumn > header {
 			margin-top: -9px;
-			background: url('/images/doubleRule.gif') repeat-x bottom;
 			padding-bottom: 9px;
 			margin-bottom: 9px;
+		}
+		.articleImage {
+			margin-bottom: 9px;
+		}
+		a:visited {
+			color: #669;
 		}
 	</style>
 </head>

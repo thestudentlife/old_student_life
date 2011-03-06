@@ -23,10 +23,18 @@ TslRails::Application.routes.draw do
   match '/articles/:section/:subsection/:id' => "articles#article"
   match '/articles/:section/:subsection' => "articles#subsection", :subsection => /\w.*/
   match '/articles/:section' => "articles#section"
+  match '/authors/:author' => "articles#author"
   
   module ArticlesHelper
     def article_path(article)
       File.join articles_path, article.section.url, article.subsection ? article.subsection.url : "", article.slug
+    end
+    
+    def authors_path
+      "/authors"
+    end
+    def author_path(author)
+      File.join authors_path, author.slug
     end
   end
   

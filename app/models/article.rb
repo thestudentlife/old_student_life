@@ -13,7 +13,9 @@ class Article < ActiveRecord::Base
   validates_presence_of :workflow_status, :section
   
   def slug
-    "#{id}-#{latest_published_revision.title.to_slug}"
+    t = latest_published_revision.title.to_slug
+    t = "-#{t}" if t =~ /^\d/
+    "#{id}#{t}"
   end
   
   def summary
