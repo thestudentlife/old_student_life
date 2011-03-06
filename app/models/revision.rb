@@ -22,6 +22,12 @@ class Revision < ActiveRecord::Base
     ).order("published_online_at")
   end
   
+  def diff(previous)
+    return self.body unless previous
+    require 'htmldiff'
+    return HTMLDiff.diff(previous.body, self.body)
+  end
+  
   def to_s
     body
   end

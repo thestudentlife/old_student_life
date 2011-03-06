@@ -30,11 +30,20 @@ class Workflow::ArticlesController < WorkflowController
     @editable = current_staff_member.can_edit_article @article
     @postable = current_staff_member.can_post_to_article @article
     
+    last_revision = nil
     @workflow_history_views = \
     current_staff_member.visible_workflow_history_for(@article
     ).map do |item|
-      slug = item.class.name.underscore
-      render_to_string :partial => slug, :locals => {slug.to_sym => item}
+      # Horrible hack to get revision diffs
+      if item.class == Revision
+        render_to_string(:partial => 'revision', :locals => {
+          :revision => item,
+          :diff => item.diff(last_revision)
+        }).tap do last_revision = item end
+      else
+        slug = item.class.name.underscore
+        render_to_string :partial => slug, :locals => {slug.to_sym => item}
+      end
     end
     
     if current_staff_member.can_see_article_images @article
