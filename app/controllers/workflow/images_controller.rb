@@ -26,7 +26,7 @@ class Workflow::ImagesController < WorkflowController
     @image = Image.find(params[:id])
 
     if @image.update_attributes(params[:image])
-      redirect_to workflow_article_path(@article, @image), :notice => 'Image was successfully updated.'
+      redirect_to workflow_article_path(@article), :notice => 'Image was successfully updated.'
     else
       render :action => "edit"
     end
