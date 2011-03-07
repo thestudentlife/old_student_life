@@ -56,10 +56,14 @@
 		}
 		body > nav li.selected {
 			background-color: #f4f4f4;
+			font-weight: bold;
 		}
 		body > nav li.selected.withSecondary {
 			border-bottom: 1px solid #f4f4f4;
 			margin-bottom: -1px;
+		}
+		body > nav ul.secondary li.selected {
+			font-weight: bold;
 		}
 		body > nav a,
 		body > nav a:visited {
@@ -132,6 +136,12 @@
 		}
 		article .byline .author {
 			text-transform: uppercase;
+		}
+		article .byline a.author {
+			color: #004276;
+		}
+		article .byline a.author:visited {
+			color: #669;
 		}
 		article .byline .timestamp {
 			color: #a81817;
@@ -268,6 +278,19 @@
 		a:visited {
 			color: #669;
 		}
+		.fullArticle aside {
+			font: 10px/13px arial,helvetica,sans-serif;
+			border: 1px solid #f4f4f4;
+			float: right;
+			padding: 9px;
+			margin: 0 0 9px 9px;
+		}
+		.articleComments {
+			background: url("/images/doubleRule.gif") repeat-x;
+			margin-top: 12px;
+			padding-top: 12px;
+			margin-bottom: 8px;
+		}
 	</style>
 </head>
 <body>
@@ -283,7 +306,7 @@
 						("withSecondary" if section.subsections.any?)] %>
 			<% end %>
 			<li><a href="/blogs">Blogs</a></li>
-			<li><a href="/staff">Staff</a></li>
+			<li><a href="/pages/staff">Staff</a></li>
 			<li><a href="/pages/subscriptions">Subscriptions</a></li>
 			<li><a href="/pages/about">About</a></li>
 			<div style="clear: both;"></div>
@@ -291,7 +314,8 @@
 		<% if @section and @section.subsections.any? %>
 		    <ul class="secondary">
 		      <% @section.subsections.each do |subsection| %>
-		        <%= li_tag link_to(subsection, subsection_path(subsection)) %>
+		        <%= li_tag link_to(subsection, subsection_path(subsection)),
+		 			:class => ("selected" if @subsection and subsection == @subsection) %>
 		    	<% end %>
 		    	<div style="clear: both">
 		    </ul>
