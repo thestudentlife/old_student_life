@@ -26,6 +26,8 @@ TslRails::Application.routes.draw do
   match '/authors/:author' => "articles#author"
   match '/blogs' => "blogs#index"
   
+  resources :pages
+  
   module ArticlesHelper
     def article_path(article)
       File.join articles_path, article.section.url, article.subsection ? article.subsection.url : "", article.slug
