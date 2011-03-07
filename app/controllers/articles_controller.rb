@@ -1,6 +1,5 @@
 class ArticlesController < ApplicationController
   
-  helper :all
   layout "front"
   
   before_filter do @most_viewed = ViewedArticle.latest_most_viewed(10) end

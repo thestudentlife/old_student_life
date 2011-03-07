@@ -305,7 +305,7 @@
 						section_is_selected?(section),
 						("withSecondary" if section.subsections.any?)] %>
 			<% end %>
-			<li><a href="/blogs">Blogs</a></li>
+			<%= li_tag link_to("Blogs", blogs_path), :class => ("selected" if request.fullpath == blogs_path) %>
 			<li><a href="/pages/staff">Staff</a></li>
 			<li><a href="/pages/subscriptions">Subscriptions</a></li>
 			<li><a href="/pages/about">About</a></li>
