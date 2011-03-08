@@ -32,5 +32,5 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 
 gem "authlogic"
 gem "paperclip", "~> 2.3"
-gem "htmldiff", :git => "git@github.com:mikemaltese/htmldiff.git"
+gem "htmldiff", :git => "git://github.com/mikemaltese/htmldiff.git"
 gem "high_voltage"
