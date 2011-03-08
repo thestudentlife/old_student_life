@@ -1,6 +1,6 @@
 namespace :dummy do
   task :admin => :environment do
-    StaffMember.create :user => User.create(
+    User.create(
       :email => "admin@tsl.pomona.edu",
       :password => "password",
       :password_confirmation => "password"),
@@ -14,20 +14,20 @@ namespace :dummy do
     edited_by_section = WorkflowStatus.create(:name => "Edited by Section")
     edited_by_management = WorkflowStatus.create(:name => "Edited by Management")
     
-    writer = StaffMember.create :user => User.create(
+    writer = User.create(
         :email => "writer@tsl.pomona.edu",
         :password => "password",
         :password_confirmation => "password")
-    writer2 = StaffMember.create :user => User.create(
+    writer2 = User.create(
         :email => "writer2@tsl.pomona.edu",
         :password => "password",
         :password_confirmation => "password")
-    editor = StaffMember.create :user => User.create(
+    editor = User.create(
         :email => "editor@tsl.pomona.edu",
         :password => "password",
         :password_confirmation => "password"),
         :sections => [news]
-    admin = StaffMember.create :user => User.create(
+    admin = User.create(
       :email => "admin@tsl.pomona.edu",
       :password => "password",
       :password_confirmation => "password"),
@@ -37,7 +37,7 @@ namespace :dummy do
       :working_name => "Bill Gates",
       :section => news,
       :workflow_status => open,
-      :authors => [writer2])
+      :authors => [])
     
     geeky = Revision.create(
       :article => billgates,
@@ -51,7 +51,7 @@ namespace :dummy do
       :working_name => "Smiley 80s",
       :section => news,
       :workflow_status => open,
-      :authors => [writer, editor],
+      :authors => [],
       :open_to_author => false)
     smiley_head = Headline.create(
       :article => smiley,
