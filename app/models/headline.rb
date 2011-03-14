@@ -1,4 +1,5 @@
 class Headline < ActiveRecord::Base
   has_one :article
-  validates_presence_of :article
+  validates :article, :presence => true, :uniqueness => true
+  validates :priority, :numericality => { :only_integer => true }
 end
