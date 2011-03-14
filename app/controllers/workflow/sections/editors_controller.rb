@@ -1,4 +1,4 @@
-class Workflow::EditorsController < WorkflowController
+class Workflow::Sections::EditorsController < WorkflowController
   respond_to :html
   
   before_filter :require_user

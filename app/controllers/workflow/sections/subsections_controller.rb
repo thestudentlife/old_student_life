@@ -1,4 +1,4 @@
-class Workflow::SubsectionsController < WorkflowController
+class Workflow::Sections::SubsectionsController < WorkflowController
   respond_to :html
 
   before_filter :require_user
