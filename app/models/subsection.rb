@@ -2,6 +2,8 @@ class Subsection < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :url
   
+  validates :priority, :numericality => { :only_integer => true }
+  
   def validate
     errors[:url] << "must not start with a number" unless url =~ /^[^\d]/
   end

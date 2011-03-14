@@ -1,35 +1,28 @@
 class Workflow::SubsectionsController < WorkflowController
+  respond_to :html
 
   before_filter :require_user
   before_filter { @section = Section.find params[:section_id] }
   before_filter {current_user.can_edit_sections!}
 
   def new
-    @subsection = Subsection.new
+    respond_with :workflow, @subsection = Subsection.new
   end
 
   def edit
-    @subsection = @section.subsections.find params[:id]
+    respond_with :workflow, @subsection = @section.subsections.find(params[:id])
   end
 
   def create
-    @subsection = @section.subsections.build params[:subsection]
-
-   if @subsection.save
-      redirect_to(workflow_sections_path, :notice => 'Subsubsection was successfully created.')
-    else
-      render :action => "new"
-    end
+    respond_with :workflow,
+      @subsection = @section.subsections.create(params[:subsection]),
+      :location => [:workflow, :sections]
   end
 
   def update
-    @subsection = @section.subsections.find params[:id]
-
-    if @subsection.update_attributes(params[:subsection])
-      redirect_to(workflow_sections_path, :notice => 'Subsubsection was successfully updated.')
-    else
-      render :action => "edit"
-    end
+    respond_with :workflow,
+      @subsection = @section.subsections.update(params[:id], params[:subsection]),
+      :location => [:workflow, :sections]
   end
 
   def destroy
@@ -41,6 +34,6 @@ class Workflow::SubsectionsController < WorkflowController
     else
       flash[:warning] = "Can't delete subsection with articles"
     end
-    redirect_to(workflow_sections_path)
+    redirect_to [:workflow, :sections]
   end
 end
