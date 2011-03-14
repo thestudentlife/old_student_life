@@ -1,7 +1,8 @@
-class Workflow::RevisionsController < WorkflowController
+class Workflow::Articles::RevisionsController < WorkflowController
 
-  before_filter :require_user, :find_article
-  before_filter {current_user.can_post_to_article! @article}
+  before_filter :require_user
+  before_filter { @article = Article.find params[:article_id] }
+  before_filter { current_user.can_post_to_article! @article }
 
   def new
     @revision = Revision.new
@@ -33,10 +34,5 @@ class Workflow::RevisionsController < WorkflowController
       else
         render :action => "edit"
       end
-  end
-  
-  private
-  def find_article
-    @article = Article.find params[:article_id]
   end
 end

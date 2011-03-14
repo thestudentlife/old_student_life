@@ -56,7 +56,7 @@ TslRails::Application.routes.draw do
       resources :authors, :controller => "articles/authors"
       resources :comments, :controller => "articles/comments"
       resources :images, :controller => "articles/images"
-      resources :revisions
+      resources :revisions, :controller => "articles/revisions"
     end
     resources :authors
     resources :headlines, :except => [:new]
