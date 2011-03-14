@@ -1,42 +1,35 @@
 class Workflow::AuthorsController < WorkflowController
   respond_to :html
+  responders :flash
   
   def index
-    @authors = Author.all
-    respond_with(:workflow, @authors)
+    respond_with :workflow, @authors = Author.all
   end
 
   def show
-    @author = Author.find(params[:id])
-    respond_with(:workflow, @author)
+    respond_with :workflow, @author = Author.find(params[:id])
   end
 
   def new
-    @author = Author.new
-    respond_with(:workflow, @author)
+    respond_with :workflow, @author = Author.new
   end
 
   def edit
-    @author = Author.find(params[:id])
-    respond_with(:workflow, @author)
+    respond_with :workflow, @author = Author.find(params[:id])
   end
 
   def create
-    @author = Author.new(params[:author])
-    flash[:notice] = "Author was successfully created" if @author.save
+    @author = Author.create(params[:author])
     respond_with(:workflow, @author, :location => [:workflow, :authors])
   end
 
   def update
-    @author = Author.find(params[:id])
-    flash[:notice] = "Author was successfully updated" if @author.update_attributes(params[:author])
+    @author = Author.update(params[:id], params[:author])
     respond_with(:workflow, @author, :location => [:workflow, :authors])
   end
 
   def destroy
-    @author = Author.find(params[:id])
-    @author.destroy
-    flash[:notice] = "Successfully destroyed author"
-    respond_with(:workflow, @author)
+    
+    respond_with :workflow, @author = Author.destroy(params[:id])
   end
 end
