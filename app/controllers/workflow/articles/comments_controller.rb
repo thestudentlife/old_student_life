@@ -10,9 +10,9 @@ class Workflow::Articles::CommentsController < WorkflowController
   end
 
   def create
-    params[:workflow_comment][:author_id] = current_user.id
     @workflow_comment = WorkflowComment.create params[:workflow_comment].merge({
       :article => @article,
+      :author_id => current_user.id,
       :visible_to_article_author => (@article.open_to_author or @article.workflow_status.open_to_author)
     })
     
