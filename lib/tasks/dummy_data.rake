@@ -3,8 +3,8 @@ namespace :dummy do
     User.create(
       :email => "admin@tsl.pomona.edu",
       :password => "password",
-      :password_confirmation => "password"),
-      :is_admin => true
+      :password_confirmation => "password",
+      :is_admin => true)
   end
   task :load => :environment do
     news = Section.create(:name => "News", :priority => 10)
@@ -25,13 +25,13 @@ namespace :dummy do
     editor = User.create(
         :email => "editor@tsl.pomona.edu",
         :password => "password",
-        :password_confirmation => "password"),
-        :sections => [news]
+        :password_confirmation => "password",
+        :sections => [news])
     admin = User.create(
       :email => "admin@tsl.pomona.edu",
       :password => "password",
-      :password_confirmation => "password"),
-      :is_admin => true
+      :password_confirmation => "password",
+      :is_admin => true)
     
     billgates = Article.create(
       :working_name => "Bill Gates",
