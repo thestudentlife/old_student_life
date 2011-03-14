@@ -1,52 +1,39 @@
 class Workflow::HeadlinesController < WorkflowController
+  respond_to :html
 
   before_filter :require_user
   before_filter {current_user.can_edit_headlines!}
 
   def index
-    @headlines = Headline.order(:priority)
+    respond_with :workflow, @headlines = Headline.order(:priority)
   end
 
-  # GET: articles/:id/headline
+  # GET: headlines/:article_id
   def show
     @article = Article.find params[:id]
-    @headline = Headline.new
+    respond_with :workflow, @headline = Headline.new
   end
 
   def new
-    @headline = Headline.new
+    respond_with :workflow, @headline = Headline.new
   end
 
   def edit
-    @headline = Headline.find(params[:id])
+    respond_with :workflow, @headline = Headline.find(params[:id])
   end
 
   def create
     @article = Article.find params[:article_id]
-    
-    begin
-      ActiveRecord::Base.transaction do
-        @headline = Headline.create!(
-          :priority => params[:headline][:priority],
-          :article => @article
-        )
-      end
-    rescue => e
-      throw e
-      render :action => "new"
-    else
-      redirect_to(workflow_headlines_path, :notice => 'Headline was successfully created.')
-    end
+    @headline = Headline.create(
+      :priority => params[:headline][:priority],
+      :article => @article
+    )
+    respond_with :workflow, @headline, :location => [:workflow, :headlines]
   end
 
   def update
-    @headline = Headline.find(params[:id])
-
-    if @headline.update_attributes(params[:headline])
-      redirect_to(workflow_headlines_path, :notice => 'Headline was successfully updated.')
-    else
-      render :action => "edit"
-    end
+    @headline = Headline.update params[:id], params[:headline]
+    respond_with :workflow, @headline, :location => [:workflow, :headlines]
   end
 
   def destroy
@@ -55,8 +42,7 @@ class Workflow::HeadlinesController < WorkflowController
     @headline.article.headline = nil
     if @headline.article.save
       @headline.destroy
-      flash[:notice] = 'Headline was successfully destroyed'
-      redirect_to(workflow_headlines_url)
     end
+    respond_with :workflow, @headline
   end
 end

@@ -29,7 +29,6 @@ class Workflow::AuthorsController < WorkflowController
   end
 
   def destroy
-    
     respond_with :workflow, @author = Author.destroy(params[:id])
   end
 end
