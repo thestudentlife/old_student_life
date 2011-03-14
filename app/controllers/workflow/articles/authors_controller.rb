@@ -1,4 +1,4 @@
-class Workflow::ArticleAuthorsController < WorkflowController
+class Workflow::Articles::AuthorsController < WorkflowController
   respond_to :html
   
   before_filter :require_user
