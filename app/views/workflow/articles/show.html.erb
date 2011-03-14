@@ -3,14 +3,14 @@
     <%= @article.title %>
     <span class="tag">
       <% if @article.headline %>
-        Headline
+        Front Page
       <% end %>
     </span>
   </h1>
   
   <span class="actions">
     <% if not @article.headline and @article.latest_published_revision and current_user.can_edit_headlines %>
-      <%= link_to "Make headline", workflow_headline_path(@article) %> |
+      <%= link_to "Add to front page", workflow_headline_path(@article) %> |
     <% end %>
     <% if @editable %>
       <%= link_to 'Edit', edit_workflow_article_path(@article) %> |
