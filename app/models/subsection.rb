@@ -5,7 +5,7 @@ class Subsection < ActiveRecord::Base
   validates :priority, :numericality => { :only_integer => true }
   
   def validate
-    errors[:url] << "must not start with a number" unless url =~ /^[^\d]/
+    errors[:url] << "must not start with a number" if url =~ /^[\d]/
   end
   
   belongs_to :section
