@@ -1,17 +1,20 @@
 class Workflow::UsersController < WorkflowController
+  respond_to :html
+  
   before_filter :require_user
   before_filter(:except => [:edit, :update]) {current_user.can_edit_users!}
   
   def index
-    @users = User.all
+    respond_with :workflow, @users = User.all
   end
   
   def new
-    @user = User.new
     @authors = Author.open_authors
+    respond_with :workflow, @user = User.new
   end
   
   def create
+    @authors = Author.open_authors
     @user = User.new(
       :email => params[:email],
       :is_admin => params[:is_admin],
@@ -21,7 +24,6 @@ class Workflow::UsersController < WorkflowController
     if @user.save
       render :action => "reset"
     else
-      @authors = Author.open_authors
       render :action => "new"
     end
   end
@@ -41,6 +43,7 @@ class Workflow::UsersController < WorkflowController
       @authors = Author.open_authors
       @authors << @user.author if @user.author
     end
+    respond_with :workflow, @user
   end
   
   def update
@@ -64,15 +67,8 @@ class Workflow::UsersController < WorkflowController
         :password_confirmation => params[:password_confirmation]}
     end
     
-    if @user.save
-      flash[:notice] = "Account updated!"
-      if current_user.can_edit_users
-        redirect_to workflow_users_path
-      else
-        redirect_to workflow_path
-      end
-    else
-      render :action => :edit
-    end
+    respond_with :workflow,
+      @user,
+      :location => (current_user.can_edit_users ? [:workflow, :users] : :workflow)
   end
 end
