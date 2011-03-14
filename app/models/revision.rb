@@ -26,6 +26,10 @@ class Revision < ActiveRecord::Base
     latest_published.where(:article_id => article_id).first
   end
   
+  def previous
+    Revision.where(:article_id => article.id).where("created_at < ?", created_at).order("created_at").first
+  end
+  
   include ActionView::Helpers::SanitizeHelper
   include ActionView::Helpers::TextHelper
   def summary(length=100)
@@ -46,7 +50,7 @@ class Revision < ActiveRecord::Base
     summary 300
   end
   
-  def diff(previous)
+  def diff
     return self.body unless previous
     require 'htmldiff'
     return HTMLDiff.diff(previous.body, self.body)
