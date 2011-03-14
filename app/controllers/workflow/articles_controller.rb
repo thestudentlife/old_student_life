@@ -1,27 +1,22 @@
 class Workflow::ArticlesController < WorkflowController
+  respond_to :html
   
   before_filter :require_user
   
   def index
-    @articles = current_user.visible_articles
+    respond_with :workflow, @articles = current_user.visible_articles
   end
   def new
     current_user.can_create_articles!
-    @article = Article.new
     @workflow_statuses = current_user.available_workflow_statuses
     @sections = current_user.open_sections
     @subsections = @sections.map(&:subsections).flatten
+    respond_with :workflow, @article = Article.new
   end
   def create
     current_user.can_create_articles!
     current_user.can_create_article_with_params! params[:article]
-    @article = Article.new params[:article]
-    
-    if @article.save
-      redirect_to workflow_article_path(@article), :notice => "Article was successfully created"
-    else
-      render :action => "new"
-    end
+    respond_with :workflow, @article = Article.create(params[:article])
   end
   def show
     @article = Article.find params[:id]
@@ -49,6 +44,7 @@ class Workflow::ArticlesController < WorkflowController
     if current_user.can_see_article_images @article
       @images = @article.images
     end
+    respond_with :workflow, @article
   end
   def edit
     @article = Article.find params[:id]
@@ -58,6 +54,7 @@ class Workflow::ArticlesController < WorkflowController
       @workflow_statuses = current_user.available_workflow_statuses
     end
     @subsections = @article.section.subsections
+    respond_with :workflow, @article
   end
   def update
     @article = Article.find params[:id]
