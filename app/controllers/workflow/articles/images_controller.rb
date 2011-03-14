@@ -1,7 +1,8 @@
-class Workflow::ImagesController < WorkflowController
+class Workflow::Articles::ImagesController < WorkflowController
   
-  before_filter :require_user, :find_article
-  before_filter {current_user.can_edit_article! @article}
+  before_filter :require_user
+  before_filter { @article = Article.find params[:article_id] }
+  before_filter { current_user.can_edit_article! @article }
 
   def new
     @image = Image.new
@@ -37,10 +38,5 @@ class Workflow::ImagesController < WorkflowController
     @image.destroy
 
     redirect_to workflow_article_path(@article)
-  end
-  
-  private
-  def find_article
-    @article = Article.find params[:article_id]
   end
 end
