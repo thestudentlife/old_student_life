@@ -96,11 +96,7 @@
 <% end %>
 
 <h2>History for this article</h2>
-<% @workflow_history_views.each do |view| %>
-  <article class="workflow-item">
-    <%= view %>
-  </article>
-<% end %>
+<%= render_collection_in_same_controller @workflow_history, :layout => "item" %>
 
 <%= link_to 'Back', workflow_articles_path %>
 </div>

@@ -24,17 +24,11 @@ class Workflow::ArticlesController < WorkflowController
     
     @editable = current_user.can_edit_article @article
     @postable = current_user.can_post_to_article @article
-    
-    @workflow_history_views = \
-    current_user.visible_workflow_history_for(@article
-    ).map do |item|
-      slug = item.class.name.underscore
-      render_to_string :partial => slug, :locals => {slug.to_sym => item}
-    end
-    
     if current_user.can_see_article_images @article
       @images = @article.images
     end
+    @workflow_history = current_user.visible_workflow_history_for @article
+    
     respond_with :workflow, @article
   end
   def edit
