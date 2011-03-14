@@ -1,4 +1,4 @@
-class Workflow::WorkflowCommentsController < WorkflowController
+class Workflow::Articles::CommentsController < WorkflowController
   respond_to :html
   
   before_filter :require_user

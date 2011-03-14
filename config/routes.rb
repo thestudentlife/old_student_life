@@ -54,7 +54,7 @@ TslRails::Application.routes.draw do
   namespace :workflow do
     resources :articles do
       resources :authors, :controller => "articles/authors"
-      resources :comments, :controller => "workflow_comments"
+      resources :comments, :controller => "articles/comments"
       resources :images
       resources :revisions
     end
