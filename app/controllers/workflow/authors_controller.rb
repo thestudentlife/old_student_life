@@ -1,6 +1,5 @@
 class Workflow::AuthorsController < WorkflowController
   respond_to :html
-  responders :flash
   
   def index
     respond_with :workflow, @authors = Author.all
