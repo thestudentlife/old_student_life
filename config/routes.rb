@@ -1,8 +1,4 @@
 TslRails::Application.routes.draw do
-  
-  namespace :workflow do resources :authors end
-
-  resources :images
 
   namespace :workflow do
     match '/login' => 'user_sessions#new', :via => :get, :as => "login"
@@ -61,6 +57,7 @@ TslRails::Application.routes.draw do
     resources :authors
     resources :headlines, :except => [:new]
     match "articles/:id/headline" => "headlines#show", :via => :get
+    resources :issues
     resources :sections do
       resources :editors, :controller => "sections/editors"
       resources :subsections, :controller => "sections/subsections"

@@ -9,6 +9,7 @@ class Article < ActiveRecord::Base
   has_many :images
   belongs_to :headline
   has_many :viewed_articles
+  belongs_to :issue
   
   validates_presence_of :workflow_status, :section
   

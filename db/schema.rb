@@ -10,21 +10,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110316184230) do
+ActiveRecord::Schema.define(:version => 20110316231615) do
 
-  create_table "articles", :force => true do |t|
-    t.string   "working_name"
-    t.string   "status_message"
-    t.boolean  "open_to_author",     :default => false
-    t.boolean  "publishable",        :default => false
-    t.boolean  "visible",            :default => true
-    t.integer  "headline_id"
-    t.integer  "section_id"
-    t.integer  "subsection_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "workflow_status_id"
-  end
+# Could not dump table "articles" because of following StandardError
+#   Unknown type 'belongs_to' for column 'issue_id'
 
   create_table "articles_authors", :id => false, :force => true do |t|
     t.integer "article_id", :null => false
@@ -61,15 +50,20 @@ ActiveRecord::Schema.define(:version => 20110316184230) do
     t.datetime "file_updated_at"
   end
 
+  create_table "issues", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "revisions", :force => true do |t|
-    t.integer  "article_id",                                   :null => false
-    t.integer  "author_id",                                    :null => false
-    t.boolean  "visible_to_article_author", :default => true
+    t.integer  "article_id",                               :null => false
+    t.integer  "author_id",                                :null => false
     t.string   "title"
     t.text     "body"
-    t.boolean  "published_online",          :default => false
+    t.boolean  "published_online",      :default => false
     t.datetime "published_online_at"
-    t.boolean  "published_in_print",        :default => false
+    t.boolean  "published_in_print",    :default => false
     t.datetime "published_in_print_at"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -113,9 +107,8 @@ ActiveRecord::Schema.define(:version => 20110316184230) do
   end
 
   create_table "workflow_comments", :force => true do |t|
-    t.integer  "article_id",                                  :null => false
-    t.integer  "author_id",                                   :null => false
-    t.boolean  "visible_to_article_author", :default => true
+    t.integer  "article_id", :null => false
+    t.integer  "author_id",  :null => false
     t.string   "text"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -131,9 +124,8 @@ ActiveRecord::Schema.define(:version => 20110316184230) do
   end
 
   create_table "workflow_updates", :force => true do |t|
-    t.integer  "article_id",                                  :null => false
-    t.integer  "author_id",                                   :null => false
-    t.boolean  "visible_to_article_author", :default => true
+    t.integer  "article_id", :null => false
+    t.integer  "author_id",  :null => false
     t.string   "updates"
     t.datetime "created_at"
     t.datetime "updated_at"
