@@ -2,7 +2,6 @@ class Workflow::Articles::ImagesController < WorkflowController
   
   before_filter :require_user
   before_filter { @article = Article.find params[:article_id] }
-  before_filter { current_user.can_edit_article! @article }
 
   def new
     @image = Image.new

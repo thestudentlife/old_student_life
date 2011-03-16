@@ -12,13 +12,9 @@
     <% if not @article.headline and @article.latest_published_revision and current_user.can_edit_headlines %>
       <%= link_to "Add to front page", workflow_headline_path(@article) %> |
     <% end %>
-    <% if @editable %>
-      <%= link_to 'Edit', edit_workflow_article_path(@article) %> |
-    <% end %>
-    <% if @postable %>
-      <%= link_to 'Post revision', new_workflow_article_revision_path (@article) %> |
-      <%= link_to 'Post comment', new_workflow_article_comment_path (@article) %>
-    <% end %>
+    <%= link_to 'Edit', edit_workflow_article_path(@article) %> |
+    <%= link_to 'Post revision', new_workflow_article_revision_path (@article) %> |
+    <%= link_to 'Post comment', new_workflow_article_comment_path (@article) %>
   </span>
   <div style="clear: both;"></div>
   <span style="color: #5F87A5;"><%= time_ago_in_words(@article.created_at) %> ago</span>
@@ -44,59 +40,53 @@
   <div class="content">
   <p>
     Authors
-    <% if @editable %>
-      <%= link_to "Add author", new_workflow_article_author_path (@article) %>
-    <% end %>
+    <%= link_to "Add author", new_workflow_article_author_path (@article) %>
   </p>
   <ul>
   	<% @article.authors.each do |author| %>
   		<li style="margin-bottom: 0.5em; margin-left: 0.5em">
   		  <span style="color: white"><%= author %></span>
-  		  <% if @editable %>
-  		    <%= link_to 'Remove',
-  		        workflow_article_author_path(@article, author),
-  		        :confirm => 'Are you sure?',
-  		        :method => :delete %>
-  		  <% end %>
+		    <%= link_to 'Remove',
+	        workflow_article_author_path(@article, author),
+	        :confirm => 'Are you sure?',
+	        :method => :delete %>
   		</li>
   	<% end %>
   </ul>
-  <% if current_user.can_see_article_images @article %>
-    <p>
-      Image
-      <% if @editable and @article.images.empty? %>
-        <%= link_to "Upload image", new_workflow_article_image_path (@article) %>
-      <% end %>
-    </p>
-    <ul style="display: block; float: left; width: 100%">
-      <% @article.images.each do |image| %>
-        <li style="margin-left: 0.5em; display: block; width: 100%; margin-bottom: 2em; padding-bottom: 1em; /*border-bottom: 1px #fff solid*/">
-          <div style="float: right">  
-            <%= image_tag(
-              image.file.url(:thumb),
-              :style => "border: 1px white solid; margin-left: 1em; margin-right: 1em") %>
-          </div>
-          <div>
-            <p style="margin-top: 0; margin-bottom: 0;">Credit</p>
-            <p style="margin-top: 0; color: white"><%= image.credit %></p>
-            <p style="margin-top: 0; margin-bottom: 0;">Caption</p>
-            <p style="margin-top: 0; color: white"><%= image.caption %></p>
-            <p style="margin-top: 0; margin-bottom: 0">
-              <%= link_to "Edit", edit_workflow_article_image_path(@article, image) %>
-              <%= link_to "Remove", workflow_article_image_path(@article, image),
-                :confirm => "Are you sure you want to remove this image?", :method => :delete %>
-            </p>
-          </div>
-          <div style="clear: both;"></div>
-        </li>
-      <% end %>
-    </ul>
-  <% end %>
+  <p>
+    Image
+    <% if @article.images.empty? %>
+      <%= link_to "Upload image", new_workflow_article_image_path (@article) %>
+    <% end %>
+  </p>
+  <ul style="display: block; float: left; width: 100%">
+    <% @article.images.each do |image| %>
+      <li style="margin-left: 0.5em; display: block; width: 100%; margin-bottom: 2em; padding-bottom: 1em; /*border-bottom: 1px #fff solid*/">
+        <div style="float: right">  
+          <%= image_tag(
+            image.file.url(:thumb),
+            :style => "border: 1px white solid; margin-left: 1em; margin-right: 1em") %>
+        </div>
+        <div>
+          <p style="margin-top: 0; margin-bottom: 0;">Credit</p>
+          <p style="margin-top: 0; color: white"><%= image.credit %></p>
+          <p style="margin-top: 0; margin-bottom: 0;">Caption</p>
+          <p style="margin-top: 0; color: white"><%= image.caption %></p>
+          <p style="margin-top: 0; margin-bottom: 0">
+            <%= link_to "Edit", edit_workflow_article_image_path(@article, image) %>
+            <%= link_to "Remove", workflow_article_image_path(@article, image),
+              :confirm => "Are you sure you want to remove this image?", :method => :delete %>
+          </p>
+        </div>
+        <div style="clear: both;"></div>
+      </li>
+    <% end %>
+  </ul>
   </div>
 <% end %>
 
 <h2>History for this article</h2>
-<%= render_collection_in_same_controller @workflow_history, :layout => "item" %>
+<%= render_collection_in_same_controller @article.workflow_history, :layout => "item" %>
 
 <%= link_to 'Back', workflow_articles_path %>
 </div>

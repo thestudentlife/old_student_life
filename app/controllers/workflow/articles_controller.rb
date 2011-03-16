@@ -7,33 +7,19 @@ class Workflow::ArticlesController < WorkflowController
     respond_with :workflow, @articles = Article.all
   end
   def new
-    current_user.can_create_articles!
     @workflow_statuses = current_user.available_workflow_statuses
-    @sections = current_user.open_sections
-    @subsections = @sections.map(&:subsections).flatten
+    @sections = Section.all
+    @subsections = Subsection.all
     respond_with :workflow, @article = Article.new
   end
   def create
-    current_user.can_create_articles!
-    current_user.can_create_article_with_params! params[:article]
     respond_with :workflow, @article = Article.create(params[:article])
   end
   def show
-    @article = Article.find params[:id]
-    current_user.can_see_article! @article
-    
-    @editable = current_user.can_edit_article @article
-    @postable = current_user.can_post_to_article @article
-    if current_user.can_see_article_images @article
-      @images = @article.images
-    end
-    @workflow_history = @article.workflow_history
-    
-    respond_with :workflow, @article
+    respond_with :workflow, @article = Article.find(params[:id])
   end
   def edit
     @article = Article.find params[:id]
-    current_user.can_edit_article! @article
     
     if not @article.workflow_status.requires_admin or current_user.is_admin
       @workflow_statuses = current_user.available_workflow_statuses
@@ -43,7 +29,6 @@ class Workflow::ArticlesController < WorkflowController
   end
   def update
     @article = Article.find params[:id]
-    current_user.can_edit_article! @article
     workflow_statuses = current_user.available_workflow_statuses.map(&:id)
     if not workflow_statuses.include? params[:article][:workflow_status_id].to_i
       params[:article].delete :workflow_status_id
