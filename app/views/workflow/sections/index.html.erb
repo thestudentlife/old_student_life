@@ -21,19 +21,6 @@
         <span style="color: #666; margin-top: 0;">
         </span>
       </header>
-      <p style="margin-top: 0.5em; margin-bottom: 0; line-height: 1.5em; color: #666">
-        Editors:
-        <%= link_to 'Add editor', new_workflow_section_editor_path(section) %>
-      </p>
-      <ul>
-        <% section.editors.each do |editor| %>
-          <li>
-            <span class="change"><%= editor %></span>
-            <%= link_to 'Remove', workflow_section_editor_path(section, editor),
-              :confirm => 'Are you sure?', :method => :delete %>
-          </li>
-        <% end %>
-      </ul>
       <p style="color: #666;">
         Subsections:
         <%= link_to 'Add subsection', new_workflow_section_subsection_path(section) %>
