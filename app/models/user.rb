@@ -27,22 +27,6 @@ class User < ActiveRecord::Base
     end
   end
   
-  def visible_articles
-    if is_admin
-      Article.order("created_at DESC")
-    else
-      visible_articles = []
-      if author
-        visible_articles += author.articles
-      end
-      if sections.any?
-        sections.map {|s| visible_articles += s.articles }
-        visible_articles.uniq!
-      end
-      visible_articles.sort_by(&:created_at).reverse
-    end
-  end
-  
   def is_editor
     sections.any?
   end

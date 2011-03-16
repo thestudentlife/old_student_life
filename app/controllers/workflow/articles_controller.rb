@@ -4,7 +4,7 @@ class Workflow::ArticlesController < WorkflowController
   before_filter :require_user
   
   def index
-    respond_with :workflow, @articles = current_user.visible_articles
+    respond_with :workflow, @articles = Article.all
   end
   def new
     current_user.can_create_articles!
