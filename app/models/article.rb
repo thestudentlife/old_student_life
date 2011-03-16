@@ -12,6 +12,8 @@ class Article < ActiveRecord::Base
   
   validates_presence_of :workflow_status, :section
   
+  default_scope :order => 'created_at DESC'
+  
   def slug
     t = latest_published_revision.title.to_slug
     t = "-#{t}" if t =~ /^\d/

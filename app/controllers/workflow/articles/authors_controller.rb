@@ -3,7 +3,6 @@ class Workflow::Articles::AuthorsController < WorkflowController
   
   before_filter :require_user
   before_filter { @article = Article.find params[:article_id] }
-  before_filter { current_user.can_edit_article! @article }
   
   def new
     respond_with :workflow, @authors = Author.all
