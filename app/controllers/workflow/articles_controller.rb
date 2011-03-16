@@ -27,7 +27,7 @@ class Workflow::ArticlesController < WorkflowController
     if current_user.can_see_article_images @article
       @images = @article.images
     end
-    @workflow_history = current_user.visible_workflow_history_for @article
+    @workflow_history = @article.workflow_history
     
     respond_with :workflow, @article
   end

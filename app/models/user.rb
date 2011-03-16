@@ -35,14 +35,6 @@ class User < ActiveRecord::Base
     sections.include? article.section
   end
   
-  def visible_workflow_history_for (article)
-    if is_admin or is_editor_for(article)
-      article.workflow_history
-    else
-      article.workflow_history_visible_to_article_author
-    end
-  end
-  
   def open_sections
     is_admin ? Section.all : sections
   end
