@@ -67,7 +67,7 @@ GEM
       activerecord
       activesupport
     polyglot (0.3.1)
-    rack (1.2.1)
+    rack (1.2.2)
     rack-mount (0.6.13)
       rack (>= 1.0.0)
     rack-test (0.5.7)
@@ -109,6 +109,7 @@ DEPENDENCIES
   incopy!
   inherited_resources (~> 1.2.1)
   paperclip (~> 2.3)
+  rack (~> 1.2.2)
   rails (= 3.0.3)
   responders
   sqlite3-ruby
