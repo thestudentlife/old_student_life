@@ -1,5 +1,42 @@
-<p id="notice"><%= notice %></p>
+<header>
+  <h1>Articles</h1>
+  
+  <span class="actions">
+    <%= link_to 'New Article', new_workflow_issue_article_path(@issue) %>
+  </span>
+  <div style="clear: both;"></div>
+</header>
 
-
-<%= link_to 'Edit', edit_workflow_issue_path(@issue) %> |
-<%= link_to 'Back', [:workflow, :issues] %>
+<div id="content">
+<% @articles.each do |article| %>
+    <article>
+      <div class="left">
+        <% if article.latest_published_revision %>
+          <q>PUBLISHED</q>
+        <% end %>
+        <p style="margin-top: 0; text-align: center; line-height:18px; padding-top: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0px"><%= article.workflow_status %></p>
+      </div>
+      <div class="mid">
+      <header>
+        <h1 style="line-height: 1em; margin: 0; display: inline;"><%= link_to article.title, workflow_article_path(article) %></h1>
+        <span style="margin-top: 0;" class="timestamp">
+          <%= time_ago_in_words(article.created_at) %> old.
+        </span>
+      </header>
+      <p style="margin-top: 0; margin-bottom: 0; line-height: 1.5em; color: #666">
+        Assigned to
+        <%= article.authors.any? ? article.authors.map{|a|"<span class='change'>#{a}</span>"}.to_sentence.html_safe : "nobody" %>.
+      </p>
+      <p style="">
+        <% if article.status_message and not article.status_message.empty? %>
+          <span class="status_message"><%= article.status_message %></span>
+        <% end %>
+      </p>
+      </div>
+      <div class="right" style="font-size: 14px">
+        <p style="margin-top:0; padding-top: 8px;"><strong>Section:</strong> <%= article.full_section_name %></p>
+      </div>
+      <div style="clear: both;"></div>
+    </article>
+<% end %>
+</div>

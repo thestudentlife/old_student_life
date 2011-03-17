@@ -39,6 +39,7 @@ class User < ActiveRecord::Base
   
   [
     :headlines,
+    :issues,
     :sections,
     :workflow_statuses,
     :users,

@@ -1,23 +1,26 @@
-<h1>Listing issues</h1>
+<header>
+  <h1>Issues</h1>
+  <div style="clear: both"></div>
+</header>
 
+<div id="content">
 <table>
   <tr>
     <th>Name</th>
-    <th></th>
     <th></th>
     <th></th>
   </tr>
 
 <% @issues.each do |issue| %>
   <tr>
-    <td><%= issue.name %></td>
-    <td><%= link_to 'Show', [:workflow, issue] %></td>
-    <td><%= link_to 'Edit', edit_workflow_issue_path(issue) %></td>
-    <td><%= link_to 'Destroy', [:workflow, issue], :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to issue.name, [:workflow, issue] %></td>
+    <% if current_user.can_edit_issues? %>
+      <td><%= link_to 'Edit', edit_workflow_issue_path(issue) %></td>
+      <td><%= link_to 'Destroy', [:workflow, issue], :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>
 
-<br />
-
 <%= link_to 'New Issue', new_workflow_issue_path %>
+</div>

@@ -88,5 +88,5 @@
 <h2>History for this article</h2>
 <%= render_collection_in_same_controller @article.workflow_history, :layout => "item" %>
 
-<%= link_to 'Back', workflow_articles_path %>
+<%= link_to 'Back', workflow_issue_path(@article.issue) %>
 </div>

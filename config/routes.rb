@@ -48,7 +48,7 @@ TslRails::Application.routes.draw do
   
   match 'workflow/' => "workflow#index"
   namespace :workflow do
-    resources :articles do
+    resources :articles, :except => [:index, :new, :create] do
       resources :authors, :controller => "articles/authors"
       resources :comments, :controller => "articles/comments"
       resources :images, :controller => "articles/images"
@@ -57,7 +57,9 @@ TslRails::Application.routes.draw do
     resources :authors
     resources :headlines, :except => [:new]
     match "articles/:id/headline" => "headlines#show", :via => :get
-    resources :issues
+    resources :issues do
+      resources :articles, :only => [:new, :create], :controller => "issues/articles"
+    end
     resources :sections do
       resources :editors, :controller => "sections/editors"
       resources :subsections, :controller => "sections/subsections"

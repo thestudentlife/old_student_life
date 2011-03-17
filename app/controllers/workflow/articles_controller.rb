@@ -1,20 +1,6 @@
 class Workflow::ArticlesController < WorkflowController
   respond_to :html
   
-  before_filter :require_user
-  
-  def index
-    respond_with :workflow, @articles = Article.all
-  end
-  def new
-    @workflow_statuses = current_user.available_workflow_statuses
-    @sections = Section.all
-    @subsections = Subsection.all
-    respond_with :workflow, @article = Article.new
-  end
-  def create
-    respond_with :workflow, @article = Article.create(params[:article])
-  end
   def show
     respond_with :workflow, @article = Article.find(params[:id])
   end

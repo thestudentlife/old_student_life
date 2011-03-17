@@ -351,8 +351,8 @@
 			<ul>
 				<%= li_tag link_to("Home", workflow_path),
     				:class => ("selected" if request.request_uri == workflow_path) %>
-				<%= li_tag link_to("Articles", workflow_articles_path),
-    				:class => is_selected?('articles') %>
+				<%= li_tag link_to("Articles", workflow_issues_path),
+    				:class => (is_selected?('articles') or is_selected?('issues')) %>
 				<%= li_tag_if current_user.can_edit_headlines?,
     				link_to("Front Page", workflow_headlines_path),
     				:class => is_selected?('headlines') %>
