@@ -3,7 +3,6 @@ class Workflow::Issues::ArticlesController < WorkflowController
   
   before_filter { @issue = Issue.find params[:issue_id] }
   def new
-    @workflow_statuses = current_user.available_workflow_statuses
     @sections = Section.all
     @subsections = Subsection.all
     respond_with :workflow, @issue, @article = Article.new

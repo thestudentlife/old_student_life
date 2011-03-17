@@ -1,5 +1,4 @@
 class Article < ActiveRecord::Base
-  belongs_to :workflow_status
   belongs_to :section
   belongs_to :subsection
   has_and_belongs_to_many :authors
@@ -11,7 +10,7 @@ class Article < ActiveRecord::Base
   has_many :viewed_articles
   belongs_to :issue
   
-  validates_presence_of :workflow_status, :section
+  validates_presence_of :section
   
   default_scope :order => 'created_at DESC'
   

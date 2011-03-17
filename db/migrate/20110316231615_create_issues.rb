@@ -5,10 +5,11 @@ class CreateIssues < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_column :articles, :issue_id, :belongs_to
+    add_column :articles, :issue_id, :integer
   end
 
   def self.down
     drop_table :issues
+    drop_column :articles, :issue_id
   end
 end

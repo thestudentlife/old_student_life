@@ -359,9 +359,6 @@
 				<%= li_tag_if current_user.can_edit_sections?,
     				link_to("Sections", workflow_sections_path),
     				:class => is_selected?('sections') %>
-				<%= li_tag_if current_user.can_edit_workflow_statuses?,
-    				link_to("Workflow Statuses", workflow_statuses_path),
-    				:class => is_selected?('statuses') %>
 				<%= li_tag_if current_user.can_edit_users?,
     				link_to("Users", workflow_users_path),
     				:class => is_selected?('users') %>

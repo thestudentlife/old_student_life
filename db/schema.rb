@@ -10,10 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110316231615) do
+ActiveRecord::Schema.define(:version => 20110317060819) do
 
-# Could not dump table "articles" because of following StandardError
-#   Unknown type 'belongs_to' for column 'issue_id'
+  create_table "articles", :force => true do |t|
+    t.string   "working_name"
+    t.string   "status_message"
+    t.integer  "headline_id"
+    t.integer  "section_id"
+    t.integer  "subsection_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "issue_id"
+  end
 
   create_table "articles_authors", :id => false, :force => true do |t|
     t.integer "article_id", :null => false
@@ -26,10 +34,8 @@ ActiveRecord::Schema.define(:version => 20110316231615) do
   end
 
   create_table "authors", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "name",       :limit => nil
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "user_id"
+    t.string  "name"
   end
 
   create_table "headlines", :force => true do |t|
@@ -110,15 +116,6 @@ ActiveRecord::Schema.define(:version => 20110316231615) do
     t.integer  "article_id", :null => false
     t.integer  "author_id",  :null => false
     t.string   "text"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "workflow_statuses", :force => true do |t|
-    t.string   "name"
-    t.boolean  "requires_admin", :default => false
-    t.boolean  "open_to_author", :default => true
-    t.boolean  "publishable",    :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

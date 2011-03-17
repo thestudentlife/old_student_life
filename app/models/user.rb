@@ -18,18 +18,6 @@ class User < ActiveRecord::Base
     end
   end
   
-  def available_workflow_statuses
-    if is_admin
-      return WorkflowStatus.all
-    else
-      return WorkflowStatus.where(:requires_admin => false)
-    end
-  end
-  
-  def can_override_workflow?
-    is_admin
-  end
-  
   def can_publish_revision? (revision)
     revision.can_be_published_by self
   end
@@ -41,7 +29,6 @@ class User < ActiveRecord::Base
     :headlines,
     :issues,
     :sections,
-    :workflow_statuses,
     :users,
     :authors
   ].map{ |m|

@@ -1,27 +1,18 @@
 class Workflow::ArticlesController < WorkflowController
   respond_to :html
+  before_filter { @article = Article.find params[:id] }
   
   def show
-    respond_with :workflow, @article = Article.find(params[:id])
+    respond_with :workflow, @article
   end
   def edit
-    @article = Article.find params[:id]
-    
-    unless @article.workflow_status.requires_admin and not current_user.is_admin
-      @workflow_statuses = current_user.available_workflow_statuses
-    end
     @subsections = @article.section.subsections
     respond_with :workflow, @article
   end
   def update
-    @article = Article.find params[:id]
-    workflow_statuses = current_user.available_workflow_statuses.map(&:id)
-    if not workflow_statuses.include? params[:article][:workflow_status_id].to_i
-      params[:article].delete :workflow_status_id
-    end
-    
     workflow_update = WorkflowUpdate.new_for_article_params(@article, params[:article])
     workflow_update.author = current_user
+    
     
     if @article.update_attributes params[:article] and (workflow_update.updates.any? ? workflow_update.save : true)
       redirect_to workflow_article_path(@article), :notice => "Article was successfully updated"
