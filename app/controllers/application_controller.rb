@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
   
   helper :all
   helper_method :current_user_session, :current_user
-  filter_parameter_logging :password, :password_confirmation
 
   private
     def current_user_session
@@ -26,7 +25,7 @@ class ApplicationController < ActionController::Base
     end
     
     def store_location
-      session[:return_to] = request.request_uri
+      session[:return_to] = request.fullpath
     end
     
     def redirect_back_or_default(default)

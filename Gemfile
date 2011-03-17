@@ -37,3 +37,4 @@ gem "high_voltage"
 gem "incopy", :git => "git://github.com/mikemaltese/html2incopy.git"
 gem "responders"
 gem "inherited_resources", '~> 1.2.1'
+gem "factory_girl_rails"

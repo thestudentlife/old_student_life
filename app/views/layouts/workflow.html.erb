@@ -343,14 +343,14 @@
 		<% if current_user %>
 			<span id="user-info">
 				Logged in as <%= current_user %>.
-				<%= link_to "My account", edit_workflow_user_path (current_user) %> |
+				<%= link_to "My account", edit_workflow_user_path(current_user) %> |
 				<%= link_to "Log out", workflow_logout_path %>
 				<a href="/workflow/help" id="help">Help</a>
 			</span>
 		<nav>
 			<ul>
 				<%= li_tag link_to("Home", workflow_path),
-    				:class => ("selected" if request.request_uri == workflow_path) %>
+    				:class => ("selected" if request.fullpath == workflow_path) %>
 				<%= li_tag link_to("Articles", workflow_issues_path),
     				:class => (is_selected?('articles') or is_selected?('issues')) %>
 				<%= li_tag_if current_user.can_edit_headlines?,

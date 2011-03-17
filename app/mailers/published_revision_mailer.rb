@@ -3,6 +3,6 @@ class PublishedRevisionMailer < ActionMailer::Base
   
   def revision_email (revision)
     attachments["#{revision.title}.incx"] = InCopy.html_to_incopy(revision.body)
-    mail (:to => "mchtly@gmail.com", :subject => revision.title )
+    mail(:to => "mchtly@gmail.com", :subject => revision.title )
   end
 end

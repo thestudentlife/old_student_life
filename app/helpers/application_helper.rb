@@ -4,7 +4,7 @@ module ApplicationHelper
   end
   
   def li_tag_if (condition, *args)
-    li_tag (*args) if condition
+    li_tag *args if condition
   end
 end
 

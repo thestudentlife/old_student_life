@@ -9,7 +9,7 @@ class Workflow::Articles::AuthorsController < WorkflowController
   def create
     @author = Author.find params[:author_id]
     
-    workflow_update = WorkflowUpdate.new_for_adding_author_to_article (@author, @article)
+    workflow_update = WorkflowUpdate.new_for_adding_author_to_article(@author, @article)
     workflow_update.author = current_user
       
     if @article.authors.include? @author
@@ -25,7 +25,7 @@ class Workflow::Articles::AuthorsController < WorkflowController
   def destroy
     @author = @article.authors.find params[:id]
     
-    workflow_update = WorkflowUpdate.new_for_removing_author_from_article (@author, @article)
+    workflow_update = WorkflowUpdate.new_for_removing_author_from_article(@author, @article)
     workflow_update.author = current_user
       
     @article.authors.delete @author
