@@ -185,7 +185,7 @@
 			text-decoration: underline;
 		}
 		.doubleRuleDivide {
-			background: url("/images/doubleRule.gif") repeat-x;
+			background: url("<%= image_path 'doubleRule.gif' %>") repeat-x;
 			height: 4px;
 			margin-top: 12px;
 			margin-bottom: 8px;
@@ -231,7 +231,7 @@
 		}
 		footer {
 			clear: both;
-			background: url("/images/doubleRule.gif") repeat-x;
+			background: url("<%= image_path 'doubleRule.gif' %>") repeat-x;
 			font-size: 11px;
 			line-height: 13px;
 			color: #666;
@@ -256,7 +256,7 @@
 		}
 		.section > header,
 		.author > header {
-			background: url('/images/doubleRule.gif') repeat-x bottom;
+			background: url('<%= image_path 'doubleRule.gif' %>') repeat-x bottom;
 		}
 		.section > header h1 {
 			margin: 0;
@@ -286,7 +286,7 @@
 			margin: 0 0 9px 9px;
 		}
 		.articleComments {
-			background: url("/images/doubleRule.gif") repeat-x;
+			background: url("<%= image_path 'doubleRule.gif' %>") repeat-x;
 			margin-top: 12px;
 			padding-top: 12px;
 			margin-bottom: 8px;
@@ -308,7 +308,7 @@
 </head>
 <body>
 	<header>
-		<%= link_to image_tag("/images/tslbanner2.jpg"), root_path %>
+		<%= link_to image_tag("tslbanner2.jpg"), root_path %>
 	</header>
 	<nav>
 		<ul>
@@ -319,9 +319,9 @@
 						("withSecondary" if section.subsections.any?)] %>
 			<% end %>
 			<%= li_tag link_to("Blogs", blogs_path), :class => ("selected" if request.fullpath == blogs_path) %>
-			<li><a href="/pages/staff">Staff</a></li>
-			<li><a href="/pages/subscriptions">Subscriptions</a></li>
-			<li><a href="/pages/about">About</a></li>
+			<%= li_tag link_to('Staff', page_path(:staff)) %>
+			<%= li_tag link_to('Subscriptions', page_path(:staff)) %>
+			<%= li_tag link_to('About', page_path(:staff)) %>
 			<div style="clear: both;"></div>
 		</ul>
 		<% if @section and @section.subsections.any? %>
@@ -338,7 +338,8 @@
 		<%= yield %>
 	</div>
 	<footer>
-		&copy; 2011 <a href="/">The Student Life</a> | <a href="/pages/contact">Contact us</a>
+		&copy; 2011 <%= link_to 'The Student Life', root_path %> |
+		<%= link_to 'Contact us', page_path(:contact) %>
 	</footer>
 </body>
 </html>
