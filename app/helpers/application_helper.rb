@@ -2,6 +2,10 @@ module ApplicationHelper
   def li_tag(text, options={})
     content_tag :li, text, :class => options[:class]
   end
+  
+  def li_tag_if (condition, *args)
+    li_tag (*args) if condition
+  end
 end
 
 class String

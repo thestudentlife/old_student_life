@@ -39,7 +39,7 @@ class Workflow::UsersController < WorkflowController
       current_user.can_edit_users!
     end
     @user = User.find params[:id]
-    if current_user.can_edit_users
+    if current_user.can_edit_users?
       @authors = Author.open_authors
       @authors << @user.author if @user.author
     end
@@ -67,8 +67,7 @@ class Workflow::UsersController < WorkflowController
         :password_confirmation => params[:password_confirmation]}
     end
     
-    respond_with :workflow,
-      @user,
-      :location => (current_user.can_edit_users ? [:workflow, :users] : :workflow)
+    respond_with :workflow, @user,
+      :location => (current_user.can_edit_users? ? [:workflow, :users] : :workflow)
   end
 end

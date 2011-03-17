@@ -26,14 +26,15 @@ class User < ActiveRecord::Base
     end
   end
   
-  def can_publish_article (article)
-    return true if is_admin
-    return true if article.publishable or article.workflow_status.publishable
-    return false
+  def can_override_workflow?
+    is_admin
   end
   
-  def can_override_workflow
-    is_admin
+  def can_publish_revision? (revision)
+    revision.can_be_published_by self
+  end
+  def can_publish_revision! (revision)
+    can_publish_revision?(revision) or raise NotAuthorized
   end
   
   [
@@ -45,11 +46,11 @@ class User < ActiveRecord::Base
   ].map{ |m|
     "can_edit_#{m}"
   }.each do |permission|
-    define_method(permission) do 
+    define_method("#{permission}?") do 
       is_admin
     end
     define_method("#{permission}!") do
-      send(permission) or raise NotAuthorized
+      send("#{permission}?") or raise NotAuthorized
     end
   end
   

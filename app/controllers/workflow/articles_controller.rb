@@ -21,7 +21,7 @@ class Workflow::ArticlesController < WorkflowController
   def edit
     @article = Article.find params[:id]
     
-    if not @article.workflow_status.requires_admin or current_user.is_admin
+    unless @article.workflow_status.requires_admin and not current_user.is_admin
       @workflow_statuses = current_user.available_workflow_statuses
     end
     @subsections = @article.section.subsections

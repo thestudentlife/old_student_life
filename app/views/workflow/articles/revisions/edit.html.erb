@@ -17,25 +17,23 @@
     </div>
   <% end %>
 
-  <% if current_user.can_publish_article @article %>
-    <div class="field">
-  		<%= f.label :published_online %>
-  		<%= f.check_box :published_online %>
-  	</div>
-  	<div class="field">
-  		<%= f.label :published_online_at %>
-  		<%= f.datetime_select :published_online_at %>
-  	</div>
-	
-  	<div class="field">
-  		<%= f.label :published_in_print %>
-  		<%= f.check_box :published_in_print %>
-  	</div>
-  	<div class="field">
-  		<%= f.label :published_in_print_at %>
-  		<%= f.datetime_select :published_in_print_at %>
-  	</div>
-  <% end %>
+  <div class="field">
+    <%= f.label :published_online %>
+    <%= f.check_box :published_online %>
+  </div>
+  <div class="field">
+    <%= f.label :published_online_at %>
+    <%= f.datetime_select :published_online_at %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :published_in_print %>
+    <%= f.check_box :published_in_print %>
+  </div>
+  <div class="field">
+    <%= f.label :published_in_print_at %>
+    <%= f.datetime_select :published_in_print_at %>
+  </div>
 
   <div class="actions">
     <%= f.submit %>

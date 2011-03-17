@@ -349,23 +349,25 @@
 			</span>
 		<nav>
 			<ul>
-				<%= li_tag link_to("Home", workflow_path), :class => ("selected" if request.request_uri == workflow_path) %>
-				<%= li_tag link_to("Articles", workflow_articles_path), :class => is_selected?('articles') %>
-				<% if current_user.can_edit_headlines %>
-					<%= li_tag link_to("Front Page", workflow_headlines_path), :class => is_selected?('headlines') %>
-				<% end %>
-				<% if current_user.can_edit_sections %>
-					<%= li_tag link_to("Sections", workflow_sections_path), :class => is_selected?('sections') %>
-				<% end %>
-				<% if current_user.can_edit_workflow_statuses %>
-					<%= li_tag link_to("Workflow Statuses", workflow_statuses_path), :class => is_selected?('statuses') %>
-				<% end %>
-				<% if current_user.can_edit_users %>
-					<%= li_tag link_to("Users", workflow_users_path), :class => is_selected?('users') %>
-				<% end %>
-				<% if current_user.can_edit_authors %>
-					<%= li_tag link_to("Authors", workflow_authors_path), :class => is_selected?('authors') %>
-				<% end %>
+				<%= li_tag link_to("Home", workflow_path),
+    				:class => ("selected" if request.request_uri == workflow_path) %>
+				<%= li_tag link_to("Articles", workflow_articles_path),
+    				:class => is_selected?('articles') %>
+				<%= li_tag_if current_user.can_edit_headlines?,
+    				link_to("Front Page", workflow_headlines_path),
+    				:class => is_selected?('headlines') %>
+				<%= li_tag_if current_user.can_edit_sections?,
+    				link_to("Sections", workflow_sections_path),
+    				:class => is_selected?('sections') %>
+				<%= li_tag_if current_user.can_edit_workflow_statuses?,
+    				link_to("Workflow Statuses", workflow_statuses_path),
+    				:class => is_selected?('statuses') %>
+				<%= li_tag_if current_user.can_edit_users?,
+    				link_to("Users", workflow_users_path),
+    				:class => is_selected?('users') %>
+				<%= li_tag_if current_user.can_edit_authors?,
+    				link_to("Authors", workflow_authors_path),
+    				:class => is_selected?('authors') %>
 			</ul>
 		</nav>
 		<% end %>

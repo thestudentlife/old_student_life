@@ -26,7 +26,7 @@
 </header>
 
 <div class="right" style="margin-top: 10px">
-    <% if @editable %>
+    <% if current_user.can_publish_revision?(revision) %>
       <%= link_to 'Edit', edit_workflow_article_revision_path(@article, revision) %>
     <% end %>
 </div>

@@ -27,9 +27,11 @@
   	</div>
   	<div class="right">
       <%= link_to 'Edit', edit_workflow_user_path(user) %>
-      <% if current_user.can_edit_users and current_user != user %>
-        | <%= link_to "Reset password", reset_workflow_user_path(user), :method => :post, :confirm => "Are you sure?" %>
-      <% end %>
+      <%= link_to_if (current_user.can_edit_users? and current_user != user),
+          "Reset password",
+          reset_workflow_user_path(user),
+          :method => :post,
+          :confirm => "Are you sure?" %>
     </div>
     <div style="clear: both;"></div>
   </article>

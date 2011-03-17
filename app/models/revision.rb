@@ -1,4 +1,11 @@
+module RevisionPermissions
+  def can_be_published_by (user)
+    user.is_admin
+  end
+end
+
 class Revision < ActiveRecord::Base
+  include RevisionPermissions
   belongs_to :article
   belongs_to :author, :class_name => "User"
   validates_presence_of :body

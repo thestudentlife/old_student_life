@@ -5,14 +5,11 @@
 
 <div id="content">
 <%= form_for [:workflow, @user] do |f| %>
-  <% if @user.errors.any? or @user.errors.any? %>
+  <% if @user.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count + @user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
       <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
       <% @user.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
@@ -25,16 +22,18 @@
 		<%= f.text_field :email %>
 	</div>
 	<% if current_user.is_admin %>
-  	<div class="field">
-  		<%= f.label :is_admin %>
-  		<%= f.check_box :is_admin %>
-  	</div>
+    	<div class="field">
+    		<%= f.label :is_admin %>
+    		<%= f.check_box :is_admin %>
+    	</div>
 	<% end %>
-	<% if current_user.can_edit_users %>
+	<% if current_user.can_edit_users? %>
 	  <div class="field">
   	  <%= label_tag :author_id, "Associated author" %>
   	  <%= select_tag :author_id,
-  	    options_from_collection_for_select(@authors, :id, :to_s, @user.author ? @user.author.id : nil),
+  	    options_from_collection_for_select(
+     	    @authors, :id, :to_s,
+     	    @user.author ? @user.author.id : nil),
   	    :include_blank => "(none)" %>
   	</div>
 	<% end %>
@@ -54,6 +53,6 @@
 <% end %>
 
 <p>
-<%= link_to 'Back', current_user.can_edit_users ? workflow_users_path : workflow_path %>
+<%= link_to 'Back', current_user.can_edit_users? ? workflow_users_path : workflow_path %>
 </p>
 </div>
