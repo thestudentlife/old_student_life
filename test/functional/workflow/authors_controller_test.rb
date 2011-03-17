@@ -15,10 +15,6 @@ class Workflow::AuthorsControllerTest < ActionController::TestCase
   requires_login :update, :put, :id => 4
   requires_login :destroy, :delete, :id => 4
   
-  # inherit_resources :before => lambda { workflow_login! }
-  # create :location => {:action => :index}
-  # update :location => {:action => :index}
-  
   test "should get index" do
     workflow_login!
     get :index

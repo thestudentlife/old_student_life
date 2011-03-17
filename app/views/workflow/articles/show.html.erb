@@ -13,8 +13,8 @@
       <%= link_to "Add to front page", workflow_headline_path(@article) %> |
     <% end %>
     <%= link_to 'Edit', edit_workflow_article_path(@article) %> |
-    <%= link_to 'Post revision', new_workflow_article_revision_path (@article) %> |
-    <%= link_to 'Post comment', new_workflow_article_comment_path (@article) %>
+    <%= link_to 'Post revision', new_workflow_article_revision_path(@article) %> |
+    <%= link_to 'Post comment', new_workflow_article_comment_path(@article) %>
   </span>
   <div style="clear: both;"></div>
   <span style="color: #5F87A5;"><%= time_ago_in_words(@article.created_at) %> ago</span>
@@ -37,7 +37,7 @@
   <div class="content">
   <p>
     Authors
-    <%= link_to "Add author", new_workflow_article_author_path (@article) %>
+    <%= link_to "Add author", new_workflow_article_author_path(@article) %>
   </p>
   <ul>
   	<% @article.authors.each do |author| %>
@@ -53,7 +53,7 @@
   <p>
     Image
     <% if @article.images.empty? %>
-      <%= link_to "Upload image", new_workflow_article_image_path (@article) %>
+      <%= link_to "Upload image", new_workflow_article_image_path(@article) %>
     <% end %>
   </p>
   <ul style="display: block; float: left; width: 100%">

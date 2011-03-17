@@ -10,10 +10,6 @@ class WorkflowUpdate < ActiveRecord::Base
     if article.status_message.to_s != params[:status_message].to_s
       workflow_update.updates["Status message"] = [article.status_message, params[:status_message]]
     end
-    if article.workflow_status_id != params[:workflow_status_id].to_i
-      workflow_status = WorkflowStatus.find params[:workflow_status_id]
-      workflow_update.updates["Workflow status"] = [article.workflow_status.to_s, workflow_status.to_s]
-    end
     if params[:subsection_id] and not params[:subsection_id].empty? and article.subsection_id != params[:subsection_id].to_i
       new_subsection = Subsection.find(params[:subsection_id]).to_s
       old_subsection = (a = article.subsection) ? a.to_s : "(none)"
