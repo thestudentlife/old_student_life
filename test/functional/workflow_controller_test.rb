@@ -1,15 +1,14 @@
 require 'test_helper'
 
 class WorkflowControllerTest < ActionController::TestCase
+  
   setup :activate_authlogic
-
-  test "should require login" do
-    get :index
-    assert_redirected_to workflow_login_path
-  end
+  requires_login :index, :get
+  
   test "should get index" do
-    UserSession.create Factory.create(:user)
+    workflow_login!
     get :index
     assert_response :success
   end
+  
 end
