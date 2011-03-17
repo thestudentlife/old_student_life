@@ -60,6 +60,7 @@ TslRails::Application.routes.draw do
     resources :issues do
       resources :articles, :only => [:new, :create], :controller => "issues/articles"
     end
+    resources :review_slots, :except => [:show]
     resources :sections do
       resources :editors, :controller => "sections/editors"
       resources :subsections, :controller => "sections/subsections"

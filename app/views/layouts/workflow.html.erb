@@ -376,7 +376,17 @@
 				<p><strong><%= k.to_s.capitalize %>:</strong> <%= v %></p>
 			</div>
 		<% end %>
-		<%= yield %>
+		<% if content_for? :header %>
+    		<header>
+        		<%= yield :header %>
+        		<div style="clear: both;"></div>
+    		</header>
+    		<div id="content">
+        		<%= yield %>
+    		</div>
+		<% else %>
+    		<%= yield %>
+    	<% end %>
 	</section>
 	<section id="side">
 		<%= yield :side %>

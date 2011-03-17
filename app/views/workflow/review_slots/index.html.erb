@@ -1,0 +1,23 @@
+<% content_for :header do %>
+  <h1>Review Slots</h1>
+<% end %>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @review_slots.each do |review_slot| %>
+  <tr>
+    <td><%= review_slot %></td>
+    <td><%= link_to 'Edit', edit_workflow_review_slot_path(review_slot) %></td>
+    <td><%= link_to 'Destroy', [:workflow, review_slot], :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Review slot', new_workflow_review_slot_path %>
