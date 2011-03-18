@@ -1,4 +1,4 @@
-# This file is used by Rack-based servers to start the application.
-
-require ::File.expand_path('../config/environment',  __FILE__)
-run TslRails::Application
+map '/' do
+	app, options = Rack::Builder.parse_file(File.dirname(__FILE__) + '/workflow/config.ru')
+	run app
+end
