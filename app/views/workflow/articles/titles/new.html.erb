@@ -1,0 +1,26 @@
+<% content_for :header do %>
+  <h1>New title</h1>
+<% end %>
+
+<%= form_for [:workflow, @article, @title], :url => workflow_article_titles_path(@article) do |f| %>
+  <% if @title.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@title.errors.count, "error") %> prohibited this title from being saved:</h2>
+
+      <ul>
+      <% @title.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<div class="field wide-field">
+		<%= f.label :text %>
+		<%= f.text_field :text %>
+	</div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

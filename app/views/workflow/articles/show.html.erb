@@ -1,4 +1,4 @@
-<header>
+<% content_for :header do %>
   <h1>
     <%= @article %>
     <span class="tag">
@@ -25,8 +25,7 @@
     None
   <% end %>
   </p>
-</header>
-<div id="content">
+<% end # content_for :header %>
   
 <% content_for :side do %>
   <header>
@@ -35,6 +34,23 @@
   </header>
   
   <div class="content">
+  <p>
+    Proposed Titles
+    <%= link_to "Add title", new_workflow_article_title_path(@article) %>
+  </p>
+  <ul>
+  	<% @article.titles.each do |title| %>
+  		<li style="margin-bottom: 0.5em; margin-left: 0.5em">
+  		  <span style="color: white"><%= title %></span>
+		    <%= link_to 'Remove',
+	        workflow_article_title_path(@article, title),
+	        :confirm => 'Are you sure?',
+	        :method => :delete %>
+	      <br/>
+	      <span style="padding-left: 1em; color:#ddd; font-size: 0.9em">– <%= title.author %></span>
+  		</li>
+  	<% end %> 
+  </ul>
   <p>
     Authors
     <%= link_to "Add author", new_workflow_article_author_path(@article) %>
@@ -80,10 +96,9 @@
     <% end %>
   </ul>
   </div>
-<% end %>
+<% end # content_for :side%>
 
 <h2>History for this article</h2>
 <%= render_collection_in_same_controller @article.workflow_history, :layout => "item" %>
 
 <%= link_to 'Back', workflow_issue_path(@article.issue) %>
-</div>
