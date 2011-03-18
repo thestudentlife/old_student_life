@@ -1,13 +1,11 @@
-<header>
+<% content_for :header do %>
   <h1>Sections</h1>
   
   <span class="actions">
-    <%= link_to 'New Section', new_workflow_section_path %>
+    <%= link_to 'New Section', new_workflow_section_path, :class => :button %>
   </span>
-  <div style="clear: both;"></div>
-</header>
+<% end %>
 
-<div id="content">
 <% @sections.each do |section| %>
     <article>
       <div class="left">
@@ -46,4 +44,3 @@
       <div style="clear: both;"></div>
     </article>
 <% end %>
-</div>

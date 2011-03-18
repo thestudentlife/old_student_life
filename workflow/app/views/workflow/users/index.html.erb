@@ -1,13 +1,12 @@
-<header>
+<% content_for :header do %>
   <h1>Users</h1>
   
   <span class="actions">
-    <%= link_to 'New user', new_workflow_user_path %>
+    <%= link_to 'New user', new_workflow_user_path, :class => :button %>
   </span>
   <div style="clear: both;"></div>
-</header>
+<% end %>
 
-<div id="content">
 <% @users.each do |user| %>
   <article style="padding-bottom: 4px">
     <div class="left">
@@ -36,4 +35,3 @@
     <div style="clear: both;"></div>
   </article>
 <% end %>
-</div>

@@ -1,21 +1,14 @@
-<header>
+<% content_for :header do %>
   <h1>Articles</h1>
   
   <span class="actions">
-    <%= link_to 'New Article', new_workflow_issue_article_path(@issue) %>
+    <%= link_to 'New Article', new_workflow_issue_article_path(@issue), :class => :button %>
   </span>
-  <div style="clear: both;"></div>
-</header>
+<% end %>
 
-<div id="content">
+  
 <% @articles.each do |article| %>
     <article>
-      <div class="left">
-        <!--<%# if article.published_online? %>
-          <q>PUBLISHED</q>
-        <%# end %>-->
-        <p style="margin-top: 0; text-align: center; line-height:18px; padding-top: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0px"></p>
-      </div>
       <div class="mid">
       <header>
         <h1 style="line-height: 1em; margin: 0; display: inline;"><%= link_to article, workflow_article_path(article) %></h1>
@@ -39,4 +32,3 @@
       <div style="clear: both;"></div>
     </article>
 <% end %>
-</div>

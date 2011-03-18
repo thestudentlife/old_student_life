@@ -1,9 +1,10 @@
-<header>
+<% content_for :header do %>
   <h1>Issues</h1>
-  <div style="clear: both"></div>
-</header>
+  <span class="actions">
+    <%= link_to 'New Issue', new_workflow_issue_path, :class => :button %>
+  </span>
+<% end %>
 
-<div id="content">
 <table>
   <tr>
     <th>Name</th>
@@ -21,6 +22,3 @@
   </tr>
 <% end %>
 </table>
-
-<%= link_to 'New Issue', new_workflow_issue_path %>
-</div>
