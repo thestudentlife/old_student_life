@@ -10,6 +10,8 @@ class Article < ActiveRecord::Base
   has_many :viewed_articles
   belongs_to :issue
   
+  has_many :titles, :class_name => "ArticleTitle"
+  
   has_many :reviews, :class_name => "WorkflowReview"
   has_many :review_slots, :through => :reviews
   
@@ -18,21 +20,13 @@ class Article < ActiveRecord::Base
   default_scope :order => 'created_at DESC'
   
   def slug
-    t = latest_published_revision.title.to_slug
+    t = to_s.to_slug.gsub(/(^-)|(-$)/,'')
     t = "-#{t}" if t =~ /^\d/
     "#{id}#{t}"
   end
   
-  def title
-    if latest_published_revision
-      return latest_published_revision.title
-    end
-    latest_revision = revisions.order("created_at DESC").find(:first)
-    if latest_revision and not latest_revision.title.empty?
-      return latest_revision.title
-    else
-      return working_name
-    end
+  def to_s
+    (titles.order('created_at DESC').first || '<untitled>').to_s
   end
   
   def summary

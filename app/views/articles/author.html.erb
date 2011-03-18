@@ -15,7 +15,7 @@
 				</div>
 			<% end %>
 			<header>
-				<h1><%= link_to revision.title, article_path(revision.article) %></h1>
+				<h1><%= link_to revision.article, article_path(revision.article) %></h1>
 				<span class="byline">
 					By
 					<%= revision.article.authors.map{|a|

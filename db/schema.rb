@@ -10,10 +10,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110318083031) do
+ActiveRecord::Schema.define(:version => 20110318090846) do
+
+  create_table "article_titles", :force => true do |t|
+    t.integer  "article_id", :null => false
+    t.integer  "author_id",  :null => false
+    t.string   "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "articles", :force => true do |t|
-    t.string   "working_name"
     t.string   "status_message"
     t.integer  "headline_id"
     t.integer  "section_id"
@@ -67,7 +74,6 @@ ActiveRecord::Schema.define(:version => 20110318083031) do
   create_table "revisions", :force => true do |t|
     t.integer  "article_id",                               :null => false
     t.integer  "author_id",                                :null => false
-    t.string   "title"
     t.text     "body"
     t.boolean  "published_online",      :default => false
     t.datetime "published_online_at"

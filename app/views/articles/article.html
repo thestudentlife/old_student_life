@@ -1,6 +1,6 @@
 <article id="aColumn" class="fullArticle">
 	<header>
-		<h1><%= @revision.title %></h1>
+		<h1><%= @article %></h1>
 		<% if @article.images.any? %>
 			<div class="articleImage">
 				<%= image_tag @article.images.first.file.url, :width => "100%" %>

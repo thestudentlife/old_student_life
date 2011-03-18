@@ -15,6 +15,7 @@ class Workflow::Articles::RevisionsController < WorkflowController
   end
 
   def create
+    params[:revision] ||= {}
     params[:revision][:body] = params["wmd-input"]
     @revision = Revision.new(params[:revision])
     @revision.article = @article

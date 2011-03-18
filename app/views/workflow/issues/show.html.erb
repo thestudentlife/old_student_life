@@ -18,7 +18,7 @@
       </div>
       <div class="mid">
       <header>
-        <h1 style="line-height: 1em; margin: 0; display: inline;"><%= link_to article.title, workflow_article_path(article) %></h1>
+        <h1 style="line-height: 1em; margin: 0; display: inline;"><%= link_to article, workflow_article_path(article) %></h1>
         <span style="margin-top: 0;" class="timestamp">
           <%= time_ago_in_words(article.created_at) %> old.
         </span>
