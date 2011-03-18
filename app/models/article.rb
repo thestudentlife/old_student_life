@@ -15,6 +15,7 @@ class Article < ActiveRecord::Base
   has_many :reviews, :class_name => "WorkflowReview"
   has_many :review_slots, :through => :reviews
   
+  validates_presence_of :name
   validates_presence_of :section
   
   default_scope :order => 'created_at DESC'
@@ -26,7 +27,7 @@ class Article < ActiveRecord::Base
   end
   
   def to_s
-    (titles.order('created_at DESC').first || '<untitled>').to_s
+    name
   end
   
   def summary

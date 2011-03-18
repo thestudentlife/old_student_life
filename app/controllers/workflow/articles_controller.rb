@@ -17,7 +17,7 @@ class Workflow::ArticlesController < WorkflowController
     if @article.update_attributes params[:article] and (workflow_update.updates.any? ? workflow_update.save : true)
       redirect_to workflow_article_path(@article), :notice => "Article was successfully updated"
     else
-      @subsections = current_user.open_sections.map(&:subsections).flatten
+      @subsections = @article.section.map(&:subsections).flatten
       render :action => "edit"
     end
   end
