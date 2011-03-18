@@ -10,12 +10,12 @@ class ViewedArticle < ActiveRecord::Base
       sum[value] += 1
       sum
     end.map do |article_id, views|
-      {:id => article_id,
+      {:article_id => article_id,
        :views => views}
     end.sort_by do |article|
       article[:views]
     end.reverse[0..limit-1].map do |params|
-      Revision.latest_published_for_article params[:id]
+      params[:article_id]
     end
   end
 end

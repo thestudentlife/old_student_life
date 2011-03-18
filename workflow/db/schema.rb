@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110318095448) do
+ActiveRecord::Schema.define(:version => 20110318180820) do
 
   create_table "article_titles", :force => true do |t|
     t.integer  "article_id", :null => false
@@ -65,6 +65,14 @@ ActiveRecord::Schema.define(:version => 20110318095448) do
     t.datetime "updated_at"
   end
 
+  create_table "print_published_articles", :force => true do |t|
+    t.integer  "article_id",  :null => false
+    t.integer  "revision_id", :null => false
+    t.integer  "title_id",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "review_slots", :force => true do |t|
     t.string   "name"
     t.boolean  "requires_admin"
@@ -73,13 +81,9 @@ ActiveRecord::Schema.define(:version => 20110318095448) do
   end
 
   create_table "revisions", :force => true do |t|
-    t.integer  "article_id",                               :null => false
-    t.integer  "author_id",                                :null => false
+    t.integer  "article_id", :null => false
+    t.integer  "author_id",  :null => false
     t.text     "body"
-    t.boolean  "published_online",      :default => false
-    t.datetime "published_online_at"
-    t.boolean  "published_in_print",    :default => false
-    t.datetime "published_in_print_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -119,6 +123,15 @@ ActiveRecord::Schema.define(:version => 20110318095448) do
   create_table "viewed_articles", :force => true do |t|
     t.integer  "article_id", :null => false
     t.datetime "created_at"
+  end
+
+  create_table "web_published_articles", :force => true do |t|
+    t.datetime "published_at", :null => false
+    t.integer  "article_id",   :null => false
+    t.integer  "revision_id",  :null => false
+    t.integer  "title_id",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "workflow_comments", :force => true do |t|

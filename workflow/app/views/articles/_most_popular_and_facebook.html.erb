@@ -3,7 +3,7 @@
 		<h1>Most popular</h1>
 		<ol>
 			<% @most_viewed.each do |viewed| %>
-				<li><%= link_to viewed.article, article_path(viewed.article) %></li>
+				<li><%= link_to viewed, article_path(viewed) %></li>
 			<% end %>
 		</ol>
 	</section>

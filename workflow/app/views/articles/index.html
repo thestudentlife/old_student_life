@@ -1,81 +1,81 @@
 <div id="aColumn">
-	<div id="ledes"><div class="slides_container">
-	<% @headlines.each do |headline| %>
+	<!--<div id="ledes"><div class="slides_container">
+	<%# @headlines.each do |headline| %>
 		<article class="lede">
 			<header>
-				<h1><%= link_to headline.title, article_path(headline.article) %></h1>
+				<h1><%#= link_to headline.title, article_path(headline.article) %></h1>
 				<span class="byline">
 					By
-					<%= headline.article.authors.map{|a|
+					<%#= headline.article.authors.map{|a|
 							content_tag :span, a, :class=>'author'
 						}.to_sentence.html_safe %>
 					<span class="timestamp">
-						<%= time_ago_in_words headline.published_online_at %> ago
+						<%#= time_ago_in_words headline.published_online_at %> ago
 					</span>
 				</span>
 			</header>
-			<% if headline.article.images.any? %>
+			<%# if headline.article.images.any? %>
 				<div class="ledephoto">
-					<%= link_to(
+					<%#= link_to(
 						image_tag(
 							headline.article.images.first.file.url,
 							:height => 200), 
 					    article_path(headline.article)) %>
 					<div class="credit">
-						<%= headline.article.images.first.credit %>
+						<%#= headline.article.images.first.credit %>
 					</div>
 					<!--<div class="caption">
-						<%= headline.article.images.first.caption %>
-					</div>-->
+						<%#= headline.article.images.first.caption %>
+					</div>-\->
 				</div>
-			<% end %>
-			<p class="summary"><%= headline.long_summary %></p>
+			<%# end %>
+			<p class="summary"><%#= headline.long_summary %></p>
 			<span class="actions">
-				<%= link_to "Read more", article_path(headline.article) %>
+				<%#= link_to "Read more", article_path(headline.article) %>
 			</span>
 			<div style="clear: both;"></div>
 		</article>
-	<% end %>
+	<%# end %>
 	</div>
 	<ul class="pagination">
-		<% @headlines.each_with_index do |headline, i| %>
+		<%# @headlines.each_with_index do |headline, i| %>
 			<li>
-				<%= link_to headline.title, "##{i}" %>
+				<%#= link_to headline.title, "##{i}" %>
 			</li>
-		<% end %>
+		<%# end %>
 	</ul>
-	</div>
+	</div>-->
 	<div class="doubleRuleDivide">&nbsp;</div>
-	<% @revisions.each do |revision| %>
+	<% @articles.each do |article| %>
 		<article class="teaser">
-			<% if revision.article.images.any? %>
+			<% if article.images.any? %>
 				<div class="thumbnail">
 					<%= link_to(
 						image_tag(
-							revision.article.images.first.file.url(:thumb),
+							article.images.first.file.url(:thumb),
 							:width => 75,
 							:height => 75), 
-					    article_path(revision.article)) %>
+					    article_path(article)) %>
 				</div>
 			<% end %>
 			<header>
-				<h1><%= link_to revision.article, article_path(revision.article) %></h1>
+				<h1><%= link_to article, article_path(article) %></h1>
 				<span class="byline">
 					By
-					<%= revision.article.authors.map{|a|
+					<%= article.authors.map{|a|
 						content_tag :span, a, :class=>'author'
 					}.to_sentence.html_safe %>
 					<span class="timestamp">
-						<%= time_ago_in_words revision.published_online_at %> ago
+						<%= time_ago_in_words article.published_at %> ago
 					</span>
 				</span>
 			</header>
-			<p class="summary"><%= revision.summary %></p>
+			<p class="summary"><%= article.teaser %></p>
 		</article>
 	<% end %>
 </div>
 <%= render "most_popular_and_facebook" %>
-<script>
+<!--<script>
   $(document).ready (function(){
     $("#ledes").slides({
 		preload: true,
@@ -89,4 +89,4 @@
 	});
 	$(".pagination").show();
   });
-</script>
+</script>-->
