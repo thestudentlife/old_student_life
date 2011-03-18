@@ -6,9 +6,9 @@ class Article < ActiveRecord::Base
   has_many :workflow_comments
   has_many :workflow_updates
   has_many :images
-  belongs_to :headline
-  has_many :viewed_articles
   belongs_to :issue
+  
+  has_one :front_page_article
   
   has_many :titles, :class_name => "ArticleTitle"
   
@@ -20,18 +20,20 @@ class Article < ActiveRecord::Base
   
   default_scope :order => 'created_at DESC'
   
-  def slug
-    t = to_s.to_slug.gsub(/(^-)|(-$)/,'')
-    t = "-#{t}" if t =~ /^\d/
-    "#{id}#{t}"
+  def published_online?
+    WebPublishedArticle.where(:article_id => self.id).exists?
+  end
+  
+  def published_online_at
+    WebPublishedArticle.published.find_by_article_id(id).published_at
   end
   
   def to_s
     name
   end
   
-  def summary
-    latest_published_revision.summary
+  def teaser
+    WebPublishedArticle.published.find_by_article_id(id).teaser
   end
   
   def status
@@ -44,13 +46,6 @@ class Article < ActiveRecord::Base
   
   def full_section_name
     subsection ? subsection.full_name : section.name
-  end
-  
-  def latest_published_revision
-    revisions.where(:published_online => true
-    ).where("published_online_at < ?", Time.now
-    ).order("published_online_at DESC"
-    ).find(:first)
   end
   
   def workflow_history

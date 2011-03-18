@@ -26,11 +26,11 @@ class User < ActiveRecord::Base
   end
   
   [
-    :headlines,
+    :authors,
+    :front_page,
     :issues,
     :sections,
-    :users,
-    :authors
+    :users
   ].map{ |m|
     "can_edit_#{m}"
   }.each do |permission|

@@ -15,12 +15,12 @@ TslRails::Application.routes.draw do
   
   root :to => "articles#index"
   match '/articles' => redirect("/")
+  match '/articles/:year/:month/:day/:section/:id' => 'articles#article',
+    :year => /\d+/, :month => /\d+/, :day => /\d+/, :id => /\d.*/
   match '/articles/:section/:id' => "articles#article", :id => /\d.*/
   match '/articles/:section/:subsection/:id' => "articles#article"
   match '/articles/:section/:subsection' => "articles#subsection", :subsection => /\w.*/
   match '/articles/:section' => "articles#section"
-  match '/articles/:year/:month/:day/:id' => 'articles#article',
-    :year => /\d+/, :month => /\d+/, :day => /\d+/, :id => /\d.*/
   match '/authors/:author' => "articles#author"
   match '/blogs' => "blogs#index"
   
@@ -29,9 +29,10 @@ TslRails::Application.routes.draw do
   module ArticlesHelper
     def article_path(article)
       File.join articles_path,
-        article.published_at.year,
-        article.published_at.month,
-        article.published_at.day,
+        article.published_at.year.to_s,
+        article.published_at.month.to_s,
+        article.published_at.day.to_s,
+        article.section.url,
         article.slug
     end
     
@@ -60,10 +61,10 @@ TslRails::Application.routes.draw do
       resources :images, :controller => "articles/images"
       resources :revisions, :controller => "articles/revisions"
       resources :titles, :controller => "articles/titles"
+      resource :front_page, :controller => "articles/front_page", :only => [:new, :create]
     end
     resources :authors
-    resources :headlines, :except => [:new]
-    match "articles/:id/headline" => "headlines#show", :via => :get
+    resources :front_page_articles, :except => [:show, :new, :create]
     resources :issues do
       resources :articles, :only => [:new, :create], :controller => "issues/articles"
     end

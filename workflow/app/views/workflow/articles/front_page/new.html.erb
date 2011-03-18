@@ -1,0 +1,32 @@
+<% content_for :header do %>
+  <h1>Adding article to front page</h1>
+<% end %>
+
+<%= form_for [:workflow, @article, @front_page_article], :url => [:workflow, @article, :front_page] do |f| %>
+  <% if @front_page_article.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@front_page_article.errors.count, "error") %> prohibited this front page article from being saved:</h2>
+
+      <ul>
+      <% @front_page_article.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+    <%= label_tag :article %>
+    <div style="float: left; width: 75%">    
+      <%= @front_page_article %>
+    </div>
+    <div style="clear: both"></div>
+  </div>
+	<div class="field">
+		<%= f.label :priority %>
+		<%= f.text_field :priority %>
+	</div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,28 @@
+<% content_for :header do %>
+  <h1>Front Page</h1>
+<% end %>
+
+<% @front_page_articles.each do |front_page_article| %>
+  <article class="headline">
+    <div class="left">
+      <p style="margin-top: 0; text-align: center; line-height:18px; padding-top: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0px">P<%= front_page_article.priority %></p>
+    </div>
+    <div class="mid">
+      <header>
+        <h1 style="line-height: 1em; margin: 0; display: inline;">
+          <%= link_to front_page_article, workflow_article_path(front_page_article.article) %>
+        </h1>
+        <span style="color: #666; margin-top: 0;">
+          <q>Published <%= time_ago_in_words(front_page_article.article.published_online_at) %> ago</q>
+        </span>
+      </header>
+      <p style="color: #555"><%= front_page_article.article.teaser %></p>
+    </div>
+    <div class="right">
+      <p style="font-size: 14px; margin-top:0; padding-top: 8px;"><strong>Section:</strong> <%= front_page_article.article.full_section_name %></p>
+      <p><%= link_to 'Edit', edit_workflow_front_page_article_path(front_page_article) %>
+      <%= link_to 'Destroy', workflow_front_page_article_path(front_page_article), :confirm => 'Are you sure?', :method => :delete %></p>
+    </div>
+    <div style="clear: both;"></div>
+  </article> 
+<% end %>

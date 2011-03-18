@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110318180820) do
+ActiveRecord::Schema.define(:version => 20110318191624) do
 
   create_table "article_titles", :force => true do |t|
     t.integer  "article_id", :null => false
@@ -41,7 +41,8 @@ ActiveRecord::Schema.define(:version => 20110318180820) do
     t.string  "name"
   end
 
-  create_table "headlines", :force => true do |t|
+  create_table "front_page_articles", :force => true do |t|
+    t.integer  "article_id", :null => false
     t.integer  "priority"
     t.datetime "created_at"
     t.datetime "updated_at"

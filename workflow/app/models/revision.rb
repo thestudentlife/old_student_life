@@ -10,27 +10,16 @@ class Revision < ActiveRecord::Base
   belongs_to :author, :class_name => "User"
   validates_presence_of :body
   
-  def self.latest_published
-    self.group("article_id"
-    ).where(:published_online => true
-    ).where("published_online_at < ?", Time.now
-    )
+  def published_online?
+    WebPublishedArticle.where(:revision_id => id).exists?
   end
   
-  def self.latest_headlines
-    latest_published.joins(:article => [:headline]
-    ).where("articles.headline_id"
-    ).order("headlines.priority")
+  def published_online_at
+    WebPublishedArticle.where(:revision_id => id).group(:revision_id).first.published_at
   end
   
-  def self.latest_published_not_in_headlines
-    latest_published.joins(:article
-    ).where(:articles => {:headline_id => nil}
-    ).order("published_online_at DESC")
-  end
-  
-  def self.latest_published_for_article (article_id)
-    latest_published.where(:article_id => article_id).first
+  def published_in_print?
+    PrintPublishedArticle.where(:revision_id => id).exists?
   end
   
   def previous
@@ -39,7 +28,7 @@ class Revision < ActiveRecord::Base
   
   include ActionView::Helpers::SanitizeHelper
   include ActionView::Helpers::TextHelper
-  def summary(length=100)
+  def teaser(length=100)
     sentences = strip_tags(body).scan(/.*?[\.\!\?]/)
     sum = sentences.shift
     sum = body if not sum
@@ -51,10 +40,6 @@ class Revision < ActiveRecord::Base
     end
     # why wasn't it already stripping? hmm
     return strip_tags(sum)
-  end
-  
-  def long_summary
-    summary 300
   end
   
   def diff

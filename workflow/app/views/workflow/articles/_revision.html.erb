@@ -7,18 +7,18 @@
       </span>
     </h1>
     <p style="margin-top: 0; margin-bottom: 0">
-      Published online: <% if not revision.published_online %> No <% end %>
+      Published online: <% if not revision.published_online? %> No <% end %>
     </p>
     <p>
-      <% if revision.published_online %>
+      <% if revision.published_online? %>
         <q><%= revision.published_online_at %></q>
       <% end %>
     </p>
     <p style="margin-top: 0; margin-bottom: 0">
-      Published in print: <% if not revision.published_in_print %> No <% end %>
+      Published in print: <% if not revision.published_in_print? %> No <% end %>
     </p>
     <p>
-      <% if revision.published_in_print %>
+      <% if revision.published_in_print? %>
         <q><%= revision.published_in_print_at %></q>
       <% end %>
     </p>
@@ -26,9 +26,6 @@
 </header>
 
 <div class="right" style="margin-top: 10px">
-    <% if current_user.can_publish_revision?(revision) %>
-      <%= link_to 'Edit', edit_workflow_article_revision_path(@article, revision) %>
-    <% end %>
 </div>
 
 <div class="mid">
