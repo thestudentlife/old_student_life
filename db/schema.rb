@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110317185956) do
+ActiveRecord::Schema.define(:version => 20110318083031) do
 
   create_table "articles", :force => true do |t|
     t.string   "working_name"
@@ -118,6 +118,14 @@ ActiveRecord::Schema.define(:version => 20110317185956) do
     t.integer  "article_id", :null => false
     t.integer  "author_id",  :null => false
     t.string   "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "workflow_reviews", :force => true do |t|
+    t.integer  "review_slot_id", :null => false
+    t.integer  "article_id",     :null => false
+    t.string   "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

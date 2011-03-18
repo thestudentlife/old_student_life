@@ -10,6 +10,9 @@ class Article < ActiveRecord::Base
   has_many :viewed_articles
   belongs_to :issue
   
+  has_many :reviews, :class_name => "WorkflowReview"
+  has_many :review_slots, :through => :reviews
+  
   validates_presence_of :section
   
   default_scope :order => 'created_at DESC'
