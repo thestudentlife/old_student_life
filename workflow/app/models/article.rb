@@ -10,6 +10,8 @@ class Article < ActiveRecord::Base
   
   has_one :front_page_article
   
+  has_many :web_published_articles
+  
   has_many :titles, :class_name => "ArticleTitle"
   
   has_many :reviews, :class_name => "WorkflowReview"
@@ -21,19 +23,7 @@ class Article < ActiveRecord::Base
   default_scope :order => 'created_at DESC'
   
   def published_online?
-    WebPublishedArticle.where(:article_id => self.id).exists?
-  end
-  
-  def published_online_at
-    WebPublishedArticle.published.find_by_article_id(id).published_at
-  end
-  
-  def published_online_title
-    WebPublishedArticle.where(:article_id => id).first.title
-  end
-  
-  def published_online_revision
-    WebPublishedArticle.where(:article_id => id).first.revision
+    web_published_articles.exists?
   end
   
   def published_in_print?

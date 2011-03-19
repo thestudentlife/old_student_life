@@ -41,6 +41,10 @@ class Revision < ActiveRecord::Base
     return HTMLDiff.diff(previous.body, self.body)
   end
   
+  def id_pretty
+    "Revision id.#{id}"
+  end
+  
   def to_s
     body
   end

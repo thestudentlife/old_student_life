@@ -6,6 +6,8 @@ class WebPublishedArticle < ActiveRecord::Base
   has_one :section, :through => :article
   has_one :subsection, :through => :article
   
+  default_scope :order => 'published_at DESC'
+  
   def authors
     article.authors
   end
@@ -24,7 +26,7 @@ class WebPublishedArticle < ActiveRecord::Base
   
   def slug
     t = to_s.to_slug.gsub(/(^-)|(-$)/,'')
-    "#{id}-#{t}"
+    "#{article.id}-#{t}"
   end
   
   def teaser(count=nil)
