@@ -1,24 +1,29 @@
 <% content_for :header do %>
   <h1>Issues</h1>
-  <span class="actions">
-    <%= link_to 'New Issue', new_workflow_issue_path, :class => :button %>
-  </span>
+  <% if current_user.can_edit_issues? %>
+    <span class="actions">
+      <%= link_to 'New Issue', new_workflow_issue_path, :class => "positive button" %>
+    </span>
+  <% end %>
 <% end %>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-  </tr>
 
 <% @issues.each do |issue| %>
-  <tr>
-    <td><%= link_to issue.name, [:workflow, issue] %></td>
-    <% if current_user.can_edit_issues? %>
-      <td><%= link_to 'Edit', edit_workflow_issue_path(issue) %></td>
-      <td><%= link_to 'Destroy', [:workflow, issue], :confirm => 'Are you sure?', :method => :delete %></td>
-    <% end %>
-  </tr>
+  <article>
+    <div class="left">&nbsp;</div>
+    <div class="mid">
+      <header>
+        <h1><%= link_to issue.name, [:workflow, issue] %></h1>
+      </header>
+      <div style="clear: both"></div>
+    </div>
+    <div class="right">
+      <% if current_user.can_edit_issues? %>
+        <td><%= link_to 'Edit', edit_workflow_issue_path(issue), :class => 'button' %></td>
+        <!--<td><%= link_to 'Destroy', [:workflow, issue], :class => 'destructive button',
+          :confirm => 'Are you sure?', :method => :delete %></td>-->
+      <% end %>
+      <div style="clear: both"></div>
+    </div>
+    <div style="clear: both"></div>
+  </article>
 <% end %>
-</table>

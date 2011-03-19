@@ -2,7 +2,7 @@
   <h1>Users</h1>
   
   <span class="actions">
-    <%= link_to 'New user', new_workflow_user_path, :class => :button %>
+    <%= link_to 'New user', new_workflow_user_path, :class => "positive button" %>
   </span>
   <div style="clear: both;"></div>
 <% end %>
@@ -25,12 +25,13 @@
   	  </header>
   	</div>
   	<div class="right">
-      <%= link_to 'Edit', edit_workflow_user_path(user) %>
-      <%= link_to_if (current_user.can_edit_users? and current_user != user),
-          "Reset password",
-          reset_workflow_user_path(user),
-          :method => :post,
-          :confirm => "Are you sure?" %>
+      <%= link_to 'Edit', edit_workflow_user_path(user), :class => 'button' %>
+      <%= link_to("Reset password",
+            reset_workflow_user_path(user),
+            :method => :post,
+            :confirm => "Are you sure?",
+            :class => 'destructive button'
+          ) if current_user.can_edit_users? and current_user != user %>
     </div>
     <div style="clear: both;"></div>
   </article>

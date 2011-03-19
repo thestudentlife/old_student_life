@@ -20,8 +20,8 @@
     </div>
     <div class="right">
       <p style="font-size: 14px; margin-top:0; padding-top: 8px;"><strong>Section:</strong> <%= front_page_article.article.full_section_name %></p>
-      <p><%= link_to 'Edit', edit_workflow_front_page_article_path(front_page_article) %>
-      <%= link_to 'Destroy', workflow_front_page_article_path(front_page_article), :confirm => 'Are you sure?', :method => :delete %></p>
+      <p><%= link_to 'Edit', edit_workflow_front_page_article_path(front_page_article), :class => "button" %>
+      <%= link_to 'Destroy', workflow_front_page_article_path(front_page_article), :confirm => 'Are you sure?', :method => :delete, :class => "destructive button" %></p>
     </div>
     <div style="clear: both;"></div>
   </article> 

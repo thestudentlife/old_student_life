@@ -7,9 +7,9 @@
     <% if not @article.front_page_article and @article.published_online? and current_user.can_edit_front_page? %>
       <%= link_to "Add to front page", new_workflow_article_front_page_path(@article) %> |
     <% end %>
-    <%= link_to 'Edit', edit_workflow_article_path(@article) %> |
-    <%= link_to 'Post revision', new_workflow_article_revision_path(@article) %> |
-    <%= link_to 'Post comment', new_workflow_article_comment_path(@article) %>
+    <%= link_to 'Edit', edit_workflow_article_path(@article), :class => :button %>
+    <%= link_to 'Post revision', new_workflow_article_revision_path(@article), :class => "positive button" %>
+    <%= link_to 'Post comment', new_workflow_article_comment_path(@article), :class => "positive button" %>
   </span>
   <div style="clear: both;"></div>
   <span style="color: #5F87A5;"><%= time_ago_in_words(@article.created_at) %> ago</span>

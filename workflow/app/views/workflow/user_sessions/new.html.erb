@@ -1,9 +1,11 @@
-<header>
+<% content_for :header do %>
   <h1>Login</h1>
-  <div style="clear: both"></div>
-</header>
+<% end %>
 
-<div id="content">
+<% content_for :side do %>
+  &nbsp;
+<% end %>
+
 <%= form_for :user_session, :url => workflow_login_path do |f| %>
   <% if @user_session.errors.any? %>
     <div id="error_explanation">
@@ -36,4 +38,3 @@
     <%= f.submit "Login" %>
   </div>
 <% end %>
-</div>

@@ -1,6 +1,6 @@
 <% content_for :header do %>
   <h1>Authors</h1>
-  <span class="actions"><%= link_to 'New Author', new_workflow_author_path, :class => :button %></span>
+  <span class="actions"><%= link_to 'New Author', new_workflow_author_path, :class => "positive button" %></span>
 <% end %>
 
 <% @authors.each do |author| %>
@@ -14,7 +14,7 @@
       </header>
     </div>
     <div class="right">
-      <%= link_to 'Edit', edit_workflow_author_path(author) %>
+      <%= link_to 'Edit', edit_workflow_author_path(author), :class => 'button' %>
     </div>
     <div style="clear: both"></div>
   </article>

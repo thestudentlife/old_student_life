@@ -104,9 +104,7 @@
 		
 		#main {
 			background-color: white;
-			width: 70%;
-			margin: 9px 0 0 21px;
-			float: left;
+			margin: 9px 21px;
 			
 			-moz-box-shadow: 1px 1px 2px #555;
 			-webkit-box-shadow: 1px 1px 2px #555;
@@ -116,6 +114,10 @@
 			-moz-border-radius: 5px;
 			-o-border-radius: 5px;
 			border-radius: 5px;
+		}
+		#main.has_sidebar {
+			width: 70%;
+			float: left;
 		}
 		#main > header {
 			background-color: #f2f2f2;
@@ -166,7 +168,7 @@
 			color: #555;
 		}
 		.status_message {
-			color: #444;
+			color: #000;
 			font-size: 13px;
 			background-color: #f7e20d;
 			padding: 3px;
@@ -206,7 +208,7 @@
 		}
 		#main article .right {
 			float: right;
-			width: 20%;
+			width: 25%;
 		}
 		#main h2 {
 			font-size: 14px;
@@ -330,7 +332,7 @@
 			-webkit-border-radius: 3px;
 			-moz-border-radius: 3px;
 			
-			color: #66AE1D;
+			color: #777;
 			font-weight: bold;
 			text-decoration: none;
 			text-shadow: 0 1px rgba(255, 255, 255, .75);
@@ -341,12 +343,36 @@
 		}
 		
 		.button:hover {
+			background-color: #99BCDD;
+			border-color: #5785B1;
+			color: #fff;
+			text-shadow: 0 -1px rgba(100,100,100, .8);
+		}
+		
+		.button.positive {
+			color: #66AE1D;
+		}
+		
+		.button.positive:hover {
 			background-color: #66AE1D;
 			color: #fff;
-			text-shadow: 0 -1px rgba(0, 0, 0, .25);
 			border-color: #427112;
 			border-top-color: #579619;
 			border-left-color: #579619;
+			text-shadow: 0 -1px rgba(0, 0, 0, .25);
+		}
+		
+		.button.destructive {
+			color: #b00;
+		}
+		
+		.button.destructive:hover {
+			background-color: #c00;
+			color: #fff;
+			text-shadow: 0 -1px rgba(0, 0, 0, 0.25);
+			border-color: #930000;
+			border-top-color: #b30000;
+			border-left-color: #b30000;
 		}
 	</style>
 	<script type="text/javascript">
@@ -400,7 +426,7 @@
 		<% end %>
 	</header>
 	
-	<section id="main">
+	<section id="main" class="<%= 'has_sidebar' if content_for? :side %>">
 		<% flash.each do |k, v| %>
 			<div class="flash flash_<%= k %>">
 				<p><strong><%= k.to_s.capitalize %>:</strong> <%= v %></p>
@@ -418,9 +444,11 @@
     		<%= yield %>
     	<% end %>
 	</section>
-	<section id="side">
-		<%= yield :side %>
-	</section>
+	<% if content_for? :side%>
+		<section id="side">
+			<%= yield :side %>
+		</section>
+	<% end %>
 	<div style="clear: both"></div>
 
 </body>
