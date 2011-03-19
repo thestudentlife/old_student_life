@@ -18,8 +18,16 @@ class User < ActiveRecord::Base
     end
   end
   
+  def open_review_slots_for_article (article)
+    if is_admin?
+      article.open_review_slots
+    else
+      article.open_review_slots.find_all { |slot| not slot.requires_admin? }
+    end
+  end
+  
   def can_add_review? (article)
-    article.open_review_slots.find { |slot| not slot.requires_admin? }
+    open_review_slots_for_article(article).any?
   end
   
   [

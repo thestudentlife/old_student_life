@@ -36,7 +36,7 @@
   <ul>
     <% @article.reviews.each do |review| %>
 		<li style="margin-bottom: 0.5em; margin-left: 0.5em">
-		  <span style="color: white"><%= review.author %></span>
+		  <span style="color: white"><span style="font-weight: bold"><%= review.review_slot %>:</span> <br/> <%= review.author %></span>
       <br/>
       <span style="padding-left: 1em; color:#ddd; font-size: 0.9em"><%= review.comment %></span>
 		</li>

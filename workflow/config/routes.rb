@@ -59,6 +59,7 @@ TslRails::Application.routes.draw do
       resources :authors, :controller => "articles/authors"
       resources :comments, :controller => "articles/comments"
       resources :images, :controller => "articles/images"
+      resources :reviews, :controller => 'articles/reviews', :only => [:new, :create]
       resources :revisions, :controller => "articles/revisions"
       resources :titles, :controller => "articles/titles"
       resource :front_page, :controller => "articles/front_page", :only => [:new, :create]
