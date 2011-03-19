@@ -18,11 +18,8 @@ class User < ActiveRecord::Base
     end
   end
   
-  def can_publish_revision? (revision)
-    revision.can_be_published_by self
-  end
-  def can_publish_revision! (revision)
-    can_publish_revision?(revision) or raise NotAuthorized
+  def can_add_review? (article)
+    article.open_review_slots.find { |slot| not slot.requires_admin? }
   end
   
   [

@@ -30,6 +30,19 @@
   
   <div class="content">
   <p>
+    Reviews
+    <%= link_to "Add review", new_workflow_article_review_path(@article) if current_user.can_add_review?(@article) %>
+  </p>
+  <ul>
+    <% @article.reviews.each do |review| %>
+		<li style="margin-bottom: 0.5em; margin-left: 0.5em">
+		  <span style="color: white"><%= review.author %></span>
+      <br/>
+      <span style="padding-left: 1em; color:#ddd; font-size: 0.9em"><%= review.comment %></span>
+		</li>
+    <% end %>
+  </ul>
+  <p>
     Proposed Titles
     <%= link_to "Add title", new_workflow_article_title_path(@article) %>
   </p>
