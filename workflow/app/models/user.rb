@@ -30,6 +30,10 @@ class User < ActiveRecord::Base
     open_review_slots_for_article(article).any?
   end
   
+  def can_publish_article? (article)
+    is_admin? or article.open_review_slots.empty?
+  end
+  
   [
     :authors,
     :front_page,

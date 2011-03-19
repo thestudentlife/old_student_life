@@ -26,6 +26,10 @@
 </header>
 
 <div class="right" style="margin-top: 10px">
+    <% if current_user.can_publish_article? @article %>
+      <%= link_to('Publish online', '#', :class => 'button') unless revision.published_online? %>
+      <%= link_to('Publish in print', '#', :class => 'button') unless revision.published_in_print? %>
+    <% end %>
 </div>
 
 <div class="mid">
