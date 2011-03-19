@@ -106,6 +106,43 @@
   </div>
 <% end # content_for :side%>
 
+<article class="workflow-item" style="border-bottom: 2px solid">
+<div class="left">
+  <h2>Publication status</h2>
+</div>
+
+<div style="float: left; margin-right: 2em">
+<h2>Online:</h2>
+  <% if @article.published_online? %>
+    <p><q><%= @article.published_online_at %></q></p>
+    <p><strong>Title:</strong></p><p><%= @article.published_online_title %></p>
+    <p><strong>Revision:</strong></p><p>Revision id.<%= @article.published_online_revision.id %></p>
+  <% else %>
+    No
+  <% end %>
+<p>
+<% if current_user.can_publish_article? @article %>
+  <%= link_to('Publish online', '#', :class => 'button') %>
+<% end %>
+</p >
+</div>
+
+<div style="float: left">
+<h2>Print:</h2>
+  <% if @article.published_in_print? %>
+    <q><%= @article.published_in_print_at %></q>
+  <% else %>
+    No
+  <% end %>
+<p>
+<% if current_user.can_publish_article? @article %>
+  <%= link_to('Publish in print', '#', :class => 'button') %>
+<% end %>
+</p>
+</div>
+<div style="clear: both"></div>
+</article>
+
 <h2>History for this article</h2>
 <%= render_collection_in_same_controller @article.workflow_history, :layout => "item" %>
 

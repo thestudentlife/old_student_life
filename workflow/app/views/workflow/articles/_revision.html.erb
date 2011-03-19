@@ -6,34 +6,11 @@
         <%= time_ago_in_words revision.created_at %> ago
       </span>
     </h1>
-    <p style="margin-top: 0; margin-bottom: 0">
-      Published online: <% if not revision.published_online? %> No <% end %>
-    </p>
-    <p>
-      <% if revision.published_online? %>
-        <q><%= revision.published_online_at %></q>
-      <% end %>
-    </p>
-    <p style="margin-top: 0; margin-bottom: 0">
-      Published in print: <% if not revision.published_in_print? %> No <% end %>
-    </p>
-    <p>
-      <% if revision.published_in_print? %>
-        <q><%= revision.published_in_print_at %></q>
-      <% end %>
-    </p>
   </div>
 </header>
 
-<div class="right" style="margin-top: 10px">
-    <% if current_user.can_publish_article? @article %>
-      <%= link_to('Publish online', '#', :class => 'button') unless revision.published_online? %>
-      <%= link_to('Publish in print', '#', :class => 'button') unless revision.published_in_print? %>
-    <% end %>
-</div>
-
 <div class="mid">
-  <!--<p style="font-size: 12px; font-weight: bold; margin-top: 9px; color: #333"><#%= revision.title %> </p>-->
+  <p style="font-size: 12px; font-weight: bold; margin-top: 9px; color: #333">Revision id.<%= revision.id %> </p>
   <p style="font-size: 12px;"><%= revision.diff.html_safe %></p>
 
 </div>

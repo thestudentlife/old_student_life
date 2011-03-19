@@ -28,6 +28,14 @@ class Article < ActiveRecord::Base
     WebPublishedArticle.published.find_by_article_id(id).published_at
   end
   
+  def published_online_title
+    WebPublishedArticle.where(:article_id => id).first.title
+  end
+  
+  def published_online_revision
+    WebPublishedArticle.where(:article_id => id).first.revision
+  end
+  
   def published_in_print?
     PrintPublishedArticle.where(:article_id => self.id).exists?
   end
