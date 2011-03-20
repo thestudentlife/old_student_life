@@ -13,7 +13,9 @@
           <%= link_to front_page_article, workflow_article_path(front_page_article.article) %>
         </h1>
         <span style="color: #666; margin-top: 0;">
-          <q>Published <%= time_ago_in_words(front_page_article.article.published_online_at) %> ago</q>
+          <q>Published <%= time_ago_in_words(
+            front_page_article.article.web_published_articles.published.first.published_at
+          ) %> ago</q>
         </span>
       </header>
       <p style="color: #555"><%= front_page_article.article.teaser %></p>
