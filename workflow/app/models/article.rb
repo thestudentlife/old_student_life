@@ -11,6 +11,7 @@ class Article < ActiveRecord::Base
   has_one :front_page_article
   
   has_many :web_published_articles
+  has_many :print_published_articles
   
   has_many :titles, :class_name => "ArticleTitle"
   

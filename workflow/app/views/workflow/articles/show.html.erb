@@ -132,13 +132,19 @@
 <div style="float: left; width: 25%">
 <h2 style="display: inline">Print:</h2>
 <% if current_user.can_publish_article? @article %>
-  <%= link_to('Publish in print', '#', :class => 'button') %>
+  <%= link_to('Publish in print', '#new_workflow_article_print_published_article_path(@article)', :class => 'button') %>
 <% end %>
-  <% if @article.published_in_print? %>
-    <q><%= @article.published_in_print_at %></q>
-  <% else %>
-    <p>Not published</p>
+<% if @article.published_in_print? %>
+  <% @article.print_published_articles.each do |print| %>
+    <article>
+      <p><q><%= print.created_at %></q></p>
+      <p><strong>Title:</strong></p><p><%= print.title %></p>
+      <p><strong>Revision:</strong></p><p>Revision id.<%= print.revision.id %></p>
+    </article>
   <% end %>
+<% else %>
+  <p>Not published</p>
+<% end %>
 </div>
 <div style="clear: both"></div>
 </article>
