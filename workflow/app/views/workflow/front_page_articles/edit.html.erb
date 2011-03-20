@@ -1,10 +1,35 @@
-<header>
+<% content_for :header do %>
   <h1>Editing headline</h1>
-  <div style="clear: both"></div>
-</header>
+<% end %>
 
-<div id="content">
-<%= render 'form' %>
+<%= form_for [:workflow, @front_page_article] do |f| %>
+  <% if @front_page_article.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@front_page_article.errors.count, "error") %> prohibited this headline from being saved:</h2>
 
-<%= link_to 'Back', workflow_headlines_path %>
-</div>
+      <ul>
+      <% @front_page_article.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+    <%= label_tag :article %>
+    <div style="float: left; width: 75%">
+      <%= @front_page_article %>
+    </div>
+    <div style="clear: both"></div>
+  </div>
+	<div class="field">
+		<%= f.label :priority %>
+		<%= f.text_field :priority %>
+	</div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+<%= link_to 'Back', workflow_front_page_articles_path %>

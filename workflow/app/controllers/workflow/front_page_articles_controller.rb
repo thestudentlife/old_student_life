@@ -6,6 +6,6 @@ class Workflow::FrontPageArticlesController < WorkflowController
   before_filter {current_user.can_edit_front_page!}
 
   def update
-    update! { workflow_front_page_path }
+    update! { workflow_front_page_articles_path }
   end
 end
