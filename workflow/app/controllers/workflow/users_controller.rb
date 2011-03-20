@@ -66,6 +66,7 @@ class Workflow::UsersController < WorkflowController
       @user.attributes = {:password => params[:password],
         :password_confirmation => params[:password_confirmation]}
     end
+    @user.save
     
     respond_with :workflow, @user,
       :location => (current_user.can_edit_users? ? [:workflow, :users] : :workflow)
