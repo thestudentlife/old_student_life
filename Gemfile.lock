@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/mikemaltese/dav.git
+  revision: ecef00a962b6cf7d823cd0cc4aa7c0503537f773
+  specs:
+    dav (0.4.2)
+      builder
+      rack
+
+GIT
   remote: git://github.com/mikemaltese/html2incopy.git
   revision: 736de544d461ece0610d8b02d8beb1fb5eba16ea
   specs:
@@ -40,7 +48,7 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
-    arel (2.0.8)
+    arel (2.0.9)
     authlogic (2.1.6)
       activesupport
     builder (2.1.2)
@@ -56,7 +64,7 @@ GEM
     inherited_resources (1.2.1)
       has_scope (~> 0.5.0)
       responders (~> 0.6.0)
-    kgio (2.3.2)
+    kgio (2.3.3)
     mail (2.2.15)
       activesupport (>= 2.3.6)
       i18n (>= 0.4.0)
@@ -93,9 +101,9 @@ GEM
     thor (0.14.6)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
-    tzinfo (0.3.24)
-    unicorn (3.4.0)
-      kgio (~> 2.2)
+    tzinfo (0.3.25)
+    unicorn (3.5.0)
+      kgio (~> 2.3)
       rack
 
 PLATFORMS
@@ -103,6 +111,7 @@ PLATFORMS
 
 DEPENDENCIES
   authlogic
+  dav!
   factory_girl_rails
   high_voltage
   htmldiff!
