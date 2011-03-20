@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/mikemaltese/dav.git
-  revision: ecef00a962b6cf7d823cd0cc4aa7c0503537f773
+  revision: da525a19f7c9ea7714439f763561d2cf75db3053
   specs:
-    dav (0.4.2)
+    dav (0.4.3)
       builder
       rack
 
