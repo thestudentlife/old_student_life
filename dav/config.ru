@@ -147,9 +147,10 @@ module Dav
         if article.web_published_articles.any?
           article.web_published_articles.published.first
         else
-          WebPublishedArticle.new(
-            :article => article,
-            :revision => article.revisions.latest.first
+          Struct.new(:article, :revision, :title).new(
+            article,
+            article.revisions.latest.first,
+            nil
           )
         end
       end.
@@ -169,7 +170,7 @@ module Dav
     def children
       Section.
         all.
-        reject { |section| section.articles.empty? }.
+        reject { |section| section.articles.where(:issue_id => @model.id).empty? }.
       map do |section|
         IssueSectionArticlesCollection.
         new(section.url, @model, section).
