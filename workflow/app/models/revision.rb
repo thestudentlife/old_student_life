@@ -3,6 +3,10 @@ class Revision < ActiveRecord::Base
   belongs_to :author, :class_name => "User"
   validates_presence_of :body
   
+  def self.latest
+    order('created_at DESC')
+  end
+  
   def published_online?
     WebPublishedArticle.where(:revision_id => id).exists?
   end

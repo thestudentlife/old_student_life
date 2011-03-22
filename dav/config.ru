@@ -49,6 +49,8 @@ module Dav
     params[:model].title.text
   end
   
+  NotPublishedResource = DynamicResource('text/plain') {""}
+  
   AuthorsResource = DynamicResource('text/plain') do
     params[:model].article.authors.map(&:to_s).join('\n')
   end
@@ -82,9 +84,13 @@ module Dav
       @model = article
       @files = {
         'Body.incx' => InCopyResource,
-        'Headline.txt' => HeadlineResource,
         'Authors.txt' => AuthorsResource
       }
+      if @model.title # Published
+        @files.merge!('Headline.txt' => HeadlineResource)
+      else # Not published yet
+        @files.merge!('NOT PUBLISHED.txt' => NotPublishedResource)
+      end
       @files.merge!(@files) { |key, value| value.new(key, :model => @model) }
       
       if @model.article.images.any?
@@ -124,10 +130,21 @@ module Dav
     end
   
     def children
-      PrintPublishedArticle.
-        group("article_id").
-        joins(:article).
-        where(:articles => {:issue_id => @model.id}).
+      #PrintPublishedArticle.
+      #  group("article_id").
+      #  joins(:article).
+      #  where(:articles => {:issue_id => @model.id}).
+      @model.articles.
+      map do |article|
+        if article.web_published_articles.any?
+          article.web_published_articles.published.first
+        else
+          WebPublishedArticle.new(
+            :article => article,
+            :revision => article.revisions.latest.first
+          )
+        end
+      end.
       map do |article|
         ArticleFilesCollection.
           new(article, article.article.name).
