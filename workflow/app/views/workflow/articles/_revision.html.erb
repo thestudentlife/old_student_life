@@ -11,6 +11,6 @@
 
 <div class="mid">
   <p style="font-size: 12px; font-weight: bold; margin-top: 9px; color: #333">Revision id.<%= revision.id %> </p>
-  <p style="font-size: 12px;"><%= revision.body.html_safe %></p>
+  <div class="revision" style="font-size: 12px;"><%= revision.diff.html_safe %></div>
 
 </div>
