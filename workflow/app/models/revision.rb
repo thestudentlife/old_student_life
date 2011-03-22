@@ -20,7 +20,7 @@ class Revision < ActiveRecord::Base
   end
   
   def previous
-    Revision.where(:article_id => article.id).where("created_at < ?", created_at).order("created_at").first
+    Revision.where(:article_id => article.id).where("created_at < ?", created_at).order("created_at DESC").first
   end
   
   include ActionView::Helpers::SanitizeHelper
