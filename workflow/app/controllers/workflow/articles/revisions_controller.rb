@@ -5,7 +5,7 @@ module ReverseMarkdown
     gsub(/<p>(.*?)<\/p>/) { "#$1\n\n" }.
     gsub(/<strong>(.*?)<\/strong>/) { "**#$1**" }.
     gsub(/<em>(.*?)<\/em>/) { "*#$1*" }.
-    gsub(/\n{2,}/,"\n\n").
+    gsub(/\n{2,}/,"\n").
     strip
   end
 end
