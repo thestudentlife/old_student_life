@@ -123,10 +123,11 @@ module Dav
     
   end
 
-  class IssueArticlesCollection < WebDAV::AbstractCollection
-    def initialize(issue, name)
-      @model = issue
-      super name
+  class IssueSectionArticlesCollection < WebDAV::AbstractCollection
+    def initialize(path, issue, section)
+      @issue = issue
+      @section = section
+      super path
     end
   
     def children
@@ -134,7 +135,8 @@ module Dav
       #  group("article_id").
       #  joins(:article).
       #  where(:articles => {:issue_id => @model.id}).
-      @model.articles.
+      @issue.articles.
+      where(:articles => {:section_id => @section.id}).
       map do |article|
         if article.web_published_articles.any?
           article.web_published_articles.published.first
@@ -152,14 +154,31 @@ module Dav
       end
     end
   end
+  
+  class IssueSectionsCollection < WebDAV::AbstractCollection
+    def initialize(path, model)
+      super path
+      @model = model
+    end
+    def children
+      Section.
+        all.
+        reject { |section| section.articles.empty? }.
+      map do |section|
+        IssueSectionArticlesCollection.
+        new(section.url, @model, section).
+        tap { |child| child.added_to_collection(self) }
+      end
+    end
+  end
 
   class IssueCollection < WebDAV::AbstractCollection 
     def children
       Issue.
         all.
       map do |issue|
-        IssueArticlesCollection.
-          new(issue, issue.name.gsub(/\//,'_').gsub(/\s+/,'_')).
+        IssueSectionsCollection.
+          new(issue.name.gsub(/\//,'_'), issue).
           tap { |child| child.added_to_collection(self) }
       end
     end
