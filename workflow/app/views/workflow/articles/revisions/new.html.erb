@@ -33,7 +33,7 @@
 	<div class="field wide-field">
 		<%= f.label :body %>
 		<div id="wmd-button-bar" style="padding-top: 0.5em; width: 80%; clear: both"></div>
-		<%= text_area_tag "wmd-input" %>
+		<%= text_area_tag "wmd-input", @revision.body %>
 		<div id="wmd-preview"></div>
 	</div>
 
