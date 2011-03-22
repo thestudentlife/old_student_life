@@ -1,6 +1,7 @@
 module ReverseMarkdown
   def self.html_to_markdown (text)
     text.
+    gsub(/\n/,'').
     gsub(/<p>(.*?)<\/p>/) { "#$1\n\n" }.
     gsub(/<strong>(.*?)<\/strong>/) { "**#$1**" }.
     gsub(/<em>(.*?)<\/em>/) { "*#$1*" }.
