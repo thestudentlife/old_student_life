@@ -68,6 +68,9 @@ module Dav
     def mimetype
       Rack::Mime.mime_type File.extname(@model.file.url.sub(/\?.*/,''))
     end
+    def size
+      @model.file.size
+    end
   end
 
   ImageCaptionResource = DynamicResource('text/plain') do
