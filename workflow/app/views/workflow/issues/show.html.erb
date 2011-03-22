@@ -6,56 +6,7 @@
   </span>
 <% end %>
 
-<table>
-<thead>
-  <tr style="text-align: left">
-    <th>Print</th>
-    <th>Web</th>
-    <th></th>
-    <th>Reviews</th>
-    <th>Titles</th>
-  </tr>
-</thead>
-<tbody>
-<% @articles.each do |article| %>
-    <tr style="vertical-align: top;">
-      <td style="font-size: 1.5em; padding-top: 10px"><%= "&#x2713;".html_safe if article.published_in_print? %></td>
-      <td style="font-size: 1.5em; padding-top: 10px"><%= "&#x2713;".html_safe if article.published_online? %></td>
-      <td style="padding: 10px 18px">
-        <h1 style="line-height: 1em; margin: 0; display: inline;"><%= link_to article, workflow_article_path(article) %></h1>
-        <p style="margin-top: 0; margin-bottom: 0; line-height: 1.5em; color: #666">
-          <%= article.authors.any? ? article.authors.map(&:to_s).to_sentence : "nobody" %>
-        </p>
-      </td>
-      <td>
-        <% if article.status_message and not article.status_message.empty? %>
-          <p><span class="status_message"><span style="font-weight: bold">Status:</span> <%= article.status_message %></span></p>
-        <% end %>
-        <% if article.reviews.any? %>
-          <ul>
-            <% article.reviews.each do |review| %>
-              <li class="review">
-                <p><strong><%= review.review_slot %></strong>: <%= review.author %></p>
-                <p><%= review.comment %></p>
-              </li>
-            <% end %>
-          </ul>
-        <% else %>
-          Nobody has reviewed this article yet! <span style="color: red; font-weight: bold">FOR SHAME!</span>
-        <% end %>
-      </td>
-      <td>
-        <% if article.titles.any? %>
-          <ul style="list-style-type: disc">
-            <% article.titles.each do |title| %>
-              <li><%= title %></li>
-            <% end %>
-          </ul>
-        <% else %>
-          Nobody has proposed any titles yet.
-        <% end %>
-      </td>
-    </tr>
+<% @articles_by_section.each do |section, articles| %>
+  <h1><%= section.name %></h1>
+  <%= render :partial => "articles", :locals => {:articles => articles} %>
 <% end %>
-</tbody>
-</table>
