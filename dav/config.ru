@@ -34,6 +34,9 @@ module Dav
         def content
           instance_eval &(self.class.b)
         end
+        def size
+          content.size
+        end
       end
       klass.mime = mime
       klass.b = b
