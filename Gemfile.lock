@@ -8,9 +8,9 @@ GIT
 
 GIT
   remote: git://github.com/mikemaltese/html2incopy.git
-  revision: 472c95b94452cf4471672ce725a3ce6066c59f84
+  revision: b6a7e48b0fa0da6a8009b7bb4a97577b0dd198b8
   specs:
-    incopy (1.1.2)
+    incopy (1.1.3)
 
 GIT
   remote: git://github.com/mikemaltese/htmldiff.git
