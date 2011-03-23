@@ -144,8 +144,8 @@ module Dav
       @issue.articles.
       where(:articles => {:section_id => @section.id}).
       map do |article|
-        if article.web_published_articles.any?
-          article.web_published_articles.published.first
+        if article.print_published_articles.any?
+          article.print_published_articles.published.first
         else
           Struct.new(:article, :revision, :title).new(
             article,
