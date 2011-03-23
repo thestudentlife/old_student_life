@@ -1,9 +1,6 @@
 IMPORTANT
 * "Checking out" articles
 * Fix front page
-* organize articles by section
-* workflow history descending by date
-* have any revision in webdav, then lock it to published article
 
 UX
 * Make it more apparent how to change your password

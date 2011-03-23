@@ -55,7 +55,7 @@ module Dav
   NotPublishedResource = DynamicResource('text/plain') {""}
   
   AuthorsResource = DynamicResource('text/plain') do
-    params[:model].article.authors.map(&:to_s).join('\n')
+    params[:model].article.authors.map(&:to_s).join("\n")
   end
   
   class ImageResource < WebDAV::Resource
