@@ -1,6 +1,8 @@
 class Workflow::AuthorsController < WorkflowController
   respond_to :html
   
+  before_filter {current_user.can_edit_authors!}
+  
   def index
     respond_with :workflow, @authors = Author.all
   end

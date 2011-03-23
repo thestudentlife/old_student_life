@@ -33,9 +33,19 @@ class User < ActiveRecord::Base
   def can_publish_article? (article)
     is_admin? or article.open_review_slots.empty?
   end
+
+  [ :authors ].
+  map { |m| "can_edit_#{m}" }.
+  each do |permission|
+    define_method("#{permission}?") do 
+      true
+    end
+    define_method("#{permission}!") do
+      send("#{permission}?") or raise NotAuthorized
+    end
+  end
   
   [
-    :authors,
     :front_page,
     :issues,
     :sections,
