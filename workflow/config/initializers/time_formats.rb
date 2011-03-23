@@ -4,4 +4,4 @@ Time::DATE_FORMATS[:pretty] = lambda do |time|
 end
 Time::DATE_FORMATS[:default] = Time::DATE_FORMATS[:pretty]
 
-Time::DATE_FORMATS[:sql] = "%Y-%m-%dT%H:%M:%S+00:00"
+Time::DATE_FORMATS[:sql] = "%Y-%m-%d %H:%M:%S+00:00"

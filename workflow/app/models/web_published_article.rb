@@ -39,7 +39,7 @@ class WebPublishedArticle < ActiveRecord::Base
   end
   
   def self.not_featured
-    find_by_sql ('SELECT "web_published_articles".* FROM "web_published_articles" WHERE ("web_published_articles"."published_at" < "' + Time.now.to_s(:sql) + '") EXCEPT SELECT "web_published_articles".* FROM "web_published_articles" INNER JOIN "front_page_articles" WHERE "front_page_articles"."article_id" = "web_published_articles"."article_id"')
+    find_by_sql ('SELECT "web_published_articles".* FROM "web_published_articles" WHERE ("web_published_articles"."published_at" < "' + Time.now.to_s(:sql) + '") EXCEPT SELECT "web_published_articles".* FROM "web_published_articles" INNER JOIN "front_page_articles" WHERE ("front_page_articles"."article_id" = "web_published_articles"."article_id")')
   end
   
   def self.published
