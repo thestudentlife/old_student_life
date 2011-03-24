@@ -3,6 +3,8 @@ class Revision < ActiveRecord::Base
   belongs_to :author, :class_name => "User"
   validates_presence_of :body
   
+  default_scope :order => 'created_at DESC'
+  
   include ActionView::Helpers::SanitizeHelper
   def word_count
     strip_tags(body).scan(/\s+/).length
