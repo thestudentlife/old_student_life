@@ -21,7 +21,7 @@ class WebPublishedArticle < ActiveRecord::Base
   end
   
   def to_s
-    title.text
+    title.text.gsub(/"(.*?)"/) { "“#{$1}”" }
   end
   
   def slug
