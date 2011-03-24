@@ -4,7 +4,7 @@ class Workflow::Articles::AuthorsController < WorkflowController
   before_filter { @article = Article.find params[:article_id] }
   
   def new
-    respond_with :workflow, @authors = Author.all.alphabetical
+    respond_with :workflow, @authors = Author.alphabetical
   end
   def create
     @author = Author.find params[:author_id]
