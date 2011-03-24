@@ -3,7 +3,7 @@
 		<h1><%= @article %></h1>
 		<% if @article.images.any? %>
 			<div class="articleImage">
-				<%= image_tag @article.images.first.file.url, :width => "100%" %>
+				<%= image_tag @article.images.first.file.url(:two_columns), :width => "100%" %>
 				<div class="credit"><%= @article.images.first.credit %></div>
 				<div class="caption"><%= @article.images.first.caption %></div>
 			</div>
