@@ -9,12 +9,12 @@ class Workflow::UsersController < WorkflowController
   end
   
   def new
-    @authors = Author.open_authors
+    @authors = Author.open_authors.sort_by {|a| a.name.downcase }
     respond_with :workflow, @user = User.new
   end
   
   def create
-    @authors = Author.open_authors
+    @authors = Author.open_authors.sort_by {|a| a.name.downcase }
     @user = User.new(
       :email => params[:email],
       :is_admin => params[:is_admin],
