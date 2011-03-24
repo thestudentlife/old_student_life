@@ -4,6 +4,12 @@ class Author < ActiveRecord::Base
   has_and_belongs_to_many :articles
   validates_presence_of :name
 
+  def self.alphabetical
+    all.sort_by do |author|
+      author.name.downcase
+    end
+  end
+
   def latest_published_revisions
     Revision.latest_published.joins(
       :article,
