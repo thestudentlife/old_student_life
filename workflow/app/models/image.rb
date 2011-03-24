@@ -5,7 +5,8 @@ class Image < ActiveRecord::Base
     :styles => {
       :thumb => ["75x75#", :jpg],
       :small => ["150x150>", :jpg],
-      :two_columns => ["600", :jpg]
+      :two_columns => ["600", :jpg],
+      :featured => ["x200", :jpg]
     }
   belongs_to :article
 end
