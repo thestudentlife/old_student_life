@@ -5,6 +5,7 @@ require 'incopy'
 
 require 'sinatra/base'
 require 'time'
+require 'rack/utils'
 
 class String
   def to_slug
@@ -29,17 +30,6 @@ class String
      ret.gsub! /\A[_\.]+|[_\.]+\z/,""
 
      ret
-  end
-end
-
-require File.expand_path "../../lib/common/models/issue.rb", __FILE__
-class Issue
-  def davslug
-    s = to_s.gsub ('/','-')
-    "#{id} #{s}"
-  end
-  def sections
-    Section.joins(:articles => :issue).where(:issues => {:id => id}).group(:sections => :id)
   end
 end
 
@@ -92,17 +82,65 @@ module Dav
     
     # Routes
     
+    before do
+      request.path_info = Rack::Utils.unescape(request.path_info)
+      request.script_name = Rack::Utils.unescape(request.script_name)
+    end
+    
+    def issues_path
+      '/A/issues/'
+    end
+    
+    def issue_path_template
+      File.join issues_path, '/:issue/'
+    end
+    def issue_path(issue)
+      issues_path.sub(':issue', issue.davslug)
+    end
+    
+    def issue_section_path_template
+      File.join issue_path_template, '/:section/'
+    end
+    def issue_section_path(issue, section)
+      File.join issue_path(issue), issue_section_path_template.sub(':section', section.url)
+    end
+    
+    def article_path_template
+      File.join issue_section_path_template, '/:article/'
+    end
+    def article_path(article)
+      File.join issue_section_path(article.issue, article.section), article_path_template.sub(':article', article.davslug)
+    end
+    
+    def article_authors_path(article)
+      File.join article_path(article), '/Authors.txt'
+    end
+    
+    propfind '/A/issues/:issue/:section/:article/' do
+      @article = Article.find params[:article]
+      multistatus do |xml|
+        dav_response(xml,
+          :href => "/A/issues/#{params[:issue]}/#{params[:section]}/#{params[:article]}/",
+          :collection? => true)
+        dav_response(xml,
+          :href => "/A/issues/#{params[:issue]}/#{params[:section]}/#{params[:article]}/Authors.txt"
+        )
+      end
+    end
+    
     propfind '/A/issues/:issue/:section/' do
       @issue = Issue.find params[:issue]
       @section = Section.find_by_url params[:section]
       @articles = Article.where(:issue_id => @issue.id, :section_id => @section.id)
       multistatus do |xml|
         dav_response(xml,
-          :href => '/A/issues/#{params[:issue]}/#{params[:section]}',
+          :href => "/A/issues/#{params[:issue]}/#{params[:section]}",
           :collection? => true)
         @articles.each do |article|
           dav_response(xml,
-            :href => '/A/issues/#{params[:issue]}/#{params[:section]}/'
+            :href => "/A/issues/#{params[:issue]}/#{params[:section]}/#{article.davslug}",
+            :collection? => true)
+        end
       end
     end
     
