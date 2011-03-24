@@ -118,7 +118,8 @@
 <div style="float: left; margin-right: 2em; width: 25%">
 <h2 style="display: inline">Online:</h2>
 <% if current_user.can_publish_article? @article %>
-  <%= link_to('Publish online', new_workflow_article_web_published_article_path(@article), :class => 'button') %>
+  <%= link_to('Publish online', new_workflow_article_web_published_article_path(@article),
+    :class => 'button') %>
 <% end %>
 <% if @article.published_online? %>
   <% @article.web_published_articles.each do |web| %>
@@ -136,7 +137,8 @@
 <div style="float: left; width: 25%">
 <h2 style="display: inline">Print:</h2>
 <% if current_user.can_publish_article? @article %>
-  <%= link_to('Publish in print', '#new_workflow_article_print_published_article_path(@article)', :class => 'button') %>
+  <%= link_to('Publish in print', new_workflow_article_print_published_article_path(@article),
+    :class => 'button') %>
 <% end %>
 <% if @article.published_in_print? %>
   <% @article.print_published_articles.each do |print| %>

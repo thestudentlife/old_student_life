@@ -1,0 +1,32 @@
+<% content_for :header do %>
+  <h1>Publish article online</h1>
+<% end %>
+
+<%= form_for [:workflow, @article, @print_published_article] do |f| %>
+  <% if @print_published_article.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@print_published_article.errors.count, "error") %> prohibited this article from being published:</h2>
+
+      <ul>
+      <% @print_published_article.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+	  <%= f.label :title_id, "Title" %>
+	  <%= collection_select :print_published_article, :title_id,
+   	    @article.titles, :id, :to_s %>
+	</div>
+  <div class="field">
+	  <%= f.label :revision_id, "Revision to publish" %>
+	  <%= collection_select :print_published_article, :revision_id,
+   	    @article.revisions, :id, :id_pretty %>
+	</div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
