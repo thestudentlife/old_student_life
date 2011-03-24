@@ -62,8 +62,8 @@ TslRails::Application.routes.draw do
       resources :reviews, :controller => 'articles/reviews', :only => [:new, :create]
       resources :revisions, :controller => "articles/revisions"
       resources :titles, :controller => "articles/titles"
-      resources :print_published_articles, :controller => 'articles/print_published_articles', :only => [:new, :create]
-      resources :web_published_articles, :controller => 'articles/web_published_articles', :only => [:new, :create]
+      resources :print_published_articles, :controller => 'articles/print_published_articles', :only => [:new, :create, :destroy]
+      resources :web_published_articles, :controller => 'articles/web_published_articles', :only => [:new, :create, :destroy]
       
       resource :front_page, :controller => "articles/front_page", :only => [:new, :create]
     end
