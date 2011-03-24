@@ -8,6 +8,9 @@ class WebPublishedArticle < ActiveRecord::Base
   
   default_scope :order => 'published_at ASC'
   
+  validates :title, :presence => true
+  validates :revision, :presence => true
+  
   def authors
     article.authors
   end
