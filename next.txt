@@ -5,11 +5,7 @@ IMPORTANT
 * Comments inlined in text
 * InCopy needs to allow editing of styles!
 * Convert WebDAV to Sinatra?
-
-UX
-* Make it more apparent how to change your password
-* Send out a friendly email?
-* Documentation!
+* Fix the "Like this article" and "Tweet this article" buttons
 
 FEATURES
 * "Tweet this article" button
