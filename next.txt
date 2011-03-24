@@ -1,6 +1,5 @@
 IMPORTANT
 * "Checking out" articles
-* word counts
 * Front Page tab should explain how it works
 * Comments inlined in text
 * InCopy needs to allow editing of styles!
@@ -10,6 +9,7 @@ UX
 * Make it more apparent how to change your password
 * Send out a friendly email?
 * Documentation!
+* word counts
 
 FEATURES
 * "Tweet this article" button

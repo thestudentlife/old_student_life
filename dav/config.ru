@@ -3,6 +3,82 @@ require 'active_support/core_ext/string/inflections'
 require 'dav'
 require 'incopy'
 
+require 'sinatra/base'
+require 'time'
+
+module Dav
+  module Propfind
+    def propfind (path, opts={}, &b)
+        route 'PROPFIND', path, opts, &b
+    end
+  end
+  
+  class App < Sinatra::Base
+    class <<self
+      include Propfind
+    end
+    
+    helpers do
+      def multistatus
+        xml = Builder::XmlMarkup.new
+        xml.instruct!
+        xml.D :multistatus, "xmlns:D" => "DAV:" do
+          yield xml
+        end
+        [207, xml.target!]
+      end
+    
+      def dav_response (xml, opts={})
+        opts.merge!(
+          :ctime => Time.at(0),
+          :mtime => Time.at(0),
+          :mime => 'text/plain',
+          :size => 4
+        )
+      
+        puts "SCRIPT_NAME: #{request.env['SCRIPT_NAME']}"
+      
+        xml.D :response do
+          xml.D :href, File.join(request.env['SCRIPT_NAME'], opts[:href])
+          xml.D :propstat do
+            xml.D :prop do
+              xml.D :creationdate, opts[:ctime].httpdate
+              xml.D :getlastmodified, opts[:mtime].httpdate
+              xml.D :resourcetype do xml.D :collection if opts[:collection?] end
+              xml.D :getcontenttype, opts[:mime]
+              xml.D :getcontentlength, opts[:size]
+              xml.D :supportedlock do end
+            end
+            xml.D :status, "HTTP/1.1 200 OK"
+          end
+        end
+      end
+    end
+    
+    propfind '/' do
+      multistatus do |xml|
+        dav_response(xml,
+          :href => '/A',
+          :collection? => true
+        )
+      end
+    end
+    
+    options '/' do
+      [
+        200,
+        {
+          "Content-Type" => "text/html",
+          "Dav" => "1",
+          "MS-Author-Via" => "DAV",
+          "Allow" => "OPTIONS,HEAD,GET,PROPFIND"
+        },
+        ''
+      ]
+    end
+  end
+end 
+
 # models
 def model(sym)
   autoload sym, File.dirname(__FILE__) + "/../lib/common/models/#{sym.to_s.underscore}.rb"
@@ -10,7 +86,7 @@ end
 model :Issue
 model :PrintPublishedArticle
 
-module Dav
+module DavOld
   
   class <<self
     def DynamicResource(mime, &b)
@@ -206,4 +282,4 @@ module Dav
   end
 end
 
-run Dav::App.new
+run Dav::App

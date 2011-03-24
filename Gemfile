@@ -4,6 +4,7 @@ gem 'rack', '~> 1.2.2' # Security fix
 
 # dav
 gem 'dav', :git => 'git://github.com/mikemaltese/dav.git'
+gem 'sinatra'
 
 # workflow
 gem 'rails', '3.0.3'
