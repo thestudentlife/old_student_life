@@ -6,6 +6,43 @@ require 'incopy'
 require 'sinatra/base'
 require 'time'
 
+class String
+  def to_slug
+    # http://stackoverflow.com/questions/1302022/best-way-to-generate-slugs-human-readable-ids-in-rails/1302183#1302183
+    #strip the string
+    ret = self.strip.downcase
+
+    #blow away apostrophes
+    ret.gsub! /['`]/,""
+
+    # @ --> at, and & --> and
+    ret.gsub! /\s*@\s*/, " at "
+    ret.gsub! /\s*&\s*/, " and "
+
+    #replace all non alphanumeric, underscore or periods with hyphen
+     ret.gsub! /\s*[^A-Za-z0-9\.\-]\s*/, '-'  
+
+     #convert double hyphens to single
+     ret.gsub! /-+/,"-"
+
+     #strip off leading/trailing hyphen
+     ret.gsub! /\A[_\.]+|[_\.]+\z/,""
+
+     ret
+  end
+end
+
+require File.expand_path "../../lib/common/models/issue.rb", __FILE__
+class Issue
+  def davslug
+    s = to_s.gsub ('/','-')
+    "#{id} #{s}"
+  end
+  def sections
+    Section.joins(:articles => :issue).where(:issues => {:id => id}).group(:sections => :id)
+  end
+end
+
 module Dav
   module Propfind
     def propfind (path, opts={}, &b)
@@ -32,12 +69,10 @@ module Dav
         opts.merge!(
           :ctime => Time.at(0),
           :mtime => Time.at(0),
-          :mime => 'text/plain',
-          :size => 4
+          :mime => 'text/html',
+          :size => 4.kilobytes
         )
-      
-        puts "SCRIPT_NAME: #{request.env['SCRIPT_NAME']}"
-      
+        
         xml.D :response do
           xml.D :href, File.join(request.env['SCRIPT_NAME'], opts[:href])
           xml.D :propstat do
@@ -55,8 +90,70 @@ module Dav
       end
     end
     
+    # Routes
+    
+    propfind '/A/issues/:issue/:section/' do
+      @issue = Issue.find params[:issue]
+      @section = Section.find_by_url params[:section]
+      @articles = Article.where(:issue_id => @issue.id, :section_id => @section.id)
+      multistatus do |xml|
+        dav_response(xml,
+          :href => '/A/issues/#{params[:issue]}/#{params[:section]}',
+          :collection? => true)
+        @articles.each do |article|
+          dav_response(xml,
+            :href => '/A/issues/#{params[:issue]}/#{params[:section]}/'
+      end
+    end
+    
+    propfind '/A/issues/:issue/' do
+      @issue = Issue.find params[:issue]
+      multistatus do |xml|
+        dav_response(xml,
+          :href => "/A/issues/#{params[:issue]}",
+          :collection? => true)
+        @issue.sections.each do |section|
+          dav_response(xml,
+            :href => "/A/issues/#{params[:issue]}/#{section.url}",
+            :collection? => true)
+        end
+      end
+    end
+    
+    propfind '/A/issues/' do
+      multistatus do |xml|
+        dav_response(xml,
+          :href => '/A/issues',
+          :collection? => true
+        )
+        Issue.all.each do |issue|
+          dav_response(xml,
+            :href => "/A/issues/#{issue.davslug}",
+            :collection? => true
+          )
+        end
+      end
+    end
+    
+    propfind '/A/' do
+      multistatus do |xml|
+        dav_response(xml,
+          :href => '/A',
+          :collection? => true
+        )
+        dav_response(xml,
+          :href => '/A/issues',
+          :collection? => true
+        )
+      end
+    end
+    
     propfind '/' do
       multistatus do |xml|
+        dav_response(xml,
+          :href => '/',
+          :collection? => true
+        )
         dav_response(xml,
           :href => '/A',
           :collection? => true
