@@ -27,8 +27,7 @@
           <ul>
             <% article.reviews.each do |review| %>
               <li class="review">
-                <p><strong><%= review.review_slot %></strong>: <%= review.author %></p>
-                <p><%= review.comment %></p>
+                <p><strong><%= review.review_slot %></strong>: <%= review.author %> <%= ("&mdash; " + review.comment).html_safe unless review.comment.empty? %></p>
               </li>
             <% end %>
           </ul>
