@@ -7,7 +7,13 @@ class ArticlesController < ApplicationController
   
   def index
     @featured_articles = WebPublishedArticle.featured
-    @articles = WebPublishedArticle.not_featured
+    #@articles = WebPublishedArticle.not_featured
+    @news = Section.find_by_url('news')
+    @articles = WebPublishedArticle.
+      published.
+      joins(:article).
+      where(:articles => {:section_id => @news.id}).
+      limit(5)
   end
   
   def article
