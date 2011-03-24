@@ -4,8 +4,9 @@
   </h1>
   
   <span class="actions">
+    <%= link_to 'Back to issue', workflow_issue_path(@article.issue) %>
     <% if not @article.front_page_article and @article.published_online? and current_user.can_edit_front_page? %>
-      <%= link_to "Add to front page", new_workflow_article_front_page_path(@article) %> |
+      | <%= link_to "Add to front page", new_workflow_article_front_page_path(@article) %>
     <% end %>
     <%= link_to 'Article settings', edit_workflow_article_path(@article), :class => :button %>
     <%= link_to(
