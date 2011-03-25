@@ -3,7 +3,10 @@
 	<% @featured_articles.each do |article| %>
 		<article class="lede">
 			<header>
-				<h1><%= link_to article, article_path(article) %></h1>
+				<h1>
+					<%= link_to article, article_path(article) %>
+					<span style="section_name"><%= article.section %></span>
+				</h1>
 				<span class="byline">
 					By
 					<%= article.authors.map{|a|
@@ -59,7 +62,10 @@
 				</div>
 			<% end %>
 			<header>
-				<h1><%= link_to article, article_path(article) %></h1>
+				<h1>
+					<%= link_to article, article_path(article) %>
+					<span class="section_name"><%= article.section %></span>
+				</h1>
 				<span class="byline">
 					By
 					<%= article.authors.map{|a|
