@@ -21,11 +21,27 @@
       ) %>
       <%= link_to 'Post comment', new_workflow_article_comment_path(@article), :class => "positive button" %>
     </p>
-      <%= form_for [:workflow, @article], :html => {:style => 'display: inline'} do |f| %>
+    <div id="status_message_show">
+      <p>
+        <strong>Status:</strong>
+        <% if not @article.status_message.empty? %>
+          <span class="status_message"><%= @article.status_message %></span>
+        <% else %>
+          None
+        <% end %>
+        <span style="font-size: 0.9em;">
+        (<%= link_to "Change", edit_workflow_article_path(@article), :id => 'status_message_edit_button', :style => 'display: inline-block; line-height: 2em' %>)
+        </span>
+      </p>
+    </div>
+    <div id="status_message_edit" style="display: none">
+      <%= form_for [:workflow, @article],
+          :html => {:style => 'display: inline'} do |f| %>
       		<%= f.label :status_message, "Status:", :style => 'float:none' %>
       		<%= f.text_field :status_message %>
       		<%= f.submit %>
       <% end %>
+    </div>
   </span>
 <% end # content_for :header %>
   
@@ -166,3 +182,15 @@
 <%= render_collection_in_same_controller @article.workflow_history, :layout => "item" %>
 
 <%= link_to 'Back', workflow_issue_path(@article.issue) %>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+  jQuery(document).ready(function(){
+    var button = jQuery("#status_message_edit_button");
+    button.attr("href", "javascript:true");
+    button.click(function() {
+      jQuery("#status_message_show").hide();
+      jQuery("#status_message_edit").show();
+    })
+  })
+</script>
