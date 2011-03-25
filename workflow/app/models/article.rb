@@ -36,7 +36,7 @@ class Article < ActiveRecord::Base
   end
   
   def word_count
-    revisions.latest.first.word_count
+    revisions.latest.first.word_count if revisions.any?
   end
   
   def to_s

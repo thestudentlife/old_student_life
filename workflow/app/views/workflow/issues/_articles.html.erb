@@ -18,9 +18,11 @@
         <p style="margin-top: 0; margin-bottom: 0; line-height: 1.5em; color: #666">
           <%= article.authors.any? ? article.authors.map(&:to_s).to_sentence : "nobody" %>
         </p>
-        <p style="margin-top: 0; margin-bottom: 0; line-height: 1">
-          <%= article.word_count %> words
-        </p>
+        <% if article.word_count %>
+          <p style="margin-top: 0; margin-bottom: 0; line-height: 1">
+            <%= article.word_count %> words
+          </p>
+        <% end %>
       </td>
       <td>
         <% if article.status_message and not article.status_message.empty? %>

@@ -4,7 +4,9 @@
       <%= @article %>
     </h1>
     <span style="color: #5F87A5;"><%= time_ago_in_words(@article.created_at) %> ago</span>
-    <p style="margin-bottom: 0;"><strong><%= @article.word_count %> words</strong></p>
+    <% if @article.word_count %>
+      <p style="margin-bottom: 0;"><strong><%= @article.word_count %> words</strong></p>
+    <% end %>
   </div>
   
   <span class="actions">
