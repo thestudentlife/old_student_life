@@ -39,6 +39,10 @@ class ArticlesController < ApplicationController
   def section
     @section = Section.find_by_url! params[:section]
     
+    if request.fullpath != view_context.section_path(@section)
+      redirect_to view_context.section_path(@section), :status => :moved_permanently
+    end
+    
     @articles = WebPublishedArticle.find_all_by_section(@section).order('published_at DESC')
   end
   

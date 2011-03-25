@@ -15,6 +15,8 @@ TslRails::Application.routes.draw do
   
   root :to => "articles#index"
   match '/articles' => redirect("/")
+  match '/articles/:year/:month/:day/:section' => 'articles#section',
+    :year => /\d+/, :month => /\d+/, :day => /\d+/
   match '/articles/:year/:month/:day/:section/:id' => 'articles#article',
     :year => /\d+/, :month => /\d+/, :day => /\d+/, :id => /\d.*/
   match '/articles/:section/:id' => "articles#article", :id => /\d.*/
