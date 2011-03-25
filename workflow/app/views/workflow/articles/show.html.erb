@@ -185,14 +185,13 @@
 
 <%= link_to 'Back', workflow_issue_path(@article.issue) %>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-  jQuery(document).ready(function(){
-    var button = jQuery("#status_message_edit_button");
-    button.attr("href", "javascript:true");
-    button.click(function() {
-      jQuery("#status_message_show").hide();
-      jQuery("#status_message_edit").show();
+  document.observe ('dom:loaded', function (){
+    var button = $("status_message_edit_button");
+    button.writeAttribute("href", "javascript:true");
+    button.observe('click', function() {
+      $("status_message_show").hide();
+      $("status_message_edit").show();
     })
   })
 </script>
