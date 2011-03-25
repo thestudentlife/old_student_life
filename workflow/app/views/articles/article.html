@@ -9,6 +9,7 @@
 			</div>
 		<% end %>
 		<div class="byline">
+			<div class="section_name" style="padding-left:0"><%= @article.section %></div>
 			By <%= @article.authors.map{|a|
 					link_to a, author_path(a), :class=>'author'
 				}.to_sentence.html_safe %>
