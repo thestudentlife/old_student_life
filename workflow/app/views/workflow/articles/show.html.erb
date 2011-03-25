@@ -143,7 +143,7 @@
     :class => 'button') %>
 <% end %>
 <% if @article.published_online? %>
-  <% @article.web_published_articles.each do |web| %>
+  <% @article.web_published_articles.order('published_at DESC').each do |web| %>
     <article style="border-bottom: 1px solid #999">
       <p><q><%= web.published_at %></q></p>
       <p><strong>Revision:</strong> Revision id.<%= web.revision.id %></p>
@@ -164,7 +164,7 @@
     :class => 'button') %>
 <% end %>
 <% if @article.published_in_print? %>
-  <% @article.print_published_articles.each do |print| %>
+  <% @article.print_published_articles.order('created_at DESC').each do |print| %>
     <article>
       <p><q><%= print.created_at %></q></p>
       <p><strong>Revision:</strong> Revision id.<%= print.revision.id %></p>
