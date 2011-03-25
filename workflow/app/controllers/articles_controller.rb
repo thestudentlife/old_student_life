@@ -33,13 +33,13 @@ class ArticlesController < ApplicationController
       redirect_to view_context.author_path(@author), :status => :moved_permanently
     end
     
-    @articles = WebPublishedArticle.find_all_by_author @author
+    @articles = WebPublishedArticle.find_all_by_author(@author).order('published_at DESC')
   end
   
   def section
     @section = Section.find_by_url! params[:section]
     
-    @articles = WebPublishedArticle.find_all_by_section @section
+    @articles = WebPublishedArticle.find_all_by_section(@section).order('published_at DESC')
   end
   
   def subsection
