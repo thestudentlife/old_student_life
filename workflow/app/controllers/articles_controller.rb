@@ -13,7 +13,7 @@ class ArticlesController < ApplicationController
       published.
       joins(:article).
       where(:articles => {:section_id => @news.id}).
-      limit(5)
+      limit(5).order('published_at DESC')
   end
   
   def article
