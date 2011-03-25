@@ -62,7 +62,11 @@ class User < ActiveRecord::Base
   end
   
   def to_s
-    email
+    if author
+      author.to_s
+    else
+      email
+    end
   end
   
   private
