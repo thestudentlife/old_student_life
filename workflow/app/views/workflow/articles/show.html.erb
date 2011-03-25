@@ -1,31 +1,32 @@
 <% content_for :header do %>
-  <h1>
-    <%= @article %>
-  </h1>
+  <div style="float: left">
+    <h1 style="float: none">
+      <%= @article %>
+    </h1>
+    <span style="color: #5F87A5;"><%= time_ago_in_words(@article.created_at) %> ago</span>
+    <p style="margin-bottom: 0;"><strong><%= @article.word_count %> words</strong></p>
+  </div>
   
   <span class="actions">
-    <%= link_to 'Back to issue', workflow_issue_path(@article.issue) %>
-    <% if not @article.front_page_article and @article.published_online? and current_user.can_edit_front_page? %>
-      | <%= link_to "Add to front page", new_workflow_article_front_page_path(@article) %>
-    <% end %>
-    <%= link_to 'Article settings', edit_workflow_article_path(@article), :class => :button %>
-    <%= link_to(
-      (@article.revisions.any? ? 'Edit latest revision' : 'Post original revision'),
-      new_workflow_article_revision_path(@article),
-      :class => "positive button"
-    ) %>
-    <%= link_to 'Post comment', new_workflow_article_comment_path(@article), :class => "positive button" %>
+    <p>
+      <%= link_to 'Back to issue', workflow_issue_path(@article.issue) %>
+      <% if not @article.front_page_article and @article.published_online? and current_user.can_edit_front_page? %>
+        | <%= link_to "Add to front page", new_workflow_article_front_page_path(@article) %>
+      <% end %>
+      <%= link_to 'Article settings', edit_workflow_article_path(@article), :class => :button %>
+      <%= link_to(
+        (@article.revisions.any? ? 'Edit latest revision' : 'Post original revision'),
+        new_workflow_article_revision_path(@article),
+        :class => "positive button"
+      ) %>
+      <%= link_to 'Post comment', new_workflow_article_comment_path(@article), :class => "positive button" %>
+    </p>
+      <%= form_for [:workflow, @article], :html => {:style => 'display: inline'} do |f| %>
+      		<%= f.label :status_message, "Status:", :style => 'float:none' %>
+      		<%= f.text_field :status_message %>
+      		<%= f.submit %>
+      <% end %>
   </span>
-  <div style="clear: both;"></div>
-  <span style="color: #5F87A5;"><%= time_ago_in_words(@article.created_at) %> ago</span>
-  <p style="margin-bottom: 0;"><strong>Status message:</strong>
-  <% if @article.status_message and not @article.status_message.empty? %>
-    <%= @article.status_message %>
-  <% else %>
-    None
-  <% end %>
-  </p>
-  <p style="margin-bottom: 0;"><strong>Statistics:</strong> <%= @article.word_count %> words</p>
 <% end # content_for :header %>
   
 <% content_for :side do %>
