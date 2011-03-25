@@ -24,7 +24,7 @@
     <div id="status_message_show">
       <p>
         <strong>Status:</strong>
-        <% if not @article.status_message.empty? %>
+        <% if @article.status_message and not @article.status_message.empty? %>
           <span class="status_message"><%= @article.status_message %></span>
         <% else %>
           None
