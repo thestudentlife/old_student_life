@@ -11,3 +11,27 @@ FEATURES
 * "Tweet this article" button
 * Polls
 * Blogs
+
+EDITOR
+<p>
+  <span class>
+    text
+    <a href></a>
+  </span>
+</p>
+
+<span> classes:
+* bold
+* italic
+
+* author-#{id}
+* comment
+
+* incopy-prsl-#{id}
+* incopy-crsl-#{id}
+
+<p>
+  <span class="author-25 incopy-prsl-2">Researchers at the <a href>Important Research Center</a> announced Tuesday that</span>
+  <span class="author-14 incopy-prsl-2">they had created a new form of energy.</span>
+  <span class="comment author-6">This is unclear. A new form of energy?</span>
+</p>
