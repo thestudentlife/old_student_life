@@ -7,7 +7,13 @@ class ArticlesController < ApplicationController
   
   def index
     @featured_articles = WebPublishedArticle.featured
-    @articles = WebPublishedArticle.not_featured
+    #@articles = WebPublishedArticle.not_featured
+    @news = Section.find_by_url('news')
+    @articles = WebPublishedArticle.
+      published.
+      joins(:article).
+      where(:articles => {:section_id => @news.id}).
+      limit(5).order('published_at DESC')
   end
   
   def article
@@ -27,13 +33,17 @@ class ArticlesController < ApplicationController
       redirect_to view_context.author_path(@author), :status => :moved_permanently
     end
     
-    @articles = WebPublishedArticle.find_all_by_author @author
+    @articles = WebPublishedArticle.find_all_by_author(@author).order('published_at DESC')
   end
   
   def section
     @section = Section.find_by_url! params[:section]
     
-    @articles = WebPublishedArticle.find_all_by_section @section
+    if request.fullpath != view_context.section_path(@section)
+      redirect_to view_context.section_path(@section), :status => :moved_permanently
+    end
+    
+    @articles = WebPublishedArticle.find_all_by_section(@section).order('published_at DESC')
   end
   
   def subsection

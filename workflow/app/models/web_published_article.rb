@@ -6,7 +6,8 @@ class WebPublishedArticle < ActiveRecord::Base
   has_one :section, :through => :article
   has_one :subsection, :through => :article
   
-  default_scope :order => 'published_at ASC'
+  validates :title, :presence => true
+  validates :revision, :presence => true
   
   def authors
     article.authors

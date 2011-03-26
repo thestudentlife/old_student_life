@@ -3,8 +3,11 @@
 	<% @featured_articles.each do |article| %>
 		<article class="lede">
 			<header>
-				<h1><%= link_to article, article_path(article) %></h1>
+				<h1>
+					<%= link_to article, article_path(article) %>
+				</h1>
 				<span class="byline">
+					<div class="section_name" style="padding-left: 0"><%= article.section %></div>
 					By
 					<%= article.authors.map{|a|
 							content_tag :span, a, :class=>'author'
@@ -18,7 +21,7 @@
 				<div class="ledephoto">
 					<%= link_to(
 						image_tag(
-							article.images.first.file.url,
+							article.images.first.file.url(:featured),
 							:height => 200), 
 					    article_path(article)) %>
 					<div class="credit">
@@ -59,7 +62,10 @@
 				</div>
 			<% end %>
 			<header>
-				<h1><%= link_to article, article_path(article) %></h1>
+				<h1>
+					<%= link_to article, article_path(article) %>
+					<span class="section_name"><%= article.section %></span>
+				</h1>
 				<span class="byline">
 					By
 					<%= article.authors.map{|a|

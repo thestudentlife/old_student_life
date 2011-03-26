@@ -1,29 +1,50 @@
 <% content_for :header do %>
-  <h1>
-    <%= @article %>
-  </h1>
+  <div style="float: left">
+    <h1 style="float: none">
+      <%= @article %>
+    </h1>
+    <span style="color: #5F87A5;"><%= time_ago_in_words(@article.created_at) %> ago</span>
+    <% if @article.word_count %>
+      <p style="margin-bottom: 0;"><strong><%= @article.word_count %> words</strong></p>
+    <% end %>
+  </div>
   
   <span class="actions">
-    <% if not @article.front_page_article and @article.published_online? and current_user.can_edit_front_page? %>
-      <%= link_to "Add to front page", new_workflow_article_front_page_path(@article) %> |
-    <% end %>
-    <%= link_to 'Article settings', edit_workflow_article_path(@article), :class => :button %>
-    <%= link_to(
-      (@article.revisions.any? ? 'Edit latest revision' : 'Post original revision'),
-      new_workflow_article_revision_path(@article),
-      :class => "positive button"
-    ) %>
-    <%= link_to 'Post comment', new_workflow_article_comment_path(@article), :class => "positive button" %>
+    <p>
+      <%= link_to 'Back to issue', workflow_issue_path(@article.issue) %>
+      <% if not @article.front_page_article and @article.published_online? and current_user.can_edit_front_page? %>
+        | <%= link_to "Add to front page", new_workflow_article_front_page_path(@article) %>
+      <% end %>
+      <%= link_to 'Article settings', edit_workflow_article_path(@article), :class => :button %>
+      <%= link_to(
+        (@article.revisions.any? ? 'Edit latest revision' : 'Post original revision'),
+        new_workflow_article_revision_path(@article),
+        :class => "positive button"
+      ) %>
+      <%= link_to 'Post comment', new_workflow_article_comment_path(@article), :class => "positive button" %>
+    </p>
+    <div id="status_message_show">
+      <p>
+        <strong>Status:</strong>
+        <% if @article.status_message and not @article.status_message.empty? %>
+          <span class="status_message"><%= @article.status_message %></span>
+        <% else %>
+          None
+        <% end %>
+        <span style="font-size: 0.9em;">
+        (<%= link_to "Change", edit_workflow_article_path(@article), :id => 'status_message_edit_button', :style => 'display: inline-block; line-height: 2em' %>)
+        </span>
+      </p>
+    </div>
+    <div id="status_message_edit" style="display: none">
+      <%= form_for [:workflow, @article],
+          :html => {:style => 'display: inline'} do |f| %>
+      		<%= f.label :status_message, "Status:", :style => 'float:none' %>
+      		<%= f.text_field :status_message %>
+      		<%= f.submit %>
+      <% end %>
+    </div>
   </span>
-  <div style="clear: both;"></div>
-  <span style="color: #5F87A5;"><%= time_ago_in_words(@article.created_at) %> ago</span>
-  <p style="margin-bottom: 0;"><strong>Status message:</strong>
-  <% if @article.status_message and not @article.status_message.empty? %>
-    <%= @article.status_message %>
-  <% else %>
-    None
-  <% end %>
-  </p>
 <% end # content_for :header %>
   
 <% content_for :side do %>
@@ -122,11 +143,13 @@
     :class => 'button') %>
 <% end %>
 <% if @article.published_online? %>
-  <% @article.web_published_articles.each do |web| %>
-    <article>
+  <% @article.web_published_articles.order('published_at DESC').each do |web| %>
+    <article style="border-bottom: 1px solid #999">
       <p><q><%= web.published_at %></q></p>
+      <p><strong>Revision:</strong> Revision id.<%= web.revision.id %></p>
       <p><strong>Title:</strong></p><p><%= web.title %></p>
-      <p><strong>Revision:</strong></p><p>Revision id.<%= web.revision.id %></p>
+      <p><%= link_to "Unpublish", workflow_article_web_published_article_path(@article, web),
+        :method => :delete, :confirm => "Are you sure you?" %></p>
     </article>
   <% end %>
 <% else %>
@@ -141,11 +164,13 @@
     :class => 'button') %>
 <% end %>
 <% if @article.published_in_print? %>
-  <% @article.print_published_articles.each do |print| %>
+  <% @article.print_published_articles.order('created_at DESC').each do |print| %>
     <article>
       <p><q><%= print.created_at %></q></p>
+      <p><strong>Revision:</strong> Revision id.<%= print.revision.id %></p>
       <p><strong>Title:</strong></p><p><%= print.title %></p>
-      <p><strong>Revision:</strong></p><p>Revision id.<%= print.revision.id %></p>
+      <p><%= link_to "Unpublish", workflow_article_print_published_article_path(@article, print),
+        :method => :delete, :confirm => "Are you sure you?" %></p>
     </article>
   <% end %>
 <% else %>
@@ -159,3 +184,14 @@
 <%= render_collection_in_same_controller @article.workflow_history, :layout => "item" %>
 
 <%= link_to 'Back', workflow_issue_path(@article.issue) %>
+
+<script type="text/javascript">
+  document.observe ('dom:loaded', function (){
+    var button = $("status_message_edit_button");
+    button.writeAttribute("href", "javascript:true");
+    button.observe('click', function() {
+      $("status_message_show").hide();
+      $("status_message_edit").show();
+    })
+  })
+</script>

@@ -15,6 +15,8 @@ TslRails::Application.routes.draw do
   
   root :to => "articles#index"
   match '/articles' => redirect("/")
+  match '/articles/:year/:month/:day/:section' => 'articles#section',
+    :year => /\d+/, :month => /\d+/, :day => /\d+/
   match '/articles/:year/:month/:day/:section/:id' => 'articles#article',
     :year => /\d+/, :month => /\d+/, :day => /\d+/, :id => /\d.*/
   match '/articles/:section/:id' => "articles#article", :id => /\d.*/
@@ -62,8 +64,8 @@ TslRails::Application.routes.draw do
       resources :reviews, :controller => 'articles/reviews', :only => [:new, :create]
       resources :revisions, :controller => "articles/revisions"
       resources :titles, :controller => "articles/titles"
-      resources :print_published_articles, :controller => 'articles/print_published_articles', :only => [:new, :create]
-      resources :web_published_articles, :controller => 'articles/web_published_articles', :only => [:new, :create]
+      resources :print_published_articles, :controller => 'articles/print_published_articles', :only => [:new, :create, :destroy]
+      resources :web_published_articles, :controller => 'articles/web_published_articles', :only => [:new, :create, :destroy]
       
       resource :front_page, :controller => "articles/front_page", :only => [:new, :create]
     end

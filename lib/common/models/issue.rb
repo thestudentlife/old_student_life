@@ -12,4 +12,8 @@ class Issue < ActiveRecord::Base
   def sections
     Section.joins(:articles => :issue).where(:issues => {:id => id}).group(:sections => :id)
   end
+  def slug
+    t = to_s.to_slug.gsub(/(^-)|(-$)/,'')
+    "#{id}-#{t}"
+  end
 end

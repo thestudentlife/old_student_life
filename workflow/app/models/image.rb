@@ -3,8 +3,10 @@ class Image < ActiveRecord::Base
     :path => ":rails_root/public/uploads/article_images/:id:style.:extension",
     :url => "/uploads/article_images/:id:style.:extension",
     :styles => {
-      :thumb => "75x75#",
-      :small => "150x150>"
+      :thumb => ["75x75#", :jpg],
+      :small => ["150x150>", :jpg],
+      :two_columns => ["600", :jpg],
+      :featured => ["x200", :jpg]
     }
   belongs_to :article
 end
