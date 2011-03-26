@@ -40,10 +40,104 @@ module Dav
     end
   end
   
+  module NamedRoutes
+    
+    def self.included(base)
+      base.class_eval do
+        class <<self
+          include Helpers
+        end
+        helpers(Helpers)
+      end
+    end
+    
+    module Helpers
+      def issues_path
+        '/A/issues/'
+      end
+    
+      def issue_path_template
+        File.join issues_path, '/:issue/'
+      end
+      def issue_path(issue)
+        File.join(issues_path, issue.davslug)
+      end
+    
+      def issue_section_path_template
+        File.join issue_path_template, '/:section/'
+      end
+      def issue_section_path(issue, section)
+        File.join issue_path(issue), section.url
+      end
+    
+      def article_path_template
+        File.join issue_section_path_template, '/:article/'
+      end
+      def article_path(article)
+        File.join(
+          issue_section_path(article.issue, article.section),
+          article.davslug
+        )
+      end
+    
+      def article_authors_path_template
+        File.join article_path_template, 'Authors.txt'
+      end
+      def article_authors_path(article)
+        File.join article_path(article), 'Authors.txt'
+      end
+      
+      def article_incopy_path_template
+        File.join article_path_template, 'Body.incx'
+      end
+      def article_incopy_path(article)
+        File.join article_path(article), 'Body.incx'
+      end
+      
+      def article_headline_path_template
+        File.join article_path_template, 'Headline.txt'
+      end
+      def article_headline_path(article)
+        File.join article_path(article), 'Headline.txt'
+      end
+      
+      def article_not_published_path_template
+        File.join article_path_template, 'NOT PUBLISHED.txt'
+      end
+      def article_not_published_path(article)
+        File.join article_path(article), 'NOT PUBLISHED.txt'
+      end
+      
+      def article_image_path_template
+        File.join article_path_template, 'Image.:ext'
+      end
+      def article_image_path(article)
+        image = article.images.first
+        ext = File.extname(image.file.url.sub(/\?.*$/,''))
+        File.join article_path(article), "Image#{ext}"
+      end
+      
+      def article_image_caption_path_template
+        File.join article_path_template, 'ImageCaption.txt'
+      end
+      def article_image_caption_path(article)
+        File.join article_path(article), 'ImageCaption.txt'
+      end
+      
+      def article_image_credit_path_template
+        File.join article_path_template, 'ImageCredit.txt'
+      end
+      def article_image_credit_path(article)
+        File.join article_path(article), 'ImageCredit.txt'
+      end
+    end
+  end
+  
   class App < Sinatra::Base
     class <<self
       include Propfind
     end
+    include NamedRoutes
     
     helpers do
       def multistatus
@@ -87,86 +181,89 @@ module Dav
       request.script_name = Rack::Utils.unescape(request.script_name)
     end
     
-    def issues_path
-      '/A/issues/'
-    end
-    
-    def issue_path_template
-      File.join issues_path, '/:issue/'
-    end
-    def issue_path(issue)
-      issues_path.sub(':issue', issue.davslug)
-    end
-    
-    def issue_section_path_template
-      File.join issue_path_template, '/:section/'
-    end
-    def issue_section_path(issue, section)
-      File.join issue_path(issue), issue_section_path_template.sub(':section', section.url)
-    end
-    
-    def article_path_template
-      File.join issue_section_path_template, '/:article/'
-    end
-    def article_path(article)
-      File.join issue_section_path(article.issue, article.section), article_path_template.sub(':article', article.davslug)
-    end
-    
-    def article_authors_path(article)
-      File.join article_path(article), '/Authors.txt'
-    end
-    
-    propfind '/A/issues/:issue/:section/:article/' do
+    propfind article_path_template do
       @article = Article.find params[:article]
       multistatus do |xml|
         dav_response(xml,
-          :href => "/A/issues/#{params[:issue]}/#{params[:section]}/#{params[:article]}/",
+          :href => article_path(@article),
           :collection? => true)
         dav_response(xml,
-          :href => "/A/issues/#{params[:issue]}/#{params[:section]}/#{params[:article]}/Authors.txt"
+          :href => article_authors_path(@article),
+          :mime => 'text/plain'
         )
+        dav_response(xml,
+          :href => article_incopy_path(@article),
+          :mime => 'application/x-incx'
+        )
+        if @article.published_in_print?
+          dav_response(xml,
+            :href => article_headline_path(@article),
+            :mime => 'text/plain'
+          )
+        else
+          dav_response(xml,
+            :href => article_not_published_path(@article),
+            :mime => 'text/plain'
+          )
+        end
+        if @article.images.any?
+          image = @article.images.first
+          mime = Rack::Mime.mime_type File.extname(image.file.url.sub(/\?.*/,''))
+          dav_response(xml,
+            :href => article_image_path(@article),
+            :mime => mime
+          )
+          dav_response(xml,
+            :href => article_image_credit_path(@article),
+            :mime => 'text/plain'
+          )
+          dav_response(xml,
+            :href => article_image_caption_path(@article),
+            :mime => 'text/plain'
+          )
+        end
       end
     end
     
-    propfind '/A/issues/:issue/:section/' do
+    propfind issue_section_path_template do
       @issue = Issue.find params[:issue]
       @section = Section.find_by_url params[:section]
       @articles = Article.where(:issue_id => @issue.id, :section_id => @section.id)
       multistatus do |xml|
         dav_response(xml,
-          :href => "/A/issues/#{params[:issue]}/#{params[:section]}",
+          :href => issue_section_path(@issue, @section),
           :collection? => true)
         @articles.each do |article|
           dav_response(xml,
-            :href => "/A/issues/#{params[:issue]}/#{params[:section]}/#{article.davslug}",
+            :href => article_path(article),
             :collection? => true)
         end
       end
     end
     
-    propfind '/A/issues/:issue/' do
+    propfind issue_path_template do
       @issue = Issue.find params[:issue]
       multistatus do |xml|
         dav_response(xml,
-          :href => "/A/issues/#{params[:issue]}",
+          :href => issue_path(@issue),
           :collection? => true)
         @issue.sections.each do |section|
           dav_response(xml,
-            :href => "/A/issues/#{params[:issue]}/#{section.url}",
+            :href => issue_section_path(@issue, section),
             :collection? => true)
         end
       end
     end
     
-    propfind '/A/issues/' do
+    propfind issues_path do
       multistatus do |xml|
         dav_response(xml,
-          :href => '/A/issues',
+          :href => issues_path,
           :collection? => true
         )
         Issue.all.each do |issue|
           dav_response(xml,
-            :href => "/A/issues/#{issue.davslug}",
+            :href => issue_path(issue),
             :collection? => true
           )
         end
@@ -180,7 +277,7 @@ module Dav
           :collection? => true
         )
         dav_response(xml,
-          :href => '/A/issues',
+          :href => issues_path,
           :collection? => true
         )
       end
