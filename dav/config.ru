@@ -1,6 +1,5 @@
 require 'active_record'
 require 'active_support/core_ext/string/inflections'
-require 'dav'
 require 'incopy'
 
 require 'sinatra/base'
