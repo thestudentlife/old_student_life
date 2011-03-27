@@ -5,9 +5,12 @@ gem 'rack', '~> 1.2.2' # Security fix
 # dav
 gem 'sinatra'
 gem "incopy", :git => "git://github.com/mikemaltese/html2incopy.git"
+gem 'workflow-dav', :require => 'workflow/dav', :path => 'lib/workflow-dav'
+
+gem 'ruby-debug'
 
 # workflow
-gem 'rails', '3.0.3'
+gem 'rails', '3.0.5'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'unicorn'
 gem "authlogic"
@@ -17,3 +20,4 @@ gem "high_voltage"
 gem "responders"
 gem "inherited_resources", '~> 1.2.1'
 gem "factory_girl_rails"
+gem 'yaml_db'

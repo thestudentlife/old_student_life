@@ -1,4 +1,8 @@
+require 'workflow/dav'
+
 TslRails::Application.routes.draw do
+
+  mount Workflow::Dav::App => '/webdav'
 
   namespace :workflow do
     match '/login' => 'user_sessions#new', :via => :get, :as => "login"

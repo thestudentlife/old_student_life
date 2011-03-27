@@ -1,11 +1,11 @@
 require 'rubygems'
 
 # Set up gems listed in the Gemfile.
-gemfile = File.expand_path('../../Gemfile', __FILE__)
+gemfile = File.expand_path('../Gemfile', __FILE__)
 begin
   ENV['BUNDLE_GEMFILE'] = gemfile
   require 'bundler'
-  Bundler.setup(:workflow)
+  Bundler.setup
 rescue Bundler::GemNotFound => e
   STDERR.puts e.message
   STDERR.puts "Try running `bundle install`."
