@@ -9,11 +9,11 @@
   
   <p>To make <strong>paragraphs</strong>, press <strong>ENTER</strong> twice after the paragraph. Paragraphs should be separated by <strong>empty lines</strong>. Don't worry, it all works out in InCopy.</p>
   
-  <p>To make text <strong>bold</strong>, select it and hit the <strong>B</strong> button below, or press <strong>APPLE</strong>+<strong>B</strong> on a Mac.</p>
+  <p>To make text <strong>bold</strong>, select it and hit the <strong>Bold</strong> button below.</p>
   
-  <p>Making text <strong>italic</strong> is just like making it <strong>bold</strong>, but with <strong>I</strong> instead of <strong>B</strong>.</p>
+  <p>To make text <strong>italic</strong>, select it and hit the <strong>Italic</strong> button below.</p>
   
-<%= form_for(@revision, :url => workflow_article_revisions_path(@article)) do |f| %>
+<%= form_for [:workflow, @article, @revision] do |f| %>
   <% if @revision.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@revision.errors.count, "error") %> prohibited this revision from being saved:</h2>
@@ -30,14 +30,40 @@
 		<#%= f.label :title %><br />
 		<#%= f.text_field :title %>
 	</div>-->
-	<div class="field wide-field">
+	<div class="field wide-field" style="display: none">
 		<%= f.label :body %>
 		<%= f.text_area :body %>
 	</div>
+	<div id="editor_toolbar">
+	  <a id="editor_bold" href="javascript:true" style="padding: 5px; display: inline-block">Bold</a> <a id="editor_italic" href="javascript:true" style="padding: 5px; display: inline-block;">Italic</a>
+  </div>
+	<iframe id="editor" src="<%= File.join workflow_article_revisions_path, @revision.id || 'new', "body" %>" style="width: 100%; border: 1px solid #999; font-family: Georgia; background-color: #ffd; height: 20em"></iframe>
 
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
-<%= javascript_include_tag '/wmd/wmd.js' %>
 </div>
+
+
+<script type="text/javascript">
+  Event.observe(window, 'load', function () {
+    var editDoc = $('editor').contentWindow.document;
+    editDoc.designMode = 'on';
+    
+    var form = $('new_revision');
+    var body = $('revision_body');
+    form.observe('submit', function() {
+      body.innerHTML = editDoc.body.innerHTML.escapeHTML();
+    })
+    
+    var bold = $('editor_bold');
+    bold.observe('click', function () {
+      editDoc.execCommand('Bold', false, null);
+    })
+    var italic = $('editor_italic');
+    italic.observe('click', function() {
+      editDoc.execCommand('Italic', false, null);
+    })
+  })
+</script>

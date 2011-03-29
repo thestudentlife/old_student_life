@@ -1,0 +1,17 @@
+<html>
+	<head>
+		<style type="text/css">
+			p:before {
+				content: "» ";
+				color: #999;
+			}
+		</style>
+	</head>
+  <body>
+    <% if @revision and not @revision.body.blank? %>
+      <%= @revision.body.html_safe %>
+    <% else %>
+      <p><span><br/></span></p>
+    <% end %>
+  </body>
+</html>

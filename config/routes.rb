@@ -66,7 +66,9 @@ TslRails::Application.routes.draw do
       resources :comments, :controller => "articles/comments"
       resources :images, :controller => "articles/images"
       resources :reviews, :controller => 'articles/reviews', :only => [:new, :create]
-      resources :revisions, :controller => "articles/revisions"
+      resources :revisions, :controller => "articles/revisions" do
+        get 'body', :on => :member
+      end
       resources :titles, :controller => "articles/titles"
       resources :print_published_articles, :controller => 'articles/print_published_articles', :only => [:new, :create, :destroy]
       resources :web_published_articles, :controller => 'articles/web_published_articles', :only => [:new, :create, :destroy]
