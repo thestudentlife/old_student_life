@@ -301,6 +301,71 @@
 			text-transform: uppercase;
 			padding-left: 0.2em;
 		}
+		
+		@media print {
+			body {
+				margin: 0 10px !important;
+			}
+			
+			body > header {
+				margin-bottom: 10px;
+				border: none;
+				border-bottom: 1px solid #999;
+			}
+			
+			body > header img {
+				height: 60px;
+			}
+			
+			body > nav,
+			.articleComments,
+			#cColumn,
+			footer,
+			.fullArticle .section_name
+				{ display: none; }
+			
+			#aColumn { border: none; width: 100%;}
+			
+			.fullArticle {
+				font-size: 16px;
+				line-height: 24px;
+			}
+			
+			.fullArticle p {
+				margin-top: 0;
+				margin-bottom: 16px;
+			}
+			
+			.fullArticle .articleImage {
+				display: none;
+			}
+			
+			.fullArticle .byline {
+				font-size: 13px;
+				line-height: 16px;
+				font-weight: bold;
+				color: #999;
+				margin: 2px 0;
+			}
+			
+			article .byline a.author {
+				color: #999 !important;
+			}
+			
+			.fullArticle .timestamp {
+				display: inline-block;
+				text-transform: uppercase;
+				color: #999;
+			}
+			
+			.fullArticle header h1 {
+				font-size: 32px;
+				line-height: 24px;
+				color: black;
+				font-weight: bold;
+				margin-bottom: 16px;
+			}
+		}
 	</style>
 	<script type="text/javascript">
 
