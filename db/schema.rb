@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110318231843) do
+ActiveRecord::Schema.define(:version => 20110329021017) do
 
   create_table "article_titles", :force => true do |t|
     t.integer  "article_id", :null => false
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(:version => 20110318231843) do
     t.datetime "updated_at"
     t.integer  "issue_id"
     t.string   "name"
+    t.integer  "locked_by"
   end
 
   create_table "articles_authors", :id => false, :force => true do |t|
@@ -133,6 +134,7 @@ ActiveRecord::Schema.define(:version => 20110318231843) do
     t.integer  "title_id",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "body"
   end
 
   create_table "workflow_comments", :force => true do |t|

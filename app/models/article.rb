@@ -23,6 +23,20 @@ class Article < ActiveRecord::Base
   
   default_scope :order => 'created_at DESC'
   
+  belongs_to :locked_by, :class_name => 'User', :foreign_key => 'locked_by'
+  
+  def locked?
+    not locked_by.nil?
+  end
+  
+  def lock(user)
+    locked_by = user
+  end
+  
+  def unlock
+    locked_by = nil
+  end
+  
   def davslug
     s = to_s.gsub('/', '-')
     "#{id} #{s}"
