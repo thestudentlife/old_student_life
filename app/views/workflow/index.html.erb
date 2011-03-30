@@ -7,10 +7,16 @@
     <h1>Changelog</h1>
   </header>
   <div class="content" style="color: white;">
+    <% changes = [
+      ['Update', '(Mar 29) Removed \'Publish Article in Print\''],
+      ['Bug fix', '(Mar 29) Looks good in Internet Explorer'],
+      ['Update', '(Mar 28) New article editor'],
+      ['Tech note', '(Mar 26) Faster WebDAV server']
+    ] %>
     <ol style="list-style: disc; margin-left: 0; padding-left: 0">
-      <li style="margin-bottom: 5px"><strong>Bug fix</strong> (Mar 29) Looks good in Internet Explorer</li>
-      <li style="margin-bottom: 5px"><strong>Update</strong> (Mar 28) New article editor</li>
-      <li style="margin-bottom: 5px"><strong>Tech note</strong> (Mar 26) Faster WebDAV server</li>
+      <% changes.each do |change| %>
+        <li style="margin-bottom: 5px"><strong><%= change[0] %></strong> <%= change[1] %></li>
+      <% end %>
     </ol>
   </div>
 <% end %>

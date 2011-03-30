@@ -97,17 +97,10 @@ module Workflow
         end
       
         def article_headline_path_template
-          File.join article_path_template, 'Headline.txt'
+          File.join article_path_template, 'Headlines.txt'
         end
         def article_headline_path(article)
-          File.join article_path(article), 'Headline.txt'
-        end
-      
-        def article_not_published_path_template
-          File.join article_path_template, 'NOT PUBLISHED.txt'
-        end
-        def article_not_published_path(article)
-          File.join article_path(article), 'NOT PUBLISHED.txt'
+          File.join article_path(article), 'Headlines.txt'
         end
       
         def article_image_path_template
@@ -206,11 +199,7 @@ module Workflow
     
       get article_incopy_path_template do
         @article = Article.find params[:article]
-        if @article.published_in_print?
-          @revision = @article.print_published_articles.order('created_at DESC').first.revision
-        else
-          @revision = @article.revisions.latest.first
-        end
+        @revision = @article.revisions.latest.first
         InCopy.html_to_incopy @revision.body
       end
       propfind article_incopy_path_template do
@@ -225,31 +214,13 @@ module Workflow
     
       get article_headline_path_template do
         @article = Article.find params[:article]
-        return [404, {}, ''] unless @article.published_in_print?
-        @article.print_published_articles.order('created_at DESC').first.title.text
+        @article.titles.map(&:to_s).join("\n")
       end
       propfind article_headline_path_template do
         @article = Article.find params[:article]
-        return [404, {}, ''] unless @article.published_in_print?
         multistatus do |xml|
           dav_response(xml,
             :href => article_headline_path(@article),
-            :mime => 'text/plain'
-          )
-        end
-      end
-    
-      get article_not_published_path_template do
-        @article = Article.find params[:article]
-        return [404, {}, ''] if @article.published_in_print?
-        ''
-      end
-      propfind article_not_published_path_template do
-        @article = Article.find params[:article]
-        return [404, {}, ''] if @article.published_in_print?
-        multistatus do |xml|
-          dav_response(xml,
-            :href => article_not_published_path(@article),
             :mime => 'text/plain'
           )
         end
@@ -318,17 +289,10 @@ module Workflow
             :href => article_incopy_path(@article),
             :mime => 'application/x-incx'
           )
-          if @article.published_in_print?
-            dav_response(xml,
-              :href => article_headline_path(@article),
-              :mime => 'text/plain'
-            )
-          else
-            dav_response(xml,
-              :href => article_not_published_path(@article),
-              :mime => 'text/plain'
-            )
-          end
+          dav_response(xml,
+            :href => article_headline_path(@article),
+            :mime => 'text/plain'
+          )
           if @article.images.any?
             image = @article.images.first
             mime = Rack::Mime.mime_type File.extname(image.file.url.sub(/\?.*/,''))

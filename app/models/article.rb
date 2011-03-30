@@ -11,7 +11,6 @@ class Article < ActiveRecord::Base
   has_one :front_page_article
   
   has_many :web_published_articles
-  has_many :print_published_articles
   
   has_many :titles, :class_name => "ArticleTitle"
   
@@ -44,10 +43,6 @@ class Article < ActiveRecord::Base
   
   def published_online?
     web_published_articles.exists?
-  end
-  
-  def published_in_print?
-    PrintPublishedArticle.where(:article_id => self.id).exists?
   end
   
   def open_review_slots

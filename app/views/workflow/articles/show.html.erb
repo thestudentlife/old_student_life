@@ -136,7 +136,7 @@
   <h2>Publication status</h2>
 </div>
 
-<div style="float: left; margin-right: 2em; width: 25%">
+<div style="float: left;">
 <h2 style="display: inline">Online:</h2>
 <% if current_user.can_publish_article? @article %>
   <%= link_to('Publish online', new_workflow_article_web_published_article_path(@article),
@@ -147,7 +147,7 @@
     <article style="border-bottom: 1px solid #999">
       <p><q><%= web.published_at %></q></p>
       <p><strong>Revision:</strong> Revision id.<%= web.revision.id %></p>
-      <p><strong>Title:</strong></p><p><%= web.title %></p>
+      <p><strong>Title:</strong> <%= web.title %></p>
       <p><%= link_to "Unpublish", workflow_article_web_published_article_path(@article, web),
         :method => :delete, :confirm => "Are you sure you?" %></p>
     </article>
@@ -157,26 +157,6 @@
 <% end %>
 </div>
 
-<div style="float: left; width: 25%">
-<h2 style="display: inline">Print:</h2>
-<% if current_user.can_publish_article? @article %>
-  <%= link_to('Publish in print', new_workflow_article_print_published_article_path(@article),
-    :class => 'button') %>
-<% end %>
-<% if @article.published_in_print? %>
-  <% @article.print_published_articles.order('created_at DESC').each do |print| %>
-    <article>
-      <p><q><%= print.created_at %></q></p>
-      <p><strong>Revision:</strong> Revision id.<%= print.revision.id %></p>
-      <p><strong>Title:</strong></p><p><%= print.title %></p>
-      <p><%= link_to "Unpublish", workflow_article_print_published_article_path(@article, print),
-        :method => :delete, :confirm => "Are you sure you?" %></p>
-    </article>
-  <% end %>
-<% else %>
-  <p>Not published</p>
-<% end %>
-</div>
 <div style="clear: both"></div>
 </article>
 
