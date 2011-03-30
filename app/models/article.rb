@@ -29,11 +29,11 @@ class Article < ActiveRecord::Base
   end
   
   def lock(user)
-    locked_by = user
+    self.locked_by = user
   end
   
   def unlock
-    locked_by = nil
+    self.locked_by = nil
   end
   
   def davslug

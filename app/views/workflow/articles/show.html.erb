@@ -27,8 +27,14 @@
       <strong>Locked by:</strong>
       <% if @article.locked? %>
         <q><%= @article.locked_by %></q>
+        (<%= link_to 'Unlock', unlock_workflow_article_path(@article),
+          :style => 'display: inline-block; line-height: 2em',
+          :method => 'delete' %>)
       <% else %>
         nobody
+        (<%= link_to 'Lock', lock_workflow_article_path(@article),
+          :style => 'display: inline-block; line-height: 2em',
+          :method => 'put' %>)
       <% end %>
     </p>
     <div id="status_message_show">

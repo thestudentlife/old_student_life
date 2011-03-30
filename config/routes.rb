@@ -62,6 +62,11 @@ TslRails::Application.routes.draw do
   match 'workflow/' => "workflow#index"
   namespace :workflow do
     resources :articles, :except => [:index, :new, :create] do
+      member do
+        put 'lock'
+        delete 'unlock'
+      end
+      
       resources :authors, :controller => "articles/authors"
       resources :comments, :controller => "articles/comments"
       resources :images, :controller => "articles/images"

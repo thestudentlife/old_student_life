@@ -21,4 +21,24 @@ class Workflow::ArticlesController < WorkflowController
       render :action => "edit"
     end
   end
+  
+  def lock
+    @article.lock(current_user)
+    if @article.save
+      flash[:notice] = 'Article was successfully locked'
+    else
+      flash[:warning] = 'Could not lock article'
+    end
+    redirect_to :action => :show
+  end
+  
+  def unlock
+    @article.unlock
+    if @article.save
+      flash[:notice] = 'Article was successfully unlocked'
+    else
+      flash[:warning] = 'Could not unlock article'
+    end
+    redirect_to :action => :show
+  end
 end
