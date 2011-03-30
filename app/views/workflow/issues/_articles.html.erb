@@ -23,6 +23,9 @@
         <% end %>
       </td>
       <td>
+        <% if article.locked? %>
+          <p><q><strong>Locked by:</strong> <%= article.locked_by %></q></p>
+        <% end %>
         <% if article.status_message and not article.status_message.empty? %>
           <p><span class="status_message"><span style="font-weight: bold">Status:</span> <%= article.status_message %></span></p>
         <% end %>

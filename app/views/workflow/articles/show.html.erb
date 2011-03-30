@@ -23,6 +23,14 @@
       ) %>
       <%= link_to 'Post comment', new_workflow_article_comment_path(@article), :class => "positive button" %>
     </p>
+    <p>
+      <strong>Locked by:</strong>
+      <% if @article.locked? %>
+        <q><%= @article.locked_by %></q>
+      <% else %>
+        nobody
+      <% end %>
+    </p>
     <div id="status_message_show">
       <p>
         <strong>Status:</strong>
