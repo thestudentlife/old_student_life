@@ -45,14 +45,14 @@
 <% end %>
 </div>
 
-
+<%= javascript_include_tag 'rangy-core' %>
 <script type="text/javascript">
   Event.observe(window, 'load', function () {
     
     var editWindow = $('editor').contentWindow;
     var editDoc = editWindow.document;
-    if (editWindow.getSelection) {
-     editDoc.body.innerHTML = "Your browser does not support the Javascript API needed to run this web page. If you are using Internet Explorer, please <a href=\"http://www.updateyourbrowser.net/en/\">switch to something else</a>."
+    if (!rangy.supported) {
+     editDoc.body.innerHTML = "Your browser does not support the Javascript API needed to run this web page. Please <a href=\"http://www.updateyourbrowser.net/en/\">update your browser</a>."
      return;
     }
     editDoc.designMode = 'on';
@@ -120,7 +120,7 @@
     }
     
     function applyClass (classname) {
-      var rng = editWindow.getSelection().getRangeAt(0);
+      var rng = rangy.getSelection(editWindow).getRangeAt(0);
       var ancestor = rng.commonAncestorContainer;
       // We have a few possibilities here for the common ancestor:
       // 1. A text node, in which case we're inside a single <span>
@@ -204,7 +204,7 @@
       // If they're empty, remove them
       Element.childElements(editDoc.body).each(function (p) {
         Element.childElements(p).each (function (child) {
-          if (child.innerHTML.empty()) Element.remove(child);
+          if (child.innerHTML.empty() || child.innerHTML == "<br>") Element.remove(child);
         });
         
         var children = Element.childElements(p);
