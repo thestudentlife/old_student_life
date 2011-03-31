@@ -1,3 +1,18 @@
+# The body of a revision must be in a special format, to expidite
+# conversion between HTML and InCopy.
+#
+# Basic ideas:
+# At the toplevel, there exist only <p> nodes
+# Inside each <p>, there exist only <span> nodes
+# Inside each <span>, there exists only one text node
+# <span> elements have various classes applied to them
+#
+# The trick here is taking raw HTML (which can look like anything)
+# and converting it into this schema. However, we don't want to be
+# too strict: the user shouldn't ever be penalized because their
+# browser does something slightly differently.
+#
+
 class Revision < ActiveRecord::Base
   belongs_to :article
   belongs_to :author, :class_name => "User"

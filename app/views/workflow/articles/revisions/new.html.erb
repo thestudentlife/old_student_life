@@ -48,7 +48,13 @@
 
 <script type="text/javascript">
   Event.observe(window, 'load', function () {
-    var editDoc = $('editor').contentWindow.document;
+    
+    var editWindow = $('editor').contentWindow;
+    var editDoc = editWindow.document;
+    if (editWindow.getSelection) {
+     editDoc.body.innerHTML = "Your browser does not support the Javascript API needed to run this web page. If you are using Internet Explorer, please <a href=\"http://www.updateyourbrowser.net/en/\">switch to something else</a>."
+     return;
+    }
     editDoc.designMode = 'on';
     
     var form = $('new_revision');
@@ -57,13 +63,173 @@
       body.innerHTML = editDoc.body.innerHTML.escapeHTML();
     })
     
+    function splitElement (element, startOffset, endOffset) {
+      var doc = element.ownerDocument;
+      
+      if (endOffset == null) {
+        endOffset = element.innerHTML.length;
+      }
+      
+      var prefix = doc.createElement(element.nodeName);
+      prefix.className = element.className;
+      prefix.innerHTML = element.innerHTML.substring(0, startOffset);
+      
+      var middle = doc.createElement(element.nodeName);
+      middle.className = element.className;
+      middle.innerHTML = element.innerHTML.substring(startOffset, endOffset);
+
+      var suffix = editDoc.createElement("span");
+      suffix.className = element.className;
+      suffix.innerHTML = element.innerHTML.substring(endOffset);
+      
+      return [prefix, middle, suffix];
+    }
+    
+    function assertType (element, type, message) {
+      if (element.nodeName != type) {
+        throw new TypeError ("Expected " + message + " to be " + type + "; got " + element.nodeName);
+      }
+      return element;
+    }
+    
+    function replaceWithArray (element, array) {
+      array.each (function (part) {
+        element.parentElement.insertBefore(part, element);
+      });
+      Element.remove (element);
+    }
+    
+    function applyToSplitSpan (span, startOffset, endOffset, func) {
+      if (span == null) return;
+      var split = splitElement(span, startOffset, endOffset);
+      func(split[1]);
+      replaceWithArray(span, split);
+    }
+    
+    function applyToMultipleSplitSpans (startSpan, endSpan, startOffset, endOffset, func) {
+      Element.nextSiblings(startSpan).each(function (sib) {
+        if (sib == endSpan) { throw $break; }
+        func(sib);
+      });
+      applyToSplitSpan (startSpan, startOffset, null, func);
+      applyToSplitSpan (endSpan, 0, endOffset, func);
+    }
+    
+    function normalizeClassName (string) {
+      return string.split(/\s+/).uniq().sort().join(" ")
+    }
+    
+    function applyClass (classname) {
+      var rng = editWindow.getSelection().getRangeAt(0);
+      var ancestor = rng.commonAncestorContainer;
+      // We have a few possibilities here for the common ancestor:
+      // 1. A text node, in which case we're inside a single <span>
+      // 2. A <p> node, in which case we cross multiple <span>s
+      // 3. The <body> node, in which case we cross multiple <p>s
+      
+      // We're going to keep track of all nodes which need to have their
+      // style change. Afterwards, we'll look this list to determine
+      // whether they should all add the style, or all remove the style.
+      var affected_nodes = [];
+      
+      // Possibility #1: Inside a single <span>
+      if (ancestor.nodeName == "#text") {
+        var span = assertType(ancestor.parentElement, "SPAN", "parent of #text");
+        applyToSplitSpan (span, rng.startOffset, rng.endOffset, function(middle) {
+          affected_nodes.push(middle);
+        });
+      } else
+      // Possibility #2: Inside a <p>, across multiple <span>s
+      if (ancestor.nodeName == "P") {
+        var startSpan = assertType (rng.startContainer.parentElement, "SPAN", "startContainer");
+        var endSpan = assertType (rng.endContainer.parentElement, "SPAN", "endContainer");
+        
+        applyToMultipleSplitSpans (startSpan, endSpan, rng.startOffset, rng.endOffset, function (middle) {
+          affected_nodes.push(middle);
+        });
+      } else
+      // Possibility #3: Inside the <body>, across multiple <p>s and <span>s
+      if (ancestor.nodeName == "BODY") {
+        var startSpan = assertType (rng.startContainer.parentElement, "SPAN", "startContainer");
+        var endSpan = rng.endContainer;
+        if (endSpan.nodeName == "P") { // User selected entire line
+          var endP = endSpan;
+          endSpan = null;
+        } else {
+          endSpan = assertType(endSpan.parentElement, "SPAN", "endContainer")
+        }
+        var startP = assertType (startSpan.parentElement, "P", "startContainer parent");
+        if (typeof(endP) == "undefined") {
+          var endP = assertType (endSpan.parentElement, "P", "endContainer parent");
+        }
+        
+        Element.nextSiblings(startP).each(function (sib) {
+          if (sib == endP) { throw $break }
+          Element.childElements(sib).each(function (span) {
+            affected_nodes.push(span);
+          });
+        });
+        applyToMultipleSplitSpans (startSpan, null, rng.startOffset, rng.endOffset, function (middle) {
+          affected_nodes.push(middle);
+        });
+        if (endSpan) {
+          Element.previousSiblings(endSpan).each(function (sib) {
+            affected_nodes.push(sib);
+          });
+          applyToSplitSpan(endSpan, 0, rng.endOffset, function (middle) {
+            affected_nodes.push(middle);
+          })
+        }
+      } else {
+        throw new TypeError("Expected commonAncestor to be #text, P, or BODY; got " + ancestor.nodeName);
+      }
+      
+      // Look at all of the affected nodes:
+      // If they all have / don't have the class, then we just toggle it.
+      // But if they're mixed, then we ensure they all have it.
+      var homogenous = affected_nodes.map(
+        function(node) { return Element.hasClassName(node, classname); }
+      ).uniq().length == 1;
+      if (homogenous) {
+        affected_nodes.each(function(node) {
+          Element.toggleClassName(node, classname);
+        });
+      } else {
+        affected_nodes.each(function(node) {
+          Element.addClassName(node, classname);
+        });
+      }
+      
+      // Look at all of the spans
+      // If they're empty, remove them
+      Element.childElements(editDoc.body).each(function (p) {
+        Element.childElements(p).each (function (child) {
+          if (child.innerHTML.empty()) Element.remove(child);
+        });
+        
+        var children = Element.childElements(p);
+        var previous = children.shift();
+        
+        while (children.length != 0) {
+          var next = children.shift();
+          
+          if (normalizeClassName(previous.className) == normalizeClassName(next.className)) {
+            previous.innerHTML = previous.innerHTML + next.innerHTML;
+            Element.remove(next);
+          } else {
+            previous = next;
+          }
+        }
+      });
+    }
+    
     var bold = $('editor_bold');
     bold.observe('click', function () {
-      editDoc.execCommand('Bold', false, null);
+      applyClass('bold');
     })
     var italic = $('editor_italic');
     italic.observe('click', function() {
-      editDoc.execCommand('Italic', false, null);
+      applyClass('italic');
     })
   })
 </script>
