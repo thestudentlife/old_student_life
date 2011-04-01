@@ -5,9 +5,9 @@ gem 'rack', '~> 1.2.2' # Security fix
 # dav
 gem 'sinatra'
 gem "incopy", :git => "git://github.com/mikemaltese/html2incopy.git"
+gem 'workflow-incopy', :require => 'workflow/incopy', :path => 'lib/workflow-incopy'
 gem 'workflow-dav', :require => 'workflow/dav', :path => 'lib/workflow-dav'
 
-gem 'ruby-debug'
 
 # workflow
 gem 'rails', '3.0.5'

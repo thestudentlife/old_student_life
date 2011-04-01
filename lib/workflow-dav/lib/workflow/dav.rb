@@ -1,5 +1,5 @@
 require 'active_support/core_ext/string/inflections'
-require 'incopy'
+require 'workflow/incopy'
 
 require 'builder'
 require 'sinatra/base'
@@ -200,7 +200,7 @@ module Workflow
       get article_incopy_path_template do
         @article = Article.find params[:article]
         @revision = @article.revisions.latest.first
-        InCopy.html_to_incopy @revision.body
+        InCopy.markup_to_incopy @revision.body
       end
       propfind article_incopy_path_template do
         @article = Article.find params[:article]
