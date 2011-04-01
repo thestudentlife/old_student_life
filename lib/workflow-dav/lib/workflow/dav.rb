@@ -180,6 +180,8 @@ module Workflow
       before do
         request.path_info = Rack::Utils.unescape(request.path_info)
         request.script_name = Rack::Utils.unescape(request.script_name)
+        
+        params[:user] = User.find_by_email env['REMOTE_USER']
       end
     
       set :raise_errors, false
@@ -197,7 +199,7 @@ module Workflow
         if @article.locked?
           return response.status = 423 # Locked
         else
-          @article.lock User.first # FIXME
+          @article.lock params[:user]
           @article.save!
           incopy = InCopyArticle.for_article(@article)
           incopy.lockfile = params[:lock]
@@ -452,6 +454,10 @@ module Workflow
         ]
       end
       
+      use Rack::Auth::Basic, "WebDAV" do |username, password|
+        user = User.find_by_email(username)
+        user.valid_password? password if user
+      end
     end
   end
 end
