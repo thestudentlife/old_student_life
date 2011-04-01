@@ -3,6 +3,22 @@ require 'nokogiri'
 module Workflow
 module InCopy
   
+  def self.extract_headers (incopy)
+    # Takes an InCopy document, and extracts the pieces that are
+    # important to us:
+    # * Paragraph styles <prst>
+    #   We need to put these back when we generate new InCopy
+    #   documents.
+    doc = Nokogiri::XML.parse(doc)
+    doc.search('prst').map(&:to_xml).join
+  end
+  
+  def self.incopy_to_markup (incopy)
+    # Takes an InCopy document, and converts it back into our
+    # special markup.
+    "FIXME"
+  end
+  
   def self.markup_to_incopy (html, opts={})
     # Takes markup that fits the follow specification:
     # * The only top level nodes are <p> elements

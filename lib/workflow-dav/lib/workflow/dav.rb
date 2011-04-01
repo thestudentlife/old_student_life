@@ -250,8 +250,29 @@ module Workflow
     
       get article_incopy_path_template do
         @article = Article.find params[:article]
-        @revision = @article.revisions.latest.first
-        InCopy.markup_to_incopy @revision.body
+        InCopyArticle.for_article(@article).to_incopy
+      end
+      put article_incopy_path_template do
+        # Allow if user has it locked
+        @article = Article.find params[:article]
+        if @article.locked_by == params[:user]
+          @incopy = InCopyArticle.for_article(@article)
+          revision = @incopy.parse (request.body.read)
+          revision.author = params[:user]
+          revision.save!
+          @incopy.save!
+        else
+          response.status = 423 # Locked
+        end
+      end
+      route 'LOCK', article_incopy_path_template do
+        @article = Article.find params[:article]
+        # Allow if user has it locked
+        if @article.locked_by == params[:user]
+          response.status = 200 # OK
+        else
+          response.status = 423 # Locked
+        end
       end
       propfind article_incopy_path_template do
         @article = Article.find params[:article]
