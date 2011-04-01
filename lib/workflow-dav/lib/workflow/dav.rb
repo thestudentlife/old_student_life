@@ -201,7 +201,12 @@ module Workflow
       end
     
       get article_lockfile_path_template do
-        ''
+        @article = Article.find params[:article]
+        if @article.locked? and not InCopyArticle.for_article(@article).lockfile.blank?
+          ''
+        else
+          response.status = 404
+        end
       end
       put article_lockfile_path_template do
         @article = Article.find params[:article]
