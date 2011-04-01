@@ -454,6 +454,10 @@ module Workflow
         ]
       end
       
+      route 'LOCK', // do
+        response.status = 423 # Locked
+      end
+
       use Rack::Auth::Basic, "WebDAV" do |username, password|
         user = User.find_by_email(username)
         user.valid_password? password if user
