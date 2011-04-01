@@ -1,10 +1,4 @@
 GIT
-  remote: git://github.com/mikemaltese/html2incopy.git
-  revision: b6a7e48b0fa0da6a8009b7bb4a97577b0dd198b8
-  specs:
-    incopy (1.1.3)
-
-GIT
   remote: git://github.com/mikemaltese/htmldiff.git
   revision: 0941b8159d6d122aa4aee68f8eff1621ed46478d
   specs:
@@ -128,7 +122,6 @@ DEPENDENCIES
   factory_girl_rails
   high_voltage
   htmldiff!
-  incopy!
   inherited_resources (~> 1.2.1)
   paperclip (~> 2.3)
   rack (~> 1.2.2)
