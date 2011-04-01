@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110330061811) do
+ActiveRecord::Schema.define(:version => 20110401021934) do
 
   create_table "article_titles", :force => true do |t|
     t.integer  "article_id", :null => false
@@ -59,6 +59,14 @@ ActiveRecord::Schema.define(:version => 20110330061811) do
     t.string   "file_content_type"
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
+  end
+
+  create_table "in_copy_articles", :force => true do |t|
+    t.integer  "article_id"
+    t.string   "header"
+    t.string   "lockfile"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "issues", :force => true do |t|
