@@ -125,6 +125,13 @@ module Workflow
         def article_image_credit_path(article)
           File.join article_path(article), 'ImageCredit.txt'
         end
+        
+        def article_lockfile_path_template
+          File.join article_path_template, ':lock.idlk'
+        end
+        def article_lockfile_path(article)
+          File.join article_path(article), "#{InCopyArticle.for_article(article).lockfile}.idlk"
+        end
       end
     end
   
@@ -161,7 +168,6 @@ module Workflow
                 xml.D :resourcetype do xml.D :collection if opts[:collection?] end
                 xml.D :getcontenttype, opts[:mime]
                 xml.D :getcontentlength, opts[:size]
-                xml.D :supportedlock do end
               end
               xml.D :status, "HTTP/1.1 200 OK"
             end
@@ -181,6 +187,49 @@ module Workflow
       set :dump_errors, false
       error ActiveRecord::RecordNotFound do
         response.status = 404
+      end
+    
+      get article_lockfile_path_template do
+        ''
+      end
+      put article_lockfile_path_template do
+        @article = Article.find params[:article]
+        if @article.locked?
+          return response.status = 423 # Locked
+        else
+          @article.lock User.first # FIXME
+          @article.save!
+          incopy = InCopyArticle.for_article(@article)
+          incopy.lockfile = params[:lock]
+          incopy.save!
+          response.status = 201 # Created
+        end
+      end
+      route 'LOCK', article_lockfile_path_template do
+        @article = Article.find params[:article]
+        response.status = 200 # OK
+      end
+      propfind article_lockfile_path_template do
+        @article = Article.find params[:article]
+        unless @article.locked? and not InCopyArticle.for_article(@article).lockfile.blank?
+          return response.status = 404 # Not Found
+        end
+        multistatus do |xml|
+          dav_response(xml,
+            :href => article_lockfile_path(@article),
+            :mime => 'text/plain'
+          )
+        end
+      end
+      delete article_lockfile_path_template do
+        @article = Article.find params[:article]
+        @article.unlock
+        @article.save!
+        incopy = InCopyArticle.for_article(@article)
+        incopy.lockfile = nil
+        incopy.save!
+        
+        response.status = 204 # Action enacted, empty response
       end
     
       get article_authors_path_template do
@@ -293,6 +342,12 @@ module Workflow
             :href => article_headline_path(@article),
             :mime => 'text/plain'
           )
+          if @article.locked? and not InCopyArticle.for_article(@article).lockfile.blank?
+            dav_response(xml,
+              :href => article_lockfile_path(@article),
+              :mime => 'application/x-idlk'
+            )
+          end
           if @article.images.any?
             image = @article.images.first
             mime = Rack::Mime.mime_type File.extname(image.file.url.sub(/\?.*/,''))
@@ -389,9 +444,9 @@ module Workflow
           200,
           {
             "Content-Type" => "text/html",
-            "Dav" => "1",
+            "Dav" => "1,2",
             "MS-Author-Via" => "DAV",
-            "Allow" => "OPTIONS,HEAD,GET,PROPFIND"
+            "Allow" => "OPTIONS,HEAD,GET,PROPFIND,DELETE,PUT"
           },
           ''
         ]
