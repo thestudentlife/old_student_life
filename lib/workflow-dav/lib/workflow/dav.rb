@@ -213,6 +213,7 @@ module Workflow
       end
       propfind article_lockfile_path_template do
         @article = Article.find params[:article]
+        puts request.body.read
         unless @article.locked? and not InCopyArticle.for_article(@article).lockfile.blank?
           return response.status = 404 # Not Found
         end
@@ -257,10 +258,12 @@ module Workflow
         @article = Article.find params[:article]
         if @article.locked_by == params[:user]
           @incopy = InCopyArticle.for_article(@article)
-          revision = @incopy.parse (request.body.read)
-          revision.author = params[:user]
-          revision.save!
+          @incopy.parse(request.body.read).tap do |rev|
+            rev.author = params[:user]
+            rev.save!
+          end
           @incopy.save!
+          puts @incopy.header
         else
           response.status = 423 # Locked
         end
@@ -276,6 +279,7 @@ module Workflow
       end
       propfind article_incopy_path_template do
         @article = Article.find params[:article]
+        puts request.body.read
         multistatus do |xml|
           dav_response(xml,
             :href => article_incopy_path(@article),
