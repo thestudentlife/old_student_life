@@ -151,6 +151,15 @@ module Workflow
           [207, xml.target!]
         end
     
+        def dav_status (xml, href, status)
+          xml.D :response do
+            xml.D :href, File.join(request.env['SCRIPT_NAME'], href)
+            xml.D :propstat do
+              xml.D :status, status
+            end
+          end
+        end
+    
         def dav_response (xml, opts={})
           opts.merge!(
             :ctime => Time.at(0),
@@ -213,14 +222,17 @@ module Workflow
       end
       propfind article_lockfile_path_template do
         @article = Article.find params[:article]
-        unless @article.locked? and not InCopyArticle.for_article(@article).lockfile.blank?
-          return response.status = 404 # Not Found
-        end
-        multistatus do |xml|
-          dav_response(xml,
-            :href => article_lockfile_path(@article),
-            :mime => 'text/plain'
-          )
+        if @article.locked? and not InCopyArticle.for_article(@article).lockfile.blank?
+          multistatus do |xml|
+            dav_response(xml,
+              :href => article_lockfile_path(@article),
+              :mime => 'text/plain'
+            )
+          end
+        else
+          multistatus do |xml|
+            dav_status(xml, article_lockfile_path(@article), "HTTP/1.1 404 Not Found")
+          end
         end
       end
       delete article_lockfile_path_template do
