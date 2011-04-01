@@ -235,9 +235,7 @@ module Workflow
             )
           end
         else
-          multistatus do |xml|
-            dav_status(xml, article_lockfile_path(@article), "HTTP/1.1 404 Not Found")
-          end
+          response.status = 404 # Not found
         end
       end
       delete article_lockfile_path_template do
