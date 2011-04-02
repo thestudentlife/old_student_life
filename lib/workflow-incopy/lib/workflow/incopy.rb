@@ -25,7 +25,7 @@ module InCopy
     doc.search('cflo > txsr').map do |txsr|
       prst = txsr['prst']
       ptfs = txsr['ptfs']
-      text = txsr.search('text()').map(&:to_s).join.gsub(/[\n\t\r]/,'').sub(/^c_/,'')
+      text = txsr.search('text()').map(&:to_s).join.gsub(/[\n\t\r]/,'').sub(/^\s*c_/,'')
       
       # InCopy treats paragraph breaks as character, so styles can
       # span multiple lines. This won't work in html, because a <p>
@@ -103,6 +103,9 @@ module InCopy
       end
       body << incopy_txsr(span.inner_html, txsr_opts)
     end
+    # Nokogiri converts it into an XML entity, but we want the
+    # unicode character.
+    body.gsub!("&#8233;", incopy_paragraph_break)
     
     incopy_header(opts[:header] || '') + body + incopy_footer
   end
