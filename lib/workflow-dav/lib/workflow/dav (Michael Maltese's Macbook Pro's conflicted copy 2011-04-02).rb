@@ -264,7 +264,7 @@ module Workflow
       end
       propfind article_lockfile_path_template do
         @article = Article.find params[:article]
-        if @article.locked? and not InCopyArticle.for_article(@article).lockfile.blank?
+        if @article.locked? and InCopyArticle.for_article(@article).lockfile == params[:lock]
           multistatus do |xml|
             dav_response(xml,
               :href => article_lockfile_path(@article),
