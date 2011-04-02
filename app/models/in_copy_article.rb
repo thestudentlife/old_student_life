@@ -19,4 +19,14 @@ class InCopyArticle < ActiveRecord::Base
       :body => Workflow::InCopy.incopy_to_markup(incopy)
     )
   end
+  
+  def ctime
+    revision = article.revisions.latest.first
+    revision.created_at
+  end
+  
+  def mtime
+    revision = article.revisions.latest.first
+    revision.updated_at
+  end
 end
