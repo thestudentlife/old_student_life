@@ -155,7 +155,13 @@ module Workflow
           xml.D :response do
             xml.D :href, File.join(request.env['SCRIPT_NAME'], href)
             xml.D :propstat do
-              xml.D :status, status
+              xml.D :prop do
+                xml.D :"current-user-privilege-set" do
+                  xml.D(:privilege) { xml.D :read }
+                  xml.D(:privilege) { xml.D :write }
+                end
+              end
+              xml.D :status, "HTTP/1.1 404 Not Found"
             end
           end
         end
@@ -177,6 +183,10 @@ module Workflow
                 xml.D :resourcetype do xml.D :collection if opts[:collection?] end
                 xml.D :getcontenttype, opts[:mime]
                 xml.D :getcontentlength, opts[:size]
+                xml.D :"current-user-privilege-set" do
+                  xml.D(:privilege) { xml.D :read }
+                  xml.D(:privilege) { xml.D :write }
+                end
               end
               xml.D :status, "HTTP/1.1 200 OK"
             end
