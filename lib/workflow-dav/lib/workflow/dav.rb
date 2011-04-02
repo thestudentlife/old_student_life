@@ -264,11 +264,15 @@ module Workflow
       end
       propfind article_lockfile_path_template do
         @article = Article.find params[:article]
-        if @article.locked? and InCopyArticle.for_article(@article).lockfile == params[:lock]
+        @incopy = InCopyArticle.for_article(@article)
+        if @article.locked? and @incopy.lockfile == params[:lock]
           multistatus do |xml|
             dav_response(xml,
               :href => article_lockfile_path(@article),
-              :mime => 'application/x-idlk'
+              :mime => 'application/x-idlk',
+              # Change this in article_path
+              :ctime => @incopy.lockfile_ctime,
+              :mtime => @incopy.lockfile_mtime
             )
           end
         else
@@ -434,7 +438,10 @@ module Workflow
           if @article.locked? and not @incopy.lockfile.blank?
             dav_response(xml,
               :href => article_lockfile_path(@article),
-              :mime => 'application/x-idlk'
+              :mime => 'application/x-idlk',
+              # Also change these in article_lockfile_path
+              :ctime => @incopy.lockfile_ctime,
+              :mtime => @incopy.lockfile_mtime
             )
           end
           if @article.images.any?

@@ -29,4 +29,11 @@ class InCopyArticle < ActiveRecord::Base
     revision = article.revisions.latest.first
     revision.updated_at
   end
+  
+  def lockfile_ctime
+    updated_at
+  end
+  def lockfile_mtime
+    updated_at
+  end
 end

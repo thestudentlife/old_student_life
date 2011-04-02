@@ -43,3 +43,17 @@ EDITOR
     This is unclear. A new form of energy?
   </span>
 </p>
+
+
+INCOPY ON WEBDAV
+
+* Check Console.app
+* Start InCopy from Terminal.app
+* Does InCopy have a log?
+* Run through MacFuse, see what's going on
+
+IF I WERE TO IMPLEMENT A LOCKING FRAMEWORK
+We have our original file A. We have a lockfile at B, which may or may not
+exist at this point. We want to lock A.
+
+return false if File.exist? B
