@@ -322,12 +322,12 @@ module Workflow
       route 'LOCK', article_incopy_path_template do
         @article = Article.find params[:article]
         # Allow if user has it locked
-        if @article.locked_by == params[:user]
+        # if @article.locked_by == params[:user]
           token = Rack::Utils.escape(article_incopy_path(@article)) + Time.now.to_i.to_s 
           dav_lock(token)
-        else
-          response.status = 423 # Locked
-        end
+        #else
+        #  response.status = 423 # Locked
+        #end
       end
       route 'UNLOCK', article_incopy_path_template do
         response.status = 204 # No content
