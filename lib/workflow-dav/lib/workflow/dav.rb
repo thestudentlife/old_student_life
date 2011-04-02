@@ -188,12 +188,12 @@ module Workflow
         end
     
         def dav_response (xml, opts={})
-          opts.merge!(
+          opts = {
             :ctime => Time.at(0),
             :mtime => Time.at(0),
             :mime => 'text/html',
             :size => 4.kilobytes
-          )
+          }.merge(opts)
         
           xml.D :response do
             xml.D :href, File.join(request.env['SCRIPT_NAME'], opts[:href])
@@ -334,11 +334,14 @@ module Workflow
       end
       propfind article_incopy_path_template do
         @article = Article.find params[:article]
-        puts request.body.read
+        @incopy = InCopyArticle.for_article(@article)
         multistatus do |xml|
           dav_response(xml,
             :href => article_incopy_path(@article),
-            :mime => 'application/x-incx'
+            :mime => 'application/x-incx',
+            # Also change these in article_path
+            :ctime => @incopy.ctime,
+            :mtime => @incopy.mtime
           )
         end
       end
@@ -408,6 +411,7 @@ module Workflow
     
       propfind article_path_template do
         @article = Article.find params[:article]
+        @incopy = InCopyArticle.for_article(@article)
         multistatus do |xml|
           dav_response(xml,
             :href => article_path(@article),
@@ -418,13 +422,16 @@ module Workflow
           )
           dav_response(xml,
             :href => article_incopy_path(@article),
-            :mime => 'application/x-incx'
+            :mime => 'application/x-incx',
+            # Also change these in article_incopy_path
+            :ctime => @incopy.ctime,
+            :mtime => @incopy.mtime
           )
           dav_response(xml,
             :href => article_headline_path(@article),
             :mime => 'text/plain'
           )
-          if @article.locked? and not InCopyArticle.for_article(@article).lockfile.blank?
+          if @article.locked? and not @incopy.lockfile.blank?
             dav_response(xml,
               :href => article_lockfile_path(@article),
               :mime => 'application/x-idlk'
@@ -536,6 +543,10 @@ module Workflow
       
       route 'LOCK', // do
         response.status = 423 # Locked
+      end
+      
+      route 'MKCOL', // do
+        response.status = 403 # Forbidden
       end
 
       use Rack::Auth::Basic, "WebDAV" do |username, password|
