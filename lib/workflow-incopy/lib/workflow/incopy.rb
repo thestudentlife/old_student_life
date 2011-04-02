@@ -16,7 +16,46 @@ module InCopy
   def self.incopy_to_markup (incopy)
     # Takes an InCopy document, and converts it back into our
     # special markup.
-    "FIXME"
+    doc = Nokogiri::XML.parse(incopy)
+    # First we grab the <txsr> elements, but only those which are
+    # directly beneath the <cflo> element. <txsr> elements also
+    # exist under <Chng> and <Note> elements, and we don't want 
+    # those.
+    require 'pp'
+    doc.search('cflo > txsr').map do |txsr|
+      prst = txsr['prst']
+      ptfs = txsr['ptfs']
+      text = txsr.search('text()').map(&:to_s).join.gsub(/[\n\t\r]/,'').sub(/^c_/,'')
+      
+      # InCopy treats paragraph breaks as character, so styles can
+      # span multiple lines. This won't work in html, because a <p>
+      # is its own element.
+      # We need to split the text up into runs, with attached styles,
+      # separated by paragraph breaks.
+      text.split(/(&#x2029;)/).map do |t|
+        if t == '&#x2029;'
+          :p
+        else
+          {
+            :text => t,
+            :prst => prst,
+            :ptfs => (ptfs || '')
+          }
+        end
+      end
+    end.flatten.map do |run|
+      if run == :p
+        "</p>"
+      else
+        classes = []
+        classes << "incopy-prst-#{run[:prst]}" if run[:prst]
+        classes << "bold" if run[:ptfs].include?('Bold')
+        classes << "italic" if run[:ptfs].include?('Italic')
+        "<span class=\"#{classes.join ' '}\">#{run[:text]}</span>"
+      end
+    end.join.gsub("</p><span", "</p><p><span").tap do |t|
+      return "<p>" + t + "</p>"
+    end
   end
   
   def self.markup_to_incopy (html, opts={})
