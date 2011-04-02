@@ -6,11 +6,11 @@ module InCopy
   def self.extract_headers (incopy)
     # Takes an InCopy document, and extracts the pieces that are
     # important to us:
-    # * Paragraph styles <prst>
+    # * Paragraph styles <psty>
     #   We need to put these back when we generate new InCopy
     #   documents.
-    doc = Nokogiri::XML.parse(doc)
-    doc.search('prst').map(&:to_xml).join
+    doc = Nokogiri::XML.parse(incopy)
+    doc.search('psty').map(&:to_xml).join
   end
   
   def self.incopy_to_markup (incopy)
