@@ -242,15 +242,15 @@ module Workflow
       end
       put article_lockfile_path_template do
         @article = Article.find params[:article]
+        @incopy = InCopyArticle.for_article(@article)
         if @article.locked? and @incopy.lockfile != params[:lock]
           return response.status = 423 # Locked
         else
           @article.lock params[:user]
           @article.save!
-          incopy = InCopyArticle.for_article(@article)
-          incopy.lockfile = params[:lock]
-          incopy.lockfile_content = request.body.read
-          incopy.save!
+          @incopy.lockfile = params[:lock]
+          @incopy.lockfile_content = request.body.read
+          @incopy.save!
           response.status = 201 # Created
         end
       end
