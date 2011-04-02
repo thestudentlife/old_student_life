@@ -166,6 +166,27 @@ module Workflow
           end
         end
     
+        def dav_lock (token)
+          xml = Builder::XmlMarkup.new
+          xml.instruct!
+          xml.D :prop, "xmlns:D" => "DAV:" do
+           xml.D :lockdiscovery do
+             xml.D :activelock do
+               xml.D(:locktype) { xml.D :write }
+               xml.D(:lockscope) { xml.D :exclusive }
+               xml.D :depth, 0
+               xml.D :timeout, 'Second-604800'
+               xml.D(:locktoken) { xml.D :href, token }
+             end
+           end
+          end
+          [
+            200,
+            {"Lock-Token" => token},
+            xml.target!
+          ]
+        end
+    
         def dav_response (xml, opts={})
           opts.merge!(
             :ctime => Time.at(0),
@@ -235,12 +256,8 @@ module Workflow
       end
       route 'LOCK', article_lockfile_path_template do
         @article = Article.find params[:article]
-        token = Rack::Utils.escape(article_lockfile_path(@article)) + Time.now.to_i.to_s 
-        [
-          200,
-          {"Lock-Token" => token},
-          token
-        ]
+        token = "opaquelocktoken:" + Rack::Utils.escape(article_lockfile_path(@article)) + Time.now.to_i.to_s
+        dav_lock(token)
       end
       propfind article_lockfile_path_template do
         @article = Article.find params[:article]
@@ -304,11 +321,7 @@ module Workflow
         # Allow if user has it locked
         if @article.locked_by == params[:user]
           token = Rack::Utils.escape(article_incopy_path(@article)) + Time.now.to_i.to_s 
-          [
-            200,
-            {"Lock-Token" => token},
-            token
-          ]
+          dav_lock(token)
         else
           response.status = 423 # Locked
         end
