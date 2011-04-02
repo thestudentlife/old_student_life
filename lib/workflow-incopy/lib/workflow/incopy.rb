@@ -13,10 +13,24 @@ module InCopy
     doc.search('psty').map(&:to_xml).join
   end
   
+  def self.escape_html_entities(string)
+    string.
+    gsub(/&(.*?);/) do 
+      "%26#{$1}%3B"
+    end
+  end
+  
+  def self.unescape_html_entities(string)
+    string.
+    gsub(/%26(.*?)%3B/) do
+      "&#{$1};"
+    end
+  end
+  
   def self.incopy_to_markup (incopy)
     # Takes an InCopy document, and converts it back into our
     # special markup.
-    doc = Nokogiri::XML.parse(incopy)
+    doc = Nokogiri::XML.parse(escape_html_entities (incopy))
     # First we grab the <txsr> elements, but only those which are
     # directly beneath the <cflo> element. <txsr> elements also
     # exist under <Chng> and <Note> elements, and we don't want 
@@ -54,7 +68,7 @@ module InCopy
         "<span class=\"#{classes.join ' '}\">#{run[:text]}</span>"
       end
     end.join.gsub("</p><span", "</p><p><span").tap do |t|
-      return "<p>" + t + "</p>"
+      return "<p>" + unescape_html_entities(t) + "</p>"
     end
   end
   
