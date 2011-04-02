@@ -259,6 +259,9 @@ module Workflow
         token = "opaquelocktoken:" + Rack::Utils.escape(article_lockfile_path(@article)) + Time.now.to_i.to_s
         dav_lock(token)
       end
+      route 'UNLOCK', article_lockfile_path_template do
+        response.status = 204 # No Content
+      end
       propfind article_lockfile_path_template do
         @article = Article.find params[:article]
         if @article.locked? and not InCopyArticle.for_article(@article).lockfile.blank?
@@ -325,6 +328,9 @@ module Workflow
         else
           response.status = 423 # Locked
         end
+      end
+      route 'UNLOCK', article_incopy_path_template do
+        response.status = 204 # No content
       end
       propfind article_incopy_path_template do
         @article = Article.find params[:article]
