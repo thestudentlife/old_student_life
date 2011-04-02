@@ -235,7 +235,12 @@ module Workflow
       end
       route 'LOCK', article_lockfile_path_template do
         @article = Article.find params[:article]
-        response.status = 200 # OK
+        token = Rack::Utils.escape(article_lockfile_path(@article)) + Time.now.to_i.to_s 
+        [
+          200,
+          {"Lock-Token" => token},
+          token
+        ]
       end
       propfind article_lockfile_path_template do
         @article = Article.find params[:article]
@@ -298,13 +303,19 @@ module Workflow
         @article = Article.find params[:article]
         # Allow if user has it locked
         if @article.locked_by == params[:user]
-          response.status = 200 # OK
+          token = Rack::Utils.escape(article_incopy_path(@article)) + Time.now.to_i.to_s 
+          [
+            200,
+            {"Lock-Token" => token},
+            token
+          ]
         else
           response.status = 423 # Locked
         end
       end
       propfind article_incopy_path_template do
         @article = Article.find params[:article]
+        puts request.body.read
         multistatus do |xml|
           dav_response(xml,
             :href => article_incopy_path(@article),
@@ -498,7 +509,7 @@ module Workflow
             "Content-Type" => "text/html",
             "Dav" => "1,2",
             "MS-Author-Via" => "DAV",
-            "Allow" => "OPTIONS,HEAD,GET,PROPFIND,DELETE,PUT"
+            "Allow" => "OPTIONS,HEAD,GET,PROPFIND,DELETE,PUT,LOCK"
           },
           ''
         ]
