@@ -212,8 +212,9 @@ module Workflow
     
       get article_lockfile_path_template do
         @article = Article.find params[:article]
-        if @article.locked? and not InCopyArticle.for_article(@article).lockfile.blank?
-          ''
+        @incopy = InCopyArticle.for_article(@article)
+        if @article.locked? and not @incopy.lockfile.blank?
+          @incopy.lockfile_content || ''
         else
           response.status = 404
         end
@@ -227,6 +228,7 @@ module Workflow
           @article.save!
           incopy = InCopyArticle.for_article(@article)
           incopy.lockfile = params[:lock]
+          incopy.lockfile_content = request.body.read
           incopy.save!
           response.status = 201 # Created
         end
@@ -241,11 +243,11 @@ module Workflow
           multistatus do |xml|
             dav_response(xml,
               :href => article_lockfile_path(@article),
-              :mime => 'text/plain'
+              :mime => 'application/x-idlk'
             )
           end
         else
-          response.status = 404 # Not found
+          response.status = 404
         end
       end
       delete article_lockfile_path_template do
