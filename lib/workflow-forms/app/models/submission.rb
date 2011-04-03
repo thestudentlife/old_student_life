@@ -1,4 +1,4 @@
-class Forms::Submission < ActiveRecord::Base
+class Submission < ActiveRecord::Base
 	serialize :data, Hash
 	
 	validates :data, :presence => true

@@ -1,4 +1,4 @@
-class Forms::Form < ActiveRecord::Base
+class Form < ActiveRecord::Base
 	serialize :definition, Array
 	
 	validates :definition, :presence => true
