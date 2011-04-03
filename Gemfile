@@ -6,7 +6,7 @@ gem 'rack', :git => 'https://github.com/rack/rack.git', :ref => 'ee1285'
 gem 'sinatra'
 gem 'workflow-incopy', :require => 'workflow/incopy', :path => 'lib/workflow-incopy'
 gem 'workflow-dav', :require => 'workflow/dav', :path => 'lib/workflow-dav'
-
+gem 'workflow-forms', :require => 'workflow/forms', :path => 'lib/workflow-forms'
 
 # workflow
 # gem 'rails', '3.0.5'

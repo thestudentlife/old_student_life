@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110402033715) do
+ActiveRecord::Schema.define(:version => 20110403175628) do
 
   create_table "article_titles", :force => true do |t|
     t.integer  "article_id", :null => false
@@ -40,6 +40,13 @@ ActiveRecord::Schema.define(:version => 20110402033715) do
   create_table "authors", :force => true do |t|
     t.integer "user_id"
     t.string  "name"
+  end
+
+  create_table "forms", :force => true do |t|
+    t.string   "name"
+    t.string   "definition"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "front_page_articles", :force => true do |t|
@@ -97,6 +104,13 @@ ActiveRecord::Schema.define(:version => 20110402033715) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "url"
+  end
+
+  create_table "submissions", :force => true do |t|
+    t.integer  "form_id"
+    t.string   "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "subsections", :force => true do |t|

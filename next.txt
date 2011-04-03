@@ -1,9 +1,5 @@
 IMPORTANT
-* "Checking out" articles
-* Front Page tab should explain how it works
 * Comments inlined in text
-* InCopy needs to allow editing of styles!
-* Convert WebDAV to Sinatra?
 * HTML Titles on frontend
 
 UX
@@ -13,6 +9,26 @@ FEATURES
 * "Tweet this article" button
 * Polls
 * Blogs
+
+FORMS
+# Forms.Form
+# * name :string
+# * definition :array
+# Forms.Submission
+# * form_id :belongs_to
+# * data :hash
+Form.new(
+	:name => "Sex Column Anonymous Dropbox",
+	:definition => [
+		{:label => 'Question', :type => 'text', :validates => {:presence => true}}
+])
+Submission.new(
+	:form => f,
+	:data => {
+		:question => "..."
+})
+
+
 
 EDITOR
 <p>
@@ -51,9 +67,3 @@ INCOPY ON WEBDAV
 * Start InCopy from Terminal.app
 * Does InCopy have a log?
 * Run through MacFuse, see what's going on
-
-IF I WERE TO IMPLEMENT A LOCKING FRAMEWORK
-We have our original file A. We have a lockfile at B, which may or may not
-exist at this point. We want to lock A.
-
-return false if File.exist? B
