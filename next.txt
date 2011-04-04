@@ -63,7 +63,10 @@ EDITOR
 
 INCOPY ON WEBDAV
 
-* Check Console.app
-* Start InCopy from Terminal.app
 * Does InCopy have a log?
 * Run through MacFuse, see what's going on
+* Compile webdavfs_agent
+
+* href needs to be percent-encoded
+* should href be absolute?
+* look at pywebdav (which works), make a test case

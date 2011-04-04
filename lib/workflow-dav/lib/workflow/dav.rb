@@ -151,21 +151,6 @@ module Workflow
           [207, xml.target!]
         end
     
-        def dav_status (xml, href, status)
-          xml.D :response do
-            xml.D :href, File.join(request.env['SCRIPT_NAME'], href)
-            xml.D :propstat do
-              xml.D :prop do
-                xml.D :"current-user-privilege-set" do
-                  xml.D(:privilege) { xml.D :read }
-                  xml.D(:privilege) { xml.D :write }
-                end
-              end
-              xml.D :status, "HTTP/1.1 404 Not Found"
-            end
-          end
-        end
-    
         def dav_lock (token)
           xml = Builder::XmlMarkup.new
           xml.instruct!
@@ -196,7 +181,7 @@ module Workflow
           }.merge(opts)
         
           xml.D :response do
-            xml.D :href, File.join(request.env['SCRIPT_NAME'], opts[:href])
+            xml.D :href, Rack::Utils.escape(File.join(request.env['SCRIPT_NAME'], opts[:href])).gsub("%2F", "/").gsub("+", "%20")
             xml.D :propstat do
               xml.D :prop do
                 xml.D :creationdate, opts[:ctime].httpdate
@@ -204,10 +189,6 @@ module Workflow
                 xml.D :resourcetype do xml.D :collection if opts[:collection?] end
                 xml.D :getcontenttype, opts[:mime]
                 xml.D :getcontentlength, opts[:size]
-                xml.D :"current-user-privilege-set" do
-                  xml.D(:privilege) { xml.D :read }
-                  xml.D(:privilege) { xml.D :write }
-                end
               end
               xml.D :status, "HTTP/1.1 200 OK"
             end
