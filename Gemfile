@@ -8,6 +8,8 @@ gem 'workflow-incopy', :require => 'workflow/incopy', :path => 'lib/workflow-inc
 gem 'workflow-dav', :require => 'workflow/dav', :path => 'lib/workflow-dav'
 gem 'workflow-forms', :require => 'workflow/forms', :path => 'lib/workflow-forms'
 
+gem 'sunspot_rails', '~> 1.2.1'
+
 # workflow
 # gem 'rails', '3.0.5'
 gem 'rails', :git => 'https://github.com/rails/rails.git', :ref => 'a000f'
