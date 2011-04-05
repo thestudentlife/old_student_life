@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'active_support/core_ext/object/blank'
 
 module Workflow
 module InCopy
@@ -37,11 +38,13 @@ module InCopy
     # those.
     require 'pp'
     doc.search('cflo > txsr').map do |txsr|
-      prst = txsr['prst']
-      ptfs = txsr['ptfs']
-      font = txsr['font']
-      ptsz = txsr['ptsz']
-      szld = txsr['szld']
+      attributes = txsr.attributes
+      attributes.merge!(attributes) { |k, v| v.value }
+      
+      # Pulling this out here, instead of below, because I'm not
+      # sure whether run[:attributes] will be an object or a
+      # reference. How does that work in Ruby?
+      ptfs = attributes.delete ('ptfs')
       
       text = txsr.search('text()').map(&:to_s).join.gsub(/[\n\t\r]/,'').sub(/^\s*c_/,'')
       
@@ -56,11 +59,8 @@ module InCopy
         else
           {
             :text => t,
-            :prst => prst,
             :ptfs => (ptfs || ''),
-            :font => font,
-            :ptsz => ptsz,
-            :szld => szld
+            :attributes => attributes
           }
         end
       end
@@ -69,12 +69,11 @@ module InCopy
         "</p>"
       else
         classes = []
-        classes << "incopy-prst-#{run[:prst]}" if run[:prst]
         classes << "bold" if run[:ptfs].include?('Bold')
         classes << "italic" if run[:ptfs].include?('Italic')
-        classes << "incopy-font-#{run[:font]}" if run[:font]
-        classes << "incopy-ptsz-#{run[:ptsz]}" if run[:ptsz]
-        classes << "incopy-szld-#{run[:szld]}" if run[:szld]
+        run[:attributes].each do |attr, value|
+          classes << "incopy:#{attr}:#{value}"
+        end
         "<span class=\"#{classes.join ' '}\">#{run[:text]}</span>"
       end
     end.join.gsub("</p><span", "</p><p><span").tap do |t|
@@ -122,17 +121,12 @@ module InCopy
         :bold => classes.include?('bold'),
         :italic => classes.include?('italic')
       }
-      if prst = classes.find {|k| k =~ /incopy-prst/ }
-        txsr_opts[:prst] = prst.match(/incopy-prst-(.*)/)[1]
-      end
-      if font = classes.find {|k| k =~ /incopy-font/ }
-        txsr_opts[:font] = font.match(/incopy-font-(.*)/)[1]
-      end
-      if ptsz = classes.find {|k| k =~ /incopy-ptsz/ }
-        txsr_opts[:ptsz] = ptsz.match(/incopy-ptsz-(.*)/)[1]
-      end
-      if szld = classes.find {|k| k =~ /incopy-szld/ }
-        txsr_opts[:szld] = szld.match(/incopy-szld-(.*)/)[1]
+      classes.each do |klass|
+        match = klass.match(/^incopy:(.*?):(.*)/)
+        if match
+          key, value = match[1], match[2]
+          txsr_opts[key] = value
+        end
       end
       body << incopy_txsr(span.inner_html, txsr_opts)
     end
@@ -166,27 +160,16 @@ module InCopy
   
   def self.incopy_txsr(text, opts={})
     
-    prst = opts[:prst]
-    bold = opts[:bold]
-    italic = opts[:italic]
-    
-    font = opts[:font]
-    ptsz = opts[:ptsz]
-    szld = opts[:szld]
-    
     ptfs = [
-      ("Bold" if opts[:bold]),
-      ("Italic" if opts[:italic])
+      ("Bold" if opts.delete(:bold)),
+      ("Italic" if opts.delete(:italic))
     ].reject(&:nil?).join(" ")
     ptfs = "c_" + ptfs if not ptfs.empty?
+    opts[:ptfs] = ptfs
     
-    attributes = [
-      ("prst=\"#{prst}\"" if prst),
-      ("ptfs=\"#{ptfs}\"" if not ptfs.empty?),
-      ("font=\"#{font}\"" if font),
-      ("ptsz=\"#{ptsz}\"" if ptsz),
-      ("szld=\"#{szld}\"" if szld)
-    ].reject(&:nil?).join(" ")
+    attributes = opts.map do |k, v|
+      "#{k}=\"#{v}\"" unless v.blank?
+    end.reject(&:nil?).join(" ")
     attributes = ' ' + attributes unless attributes.empty?
     
 "<txsr#{attributes}>
