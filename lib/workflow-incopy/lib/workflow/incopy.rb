@@ -37,6 +37,12 @@ module InCopy
     # those.
     require 'pp'
     doc.search('cflo > txsr').map do |txsr|
+      prst = txsr['prst']
+      ptfs = txsr['ptfs']
+      font = txsr['font']
+      ptsz = txsr['ptsz']
+      szld = txsr['szld']
+      
       text = txsr.search('text()').map(&:to_s).join.gsub(/[\n\t\r]/,'').sub(/^\s*c_/,'')
       
       # InCopy treats paragraph breaks as character, so styles can
@@ -50,11 +56,11 @@ module InCopy
         else
           {
             :text => t,
-            :prst => txsr['prst'],
-            :ptfs => (txsr['ptfs'] || ''),
-            :font => txsr['font'],
-            :ptsz => txsr['ptsz'],
-            :szld => txsr['szld']
+            :prst => prst,
+            :ptfs => (ptfs || ''),
+            :font => font,
+            :ptsz => ptsz,
+            :szld => szld
           }
         end
       end
