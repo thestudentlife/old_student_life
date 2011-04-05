@@ -426,6 +426,7 @@
 				<%= li_tag_if current_user.can_edit_authors?,
     				link_to("Authors", workflow_authors_path),
     				:class => is_selected?('authors') %>
+				<%= li_tag link_to("Wiki", wiki_path) %>
 			</ul>
 		</nav>
 		<% end %>

@@ -32,6 +32,12 @@ TslRails::Application.routes.draw do
   
   resources :pages
   
+  module WorkflowHelper
+    def wiki_path
+      '/wiki'
+    end
+  end
+  
   module ArticlesHelper
     def article_path(article)
       File.join articles_path,
