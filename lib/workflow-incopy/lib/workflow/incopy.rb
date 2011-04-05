@@ -37,8 +37,6 @@ module InCopy
     # those.
     require 'pp'
     doc.search('cflo > txsr').map do |txsr|
-      prst = txsr['prst']
-      ptfs = txsr['ptfs']
       text = txsr.search('text()').map(&:to_s).join.gsub(/[\n\t\r]/,'').sub(/^\s*c_/,'')
       
       # InCopy treats paragraph breaks as character, so styles can
@@ -52,8 +50,11 @@ module InCopy
         else
           {
             :text => t,
-            :prst => prst,
-            :ptfs => (ptfs || '')
+            :prst => txsr['prst'],
+            :ptfs => (txsr['ptfs'] || ''),
+            :font => txsr['font'],
+            :ptsz => txsr['ptsz'],
+            :szld => txsr['szld']
           }
         end
       end
@@ -65,6 +66,9 @@ module InCopy
         classes << "incopy-prst-#{run[:prst]}" if run[:prst]
         classes << "bold" if run[:ptfs].include?('Bold')
         classes << "italic" if run[:ptfs].include?('Italic')
+        classes << "incopy-font-#{run[:font]}" if run[:font]
+        classes << "incopy-ptsz-#{run[:ptsz]}" if run[:ptsz]
+        classes << "incopy-szld-#{run[:szld]}" if run[:szld]
         "<span class=\"#{classes.join ' '}\">#{run[:text]}</span>"
       end
     end.join.gsub("</p><span", "</p><p><span").tap do |t|
@@ -115,6 +119,15 @@ module InCopy
       if prst = classes.find {|k| k =~ /incopy-prst/ }
         txsr_opts[:prst] = prst.match(/incopy-prst-(.*)/)[1]
       end
+      if font = classes.find {|k| k =~ /incopy-font/ }
+        txsr_opts[:font] = font.match(/incopy-font-(.*)/)[1]
+      end
+      if ptsz = classes.find {|k| k =~ /incopy-ptsz/ }
+        txsr_opts[:ptsz] = font.match(/incopy-ptsz-(.*)/)[1]
+      end
+      if szld = classes.find {|k| k =~ /incopy-szld/ }
+        txsr_opts[:szld] = font.match(/incopy-szld-(.*)/)[1]
+      end
       body << incopy_txsr(span.inner_html, txsr_opts)
     end
     # Nokogiri converts it into an XML entity, but we want the
@@ -151,14 +164,22 @@ module InCopy
     bold = opts[:bold]
     italic = opts[:italic]
     
+    font = opts[:font]
+    ptsz = opts[:ptsz]
+    szld = opts[:szld]
+    
     ptfs = [
-      ("c_Bold" if opts[:bold]),
-      ("c_Italic" if opts[:italic])
+      ("Bold" if opts[:bold]),
+      ("Italic" if opts[:italic])
     ].reject(&:nil?).join(" ")
+    ptfs = "c_" + ptfs if not ptfs.empty?
     
     attributes = [
       ("prst=\"#{prst}\"" if prst),
-      ("ptfs=\"#{ptfs}\"" if not ptfs.empty?)
+      ("ptfs=\"#{ptfs}\"" if not ptfs.empty?),
+      ("font=\"#{font}\"" if font),
+      ("ptsz=\"#{ptsz}\"" if ptsz),
+      ("szld=\"#{szld}\"" if szld)
     ].reject(&:nil?).join(" ")
     attributes = ' ' + attributes unless attributes.empty?
     
