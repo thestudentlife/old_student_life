@@ -7,6 +7,7 @@ gem 'sinatra'
 gem 'workflow-incopy', :require => 'workflow/incopy', :path => 'lib/workflow-incopy'
 gem 'workflow-dav', :require => 'workflow/dav', :path => 'lib/workflow-dav'
 gem 'workflow-forms', :require => 'workflow/forms', :path => 'lib/workflow-forms'
+gem 'workflow-twitter', :require => 'workflow/twitter', :path => 'lib/workflow-twitter'
 
 gem 'sunspot_rails', '~> 1.2.1'
 
