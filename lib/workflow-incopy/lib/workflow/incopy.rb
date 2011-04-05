@@ -123,10 +123,10 @@ module InCopy
         txsr_opts[:font] = font.match(/incopy-font-(.*)/)[1]
       end
       if ptsz = classes.find {|k| k =~ /incopy-ptsz/ }
-        txsr_opts[:ptsz] = font.match(/incopy-ptsz-(.*)/)[1]
+        txsr_opts[:ptsz] = ptsz.match(/incopy-ptsz-(.*)/)[1]
       end
       if szld = classes.find {|k| k =~ /incopy-szld/ }
-        txsr_opts[:szld] = font.match(/incopy-szld-(.*)/)[1]
+        txsr_opts[:szld] = szld.match(/incopy-szld-(.*)/)[1]
       end
       body << incopy_txsr(span.inner_html, txsr_opts)
     end
