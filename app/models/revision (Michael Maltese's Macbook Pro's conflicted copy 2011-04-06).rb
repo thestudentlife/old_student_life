@@ -103,11 +103,12 @@ class Revision < ActiveRecord::Base
     # F***ing C apis. Can't figure out how to do this any more easily
     html = Nokogiri::XML::NodeSet.new(doc, html.select { |p| not p.text.strip.empty? })
     
-    html.each do |p|
-      p.attributes.keys.each do |attr|
-        p.remove_attribute attr
-      end
+    (html/'font').each do |font|
+      span = Nokogiri::XML::Node.new('span', doc)
       
+    end
+    
+    html.each do |p|
       p.children.each do |child|
         if child.name != 'span'
           span = Nokogiri::XML::Node.new('span', doc)
