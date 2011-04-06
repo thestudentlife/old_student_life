@@ -20,5 +20,5 @@ class WorkflowReview < ActiveRecord::Base
     :not_in => {
       :collection => lambda { article.reviews.reject { |review| review.id == id }.map { |review| review.review_slot_id } },
       :message => "Article already has a review for that slot!"
-    }
+    }, :if => lambda { not article.nil? }
 end

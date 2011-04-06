@@ -4,11 +4,13 @@ gem 'rack', '~> 1.2.2' # Security fix
 # gem 'rack', :git => 'https://github.com/rack/rack.git', :ref => 'ee1285'
 
 gem 'sinatra'
-gem 'workflow-incopy', :require => 'workflow/incopy', :path => 'lib/workflow-incopy'
+gem 'workflow-conductor', :require => 'workflow/conductor', :path => 'lib/workflow-conductor'
 gem 'workflow-dav', :require => 'workflow/dav', :path => 'lib/workflow-dav'
 gem 'workflow-forms', :require => 'workflow/forms', :path => 'lib/workflow-forms'
+gem 'workflow-incopy', :require => 'workflow/incopy', :path => 'lib/workflow-incopy'
 gem 'workflow-twitter', :require => 'workflow/twitter', :path => 'lib/workflow-twitter'
 
+gem 'active_presenter'
 gem 'sunspot_rails', '~> 1.2.1'
 
 # workflow
