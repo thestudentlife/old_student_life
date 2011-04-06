@@ -6,14 +6,20 @@ class Workflow::Articles::ReviewsController < WorkflowController
   
   def new
     # Why doesn't this automatically take into account the resource_class?
-    @review = resource_class.new
-    new!
+    new! {
+      @review = resource_class.new @article
+    }
   end
   
   def create
     params[:review_conductor][:review_author_id] = current_user.id
-    params[:review_conductor][:review_article_id] = params[:article_id]
-    @review = resource_class.new params[:review_conductor]
-    create! { workflow_article_path @article }
+    params[:review_conductor][:title_author_id] = current_user.id
+    @article = Article.find params[:article_id]
+    @review = resource_class.new @article, params[:review_conductor]
+    if @review.save
+      redirect_to workflow_article_path(@article)
+    else
+      render :new
+    end
   end
 end

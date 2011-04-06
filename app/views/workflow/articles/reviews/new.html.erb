@@ -20,16 +20,20 @@
 	  <%= collection_select :review_conductor, :review_review_slot_id,
    	    current_user.open_review_slots_for_article(@article), :id, :to_s %>
 	</div>
-	<% if @review.needs_author? %>
-  	<div class="field">
-  	  <%= f.label :review_author_name, "Author" %>
-  	  <%= f.text_field :review_author_name %>
-    </div>
-  <% end %>
+	<div class="field">
+    <%= f.label :title_text, "Add a title" %>
+    <%= f.text_field :title_text %>
+  </div>
+  <% if @review.needs_author? %>
+    <div class="field">
+  		<%= f.label :author_id, "Add an author" %>
+  		<%= collection_select :review_conductor, :author_id, @review.authors, :id, :to_s %>
+  	</div>
+   <% end %>
   <div class="field wide-field">
-		<%= f.label :review_comment, "Comment" %> (optional)<br />
+		<%= f.label :review_comment, "Comment" %> (optional)<br/>
 		<%= f.text_area :review_comment %>
-   </div>
+  </div>
 
   <div class="actions">
     <%= f.submit %>

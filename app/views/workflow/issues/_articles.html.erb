@@ -26,14 +26,14 @@
         <% if article.locked? %>
           <p><q><strong>Locked by:</strong> <%= article.locked_by %></q></p>
         <% end %>
-        <% if article.status_message and not article.status_message.empty? %>
+        <% if article.status_message and not article.status_message.blank? %>
           <p><span class="status_message"><span style="font-weight: bold">Status:</span> <%= article.status_message %></span></p>
         <% end %>
         <% if article.reviews.any? %>
           <ul>
             <% article.reviews.each do |review| %>
               <li class="review">
-                <p><strong><%= review.review_slot %></strong>: <%= review.author %> <%= ("&mdash; " + review.comment).html_safe unless review.comment.empty? %></p>
+                <p><strong><%= review.review_slot %></strong>: <%= review.author %> <%= ("&mdash; " + review.comment).html_safe unless review.comment.blank? %></p>
               </li>
             <% end %>
           </ul>
