@@ -78,10 +78,13 @@ class Revision < ActiveRecord::Base
   end
   
   def self.clean_markup(markup)
-    markup.
-    gsub!(/&(.*?);/) do 
+    markup = markup.
+    gsub('&nbsp;', ' ').
+    gsub(/&(.*?);/) do 
       "%26#{$1}%3B"
-    end
+    end.
+    gsub(/[\n\t\r]/,' ').
+    gsub(/\s+/, ' ')
     
     html = Nokogiri::HTML::DocumentFragment.parse (markup)
     # Simply by passing it through Nokogiri, we deal with nested <p> tags
