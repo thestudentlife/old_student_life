@@ -1,5 +1,5 @@
 class FrontPageArticle < ActiveRecord::Base
-  belongs_to :article
+  belongs_to :article, :dependent => :destroy
   validates :priority, :numericality => { :only_integer => true }
   
   default_scope :order => 'priority ASC'

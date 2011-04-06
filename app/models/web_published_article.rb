@@ -1,5 +1,5 @@
 class WebPublishedArticle < ActiveRecord::Base
-  belongs_to :article
+  belongs_to :article, :dependent => :destroy
   belongs_to :revision
   belongs_to :title, :class_name => 'ArticleTitle'
   
@@ -31,7 +31,7 @@ class WebPublishedArticle < ActiveRecord::Base
   end
   
   def teaser(count=nil)
-    count ? revision.teaser(count) : revision.teaser
+    article.teaser(count)
   end
   
   
@@ -40,11 +40,11 @@ class WebPublishedArticle < ActiveRecord::Base
   end
   
   def self.not_featured
-    find_by_sql ('SELECT "web_published_articles".* FROM "web_published_articles" WHERE ("web_published_articles"."published_at" < "' + Time.now.to_s(:sql) + '") GROUP BY "web_published_articles"."article_id" EXCEPT SELECT "web_published_articles".* FROM "web_published_articles" INNER JOIN "front_page_articles" WHERE ("front_page_articles"."article_id" = "web_published_articles"."article_id") ORDER BY "web_published_articles"."published_at" DESC')
+    find_by_sql ('SELECT "web_published_articles".* FROM "web_published_articles" WHERE ("web_published_articles"."published_at" < "' + Time.now.to_s(:sql) + '") EXCEPT SELECT "web_published_articles".* FROM "web_published_articles" INNER JOIN "front_page_articles" WHERE ("front_page_articles"."article_id" = "web_published_articles"."article_id") ORDER BY "web_published_articles"."published_at" DESC')
   end
   
   def self.published
-    group("article_id").where("published_at < ?", Time.now)
+    where("published_at < ?", Time.now)
   end
   
   def self.latest_most_viewed (count)

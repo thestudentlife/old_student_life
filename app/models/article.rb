@@ -10,7 +10,7 @@ class Article < ActiveRecord::Base
   
   has_one :front_page_article
   
-  has_many :web_published_articles
+  has_one :web_published_article
   
   has_many :titles, :class_name => "ArticleTitle"
   
@@ -42,7 +42,7 @@ class Article < ActiveRecord::Base
   end
   
   def published_online?
-    web_published_articles.exists?
+    not web_published_article.nil?
   end
   
   def open_review_slots
@@ -50,15 +50,19 @@ class Article < ActiveRecord::Base
   end
   
   def word_count
-    revisions.latest.first.word_count if revisions.any?
+    latest_revision.word_count if revisions.any?
   end
   
   def to_s
     name
   end
   
-  def teaser
-    WebPublishedArticle.published.find_by_article_id(id).teaser
+  def latest_revision
+    revisions.latest.first
+  end
+  
+  def teaser(count)
+    count ? latest_revision.teaser(count) : latest_revision.teaser
   end
   
   def status

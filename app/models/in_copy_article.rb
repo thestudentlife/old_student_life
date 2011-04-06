@@ -1,5 +1,5 @@
 class InCopyArticle < ActiveRecord::Base
-  belongs_to :article
+  belongs_to :article, :dependent => :destroy
   
   validates :article, :presence => true
   

@@ -1,20 +1,26 @@
 class Workflow::Articles::WebPublishedArticlesController < WorkflowController
   inherit_resources
   actions :new, :create, :destroy
-  belongs_to :article
-  
+  before_filter do @article = Article.find params[:article_id] end
+   
   def new
-    new! do
-      @web_published_article.published_at = Time.now - 7.hours
-    end
+    @web_published_article = WebPublishedArticle.new(
+      :published_at => (Time.now - 7.hours)
+    )
+    respond_with @web_published_article
   end
   
   def create
-    create! { workflow_article_path(@article) }
+    @web_published_article = WebPublishedArticle.create params[:web_published_article].merge(
+      :article_id => @article.id
+    )
+    respond_with @web_published_article
   end
   
   def destroy
-    destroy! { workflow_article_path(@article) }
+    @web_published_article = WebPublishedArticle.find params[:id]
+    @web_published_article.destroy
+    respond_with @web_published_article, :location => workflow_article_path(@article)
   end
   
 end
