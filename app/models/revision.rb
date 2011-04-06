@@ -100,12 +100,10 @@ class Revision < ActiveRecord::Base
     end
     html = Nokogiri::XML::NodeSet.new(doc, ps)
     
+    # F***ing C apis. Can't figure out how to do this any more easily
+    html = Nokogiri::XML::NodeSet.new(doc, html.select { |p| not p.text.strip.empty? })
+    
     html.each do |p|
-      if p.text.strip.empty?
-        p.remove
-        next
-      end
-      
       p.children.each do |child|
         if child.name != 'span'
           span = Nokogiri::XML::Node.new('span', doc)
