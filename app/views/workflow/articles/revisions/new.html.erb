@@ -37,6 +37,7 @@
 	<div id="editor_toolbar">
 	  <a id="editor_bold" href="javascript:true" style="padding: 5px; display: inline-block">Bold</a> <a id="editor_italic" href="javascript:true" style="padding: 5px; display: inline-block;">Italic</a>
   </div>
+  <input type="hidden" id="editor_innerhtml_size" value="0"/>
 	<iframe id="editor" src="<%= body_workflow_article_revision_path @article, @revision.id || 'new' %>" style="width: 100%; border: 1px solid #999; font-family: Georgia; background-color: #ffd; height: 20em"></iframe>
 
   <div class="actions">

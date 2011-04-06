@@ -13,6 +13,8 @@
 # browser does something slightly differently.
 #
 
+require 'nokogiri'
+
 class Revision < ActiveRecord::Base
   belongs_to :article
   belongs_to :author, :class_name => "User"
@@ -73,5 +75,36 @@ class Revision < ActiveRecord::Base
   
   def to_s
     body
+  end
+  
+  def self.clean_markup(markup)
+    html = Nokogiri::HTML::DocumentFragment.parse (markup)
+    # Simply by passing it through Nokogiri, we deal with nested <p> tags
+    # Explanation: <p> is a block-level element, so cannot exist inside
+    # other block-level elements. Nokogiri insures this rule.
+    doc = html.document
+    
+    ps = html.children.map do |child|
+      if child.name != 'p'
+        p = Nokogiri::XML::Node.new('p', doc)
+        p << child
+        p
+      else
+        child
+      end
+    end
+    html = Nokogiri::XML::NodeSet.new(doc, ps)
+    
+    html.each do |p|
+      p.children.each do |child|
+        if child.name != 'span'
+          span = Nokogiri::XML::Node.new('span', doc)
+          span.inner_html = child.to_html
+          child.replace(span)
+        end
+      end
+    end
+    
+    html.to_html
   end
 end

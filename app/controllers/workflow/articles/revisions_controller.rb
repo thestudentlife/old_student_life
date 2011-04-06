@@ -20,6 +20,7 @@ class Workflow::Articles::RevisionsController < WorkflowController
       :article => @article,
       :author => current_user
     )
+    params[:revision][:body] = Revision.clean_markup(params[:revision][:body])
     create! { [:workflow, @article] }
   end
   
