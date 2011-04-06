@@ -33,6 +33,13 @@ class User < ActiveRecord::Base
   def can_publish_article? (article)
     is_admin? or article.open_review_slots.empty?
   end
+  
+  def can_delete_articles?
+    is_admin?
+  end
+  def can_delete_articles!
+    can_delete_articles? or raise NotAuthorized
+  end
 
   [ :authors ].
   map { |m| "can_edit_#{m}" }.

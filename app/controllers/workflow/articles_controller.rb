@@ -22,6 +22,14 @@ class Workflow::ArticlesController < WorkflowController
     end
   end
   
+  def destroy
+    current_user.can_delete_articles!
+    @issue = @article.issue
+    @article.destroy
+    flash[:warning] = 'Article was deleted'
+    redirect_to [:workflow, @issue]
+  end
+  
   def lock
     @article.lock(current_user)
     if @article.save
