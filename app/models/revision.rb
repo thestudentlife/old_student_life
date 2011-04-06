@@ -78,6 +78,11 @@ class Revision < ActiveRecord::Base
   end
   
   def self.clean_markup(markup)
+    markup.
+    gsub!(/&(.*?);/) do 
+      "%26#{$1}%3B"
+    end
+    
     html = Nokogiri::HTML::DocumentFragment.parse (markup)
     # Simply by passing it through Nokogiri, we deal with nested <p> tags
     # Explanation: <p> is a block-level element, so cannot exist inside
@@ -105,6 +110,9 @@ class Revision < ActiveRecord::Base
       end
     end
     
-    html.to_html
+    html.to_html.
+    gsub(/%26(.*?)%3B/) do
+      "&#{$1};"
+    end
   end
 end
