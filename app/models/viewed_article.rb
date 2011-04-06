@@ -1,5 +1,5 @@
 class ViewedArticle < ActiveRecord::Base
-  belongs_to :article, :dependent => :destroy
+  belongs_to :article
   
   def self.latest_most_viewed(limit=10)
     where("created_at > ?", 1.weeks.ago

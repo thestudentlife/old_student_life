@@ -8,9 +8,9 @@ class Article < ActiveRecord::Base
   has_many :images
   belongs_to :issue
   
-  has_one :front_page_article
-  
-  has_one :web_published_article
+  has_one :front_page_article, :dependent => :destroy
+  has_one :web_published_article, :dependent => :destroy
+  has_many :viewed_articles, :dependent => :destroy
   
   has_many :titles, :class_name => "ArticleTitle"
   
@@ -61,7 +61,7 @@ class Article < ActiveRecord::Base
     revisions.latest.first
   end
   
-  def teaser(count)
+  def teaser(count=nil)
     count ? latest_revision.teaser(count) : latest_revision.teaser
   end
   

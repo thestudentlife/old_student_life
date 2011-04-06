@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110403175628) do
+ActiveRecord::Schema.define(:version => 20110406194736) do
 
   create_table "article_titles", :force => true do |t|
     t.integer  "article_id", :null => false
@@ -20,17 +20,8 @@ ActiveRecord::Schema.define(:version => 20110403175628) do
     t.datetime "updated_at"
   end
 
-  create_table "articles", :force => true do |t|
-    t.string   "status_message"
-    t.integer  "headline_id"
-    t.integer  "section_id"
-    t.integer  "subsection_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "issue_id"
-    t.string   "name"
-    t.integer  "locked_by"
-  end
+# Could not dump table "articles" because of following StandardError
+#   Unknown type 'bool' for column 'deleted'
 
   create_table "articles_authors", :id => false, :force => true do |t|
     t.integer "article_id", :null => false
@@ -145,7 +136,6 @@ ActiveRecord::Schema.define(:version => 20110403175628) do
   create_table "web_published_articles", :force => true do |t|
     t.datetime "published_at", :null => false
     t.integer  "article_id",   :null => false
-    t.integer  "revision_id",  :null => false
     t.integer  "title_id",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"

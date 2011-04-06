@@ -1,13 +1,17 @@
 class WebPublishedArticle < ActiveRecord::Base
-  belongs_to :article, :dependent => :destroy
-  belongs_to :revision
+  belongs_to :article
   belongs_to :title, :class_name => 'ArticleTitle'
   
   has_one :section, :through => :article
   has_one :subsection, :through => :article
   
   validates :title, :presence => true
-  validates :revision, :presence => true
+  
+  validate do
+    if article.latest_revision.nil?
+      errors.add :article, "must have at least one revision"
+    end
+  end
   
   def authors
     article.authors
@@ -18,7 +22,7 @@ class WebPublishedArticle < ActiveRecord::Base
   end
   
   def body
-    revision.body
+    article.latest_revision.body
   end
   
   def to_s

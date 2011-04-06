@@ -20,11 +20,6 @@
 	  <%= collection_select :web_published_article, :title_id,
    	    @article.titles, :id, :to_s %>
 	</div>
-  <div class="field">
-	  <%= f.label :revision_id, "Revision to publish" %>
-	  <%= collection_select :web_published_article, :revision_id,
-   	    @article.revisions, :id, :id_pretty %>
-	</div>
 	<div class="field">
     <%= f.label :published_at %>
     <%= datetime_select :web_published_article, :published_at %>
