@@ -21,5 +21,12 @@ class Conductor
   def self.model_name
     @_model_name ||= ActiveModel::Name.new(self)
   end
+  
+  def self.create (*args)
+    new(*args).tap do |c|
+      c.save
+    end
+  end
+  
 end # class Conductor
 end # module Workflow

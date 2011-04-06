@@ -1,6 +1,5 @@
 class WebPublishedArticle < ActiveRecord::Base
   belongs_to :article
-  belongs_to :title, :class_name => 'ArticleTitle'
   
   has_one :section, :through => :article
   has_one :subsection, :through => :article
@@ -26,7 +25,7 @@ class WebPublishedArticle < ActiveRecord::Base
   end
   
   def to_s
-    title.text.gsub(/"(.*?)"/) { "“#{$1}”" }
+    title.gsub(/"(.*?)"/) { "“#{$1}”" }
   end
   
   def slug

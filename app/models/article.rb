@@ -8,11 +8,11 @@ class Article < ActiveRecord::Base
   has_many :images
   belongs_to :issue
   
+  serialize :titles, Array
+  
   has_one :front_page_article, :dependent => :destroy
   has_one :web_published_article, :dependent => :destroy
   has_many :viewed_articles, :dependent => :destroy
-  
-  has_many :titles, :class_name => "ArticleTitle"
   
   has_many :reviews, :class_name => "WorkflowReview"
   has_many :review_slots, :through => :reviews

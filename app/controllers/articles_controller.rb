@@ -8,7 +8,7 @@ class ArticlesController < ApplicationController
   def index
     @featured_articles = WebPublishedArticle.featured
     #@articles = WebPublishedArticle.not_featured
-    @news = Section.find_by_url('news')
+    @news = Section.order('priority ASC').first
     @articles = WebPublishedArticle.
       published.
       joins(:article).

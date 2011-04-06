@@ -10,18 +10,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110406194736) do
+ActiveRecord::Schema.define(:version => 20110406212628) do
 
-  create_table "article_titles", :force => true do |t|
-    t.integer  "article_id", :null => false
-    t.integer  "author_id",  :null => false
-    t.string   "text"
+  create_table "articles", :force => true do |t|
+    t.string   "status_message"
+    t.integer  "headline_id"
+    t.integer  "section_id"
+    t.integer  "subsection_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "issue_id"
+    t.string   "name"
+    t.integer  "locked_by"
+    t.string   "titles"
   end
-
-# Could not dump table "articles" because of following StandardError
-#   Unknown type 'bool' for column 'deleted'
 
   create_table "articles_authors", :id => false, :force => true do |t|
     t.integer "article_id", :null => false
@@ -76,7 +78,7 @@ ActiveRecord::Schema.define(:version => 20110406194736) do
 
   create_table "review_slots", :force => true do |t|
     t.string   "name"
-    t.boolean  "requires_admin"
+    t.boolean  "requires_admin", :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -136,10 +138,9 @@ ActiveRecord::Schema.define(:version => 20110406194736) do
   create_table "web_published_articles", :force => true do |t|
     t.datetime "published_at", :null => false
     t.integer  "article_id",   :null => false
-    t.integer  "title_id",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "body"
+    t.string   "title"
   end
 
   create_table "workflow_comments", :force => true do |t|

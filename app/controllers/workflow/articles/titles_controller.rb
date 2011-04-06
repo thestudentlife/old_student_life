@@ -1,13 +1,16 @@
 class Workflow::Articles::TitlesController < WorkflowController
-  inherit_resources
-  actions :new, :create, :destroy
-  defaults :resource_class => ArticleTitle
-  belongs_to :article
+  respond_to :html
+
+  def new
+    @title = TitleConductor.new
+    respond_with @title
+  end
   
   def create
-    params[:article_title][:article] = @article
-    params[:article_title][:author] = current_user
-    create! { workflow_article_path(@article) }
+    params[:title_conductor] ||= {}
+    params[:title_conductor][:article_id] = params[:article_id]
+    @title = TitleConductor.create params[:title_conductor]
+    respond_with @title, :location => workflow_article_path(params[:article_id])
   end
   
 end

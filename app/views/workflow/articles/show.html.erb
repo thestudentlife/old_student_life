@@ -89,12 +89,11 @@
   	<% @article.titles.each do |title| %>
   		<li style="margin-bottom: 0.5em; margin-left: 0.5em">
   		  <span style="color: white"><%= title %></span>
-		    <%= link_to 'Remove',
+		    <%#= <%= link_to 'Remove',
 	        workflow_article_title_path(@article, title),
 	        :confirm => 'Are you sure?',
 	        :method => :delete %>
 	      <br/>
-	      <span style="padding-left: 1em; color:#ddd; font-size: 0.9em">– <%= title.author %></span>
   		</li>
   	<% end %> 
   </ul>
