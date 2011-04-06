@@ -103,8 +103,14 @@ class Revision < ActiveRecord::Base
     # F***ing C apis. Can't figure out how to do this any more easily
     html = Nokogiri::XML::NodeSet.new(doc, html.select { |p| not p.text.strip.empty? })
     
+    (html/'span').each do |span|
+      span.keys.each do |attr|
+        span.remove_attribute attr unless attr == 'class'
+      end
+    end
+    
     html.each do |p|
-      p.attributes.keys.each do |attr|
+      p.keys.each do |attr|
         p.remove_attribute attr
       end
       
@@ -114,6 +120,12 @@ class Revision < ActiveRecord::Base
           span.inner_html = child.to_html
           child.replace(span)
         end
+      end
+    end
+    
+    while (search = html / 'p > span > *').any?
+      search.each do |extra|
+        extra.swap extra.inner_html
       end
     end
     
