@@ -10,7 +10,6 @@ gem 'workflow-forms', :require => 'workflow/forms', :path => 'lib/workflow-forms
 gem 'workflow-incopy', :require => 'workflow/incopy', :path => 'lib/workflow-incopy'
 gem 'workflow-twitter', :require => 'workflow/twitter', :path => 'lib/workflow-twitter'
 
-gem 'active_presenter'
 gem 'sunspot_rails', '~> 1.2.1'
 
 # workflow
