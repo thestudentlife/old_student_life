@@ -42,7 +42,7 @@
         <% end %>
       </td>
       <td>
-        <% if article.titles.any? %>
+        <% if article.titles.try(:any?) %>
           <ul style="list-style-type: disc">
             <% article.titles.each do |title| %>
               <li><%= title %></li>
