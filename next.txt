@@ -1,3 +1,7 @@
+TODO
+* Rename InCopy files. Everything is named Body.incx
+* Create IDLK files when locked in backend
+
 IMPORTANT
 * Comments inlined in text
 * HTML Titles on frontend
