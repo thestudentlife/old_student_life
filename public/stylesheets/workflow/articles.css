@@ -1,4 +1,4 @@
-/* Reset everything */
+/* Reset stuff */
 
 #main article {
 	border: none;
@@ -12,6 +12,19 @@
 #main > header h1,
 #main #content > h1 {
 	text-shadow: 1px 1px 1px white;
+}
+
+body {
+	padding-bottom: 0;
+}
+
+#main {
+	margin: 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	-o-border-radius: 0;
+	border-radius: 0;
+	padding-bottom: 28px;
 }
 
 #main #content {
