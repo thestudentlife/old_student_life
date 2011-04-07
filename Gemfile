@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 gem 'rack', '~> 1.2.2' # Security fix
 # gem 'rack', :git => 'https://github.com/rack/rack.git', :ref => 'ee1285'
 
+gem 'htmlentities'
 gem 'sinatra'
 gem 'workflow-conductor', :require => 'workflow/conductor', :path => 'lib/workflow-conductor'
 gem 'workflow-dav', :require => 'workflow/dav', :path => 'lib/workflow-dav'
