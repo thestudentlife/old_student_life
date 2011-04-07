@@ -89,7 +89,7 @@ class Revision < ActiveRecord::Base
     markup = markup.
     gsub('&#x3c;', '<').
     gsub('&#x3e;', '>').
-    gsub('&#x22;', '""').
+    gsub('&#x22;', '"').
     gsub(/&(.*?);/) do 
       "%26#{$1}%3B"
     end
@@ -115,8 +115,8 @@ class Revision < ActiveRecord::Base
     html = Nokogiri::XML::NodeSet.new(doc, html.select { |p| not p.text.strip.empty? })
     
     (html/'span').each do |span|
-      span.keys.each do |attr|
-        span.remove_attribute attr unless attr == 'class'
+      span.attributes.each do |key, attr|
+        span.remove_attribute attr unless key == 'class'
       end
     end
     
