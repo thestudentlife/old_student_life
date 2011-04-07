@@ -87,7 +87,11 @@
     }
     
     function assertType (element, type, message) {
+      if (typeof(element) == 'undefined') {
+        alert(message + ' is undefined! Expected type ' + type);
+      }
       if (element.nodeName != type) {
+        alert("Expected " + message + " to be " + type + "; got " + element.nodeName);
         throw new TypeError ("Expected " + message + " to be " + type + "; got " + element.nodeName);
       }
       return element;
