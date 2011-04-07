@@ -99,7 +99,7 @@
     
     function replaceWithArray (element, array) {
       array.each (function (part) {
-        element.parentElement.insertBefore(part, element);
+        Element.up(element).insertBefore(part, element);
       });
       Element.remove (element);
     }
@@ -146,8 +146,8 @@
       } else
       // Possibility #2: Inside a <p>, across multiple <span>s
       if (ancestor.nodeName == "P") {
-        var startSpan = assertType (rng.startContainer.parentElement, "SPAN", "startContainer");
-        var endSpan = assertType (rng.endContainer.parentElement, "SPAN", "endContainer");
+        var startSpan = assertType (Element.up(rng.startContainer), "SPAN", "startContainer");
+        var endSpan = assertType (Element.up(rng.endContainer), "SPAN", "endContainer");
         
         applyToMultipleSplitSpans (startSpan, endSpan, rng.startOffset, rng.endOffset, function (middle) {
           affected_nodes.push(middle);
@@ -155,17 +155,17 @@
       } else
       // Possibility #3: Inside the <body>, across multiple <p>s and <span>s
       if (ancestor.nodeName == "BODY") {
-        var startSpan = assertType (rng.startContainer.parentElement, "SPAN", "startContainer");
+        var startSpan = assertType (Element.up(rng.startContainer), "SPAN", "startContainer");
         var endSpan = rng.endContainer;
         if (endSpan.nodeName == "P") { // User selected entire line
           var endP = endSpan;
           endSpan = null;
         } else {
-          endSpan = assertType(endSpan.parentElement, "SPAN", "endContainer")
+          endSpan = assertType(Element.up(endSpan), "SPAN", "endContainer")
         }
-        var startP = assertType (startSpan.parentElement, "P", "startContainer parent");
+        var startP = assertType (Element.up(startSpan), "P", "startContainer parent");
         if (typeof(endP) == "undefined") {
-          var endP = assertType (endSpan.parentElement, "P", "endContainer parent");
+          var endP = assertType (Element.up(endSpan), "P", "endContainer parent");
         }
         
         Element.nextSiblings(startP).each(function (sib) {
