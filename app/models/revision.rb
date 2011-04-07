@@ -89,6 +89,7 @@ class Revision < ActiveRecord::Base
     markup = markup.
     gsub('&#x3c;', '<').
     gsub('&#x3e;', '>').
+    gsub('&#x22;', '""').
     gsub(/&(.*?);/) do 
       "%26#{$1}%3B"
     end
