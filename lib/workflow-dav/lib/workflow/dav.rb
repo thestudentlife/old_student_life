@@ -325,6 +325,7 @@ module Workflow
             :href => article_incopy_path(@article),
             :mime => 'application/x-incx',
             # Also change these in article_path
+            :size => @incopy.to_incopy.size,
             :ctime => @incopy.ctime,
             :mtime => @incopy.mtime
           )
