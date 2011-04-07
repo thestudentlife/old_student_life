@@ -19,7 +19,7 @@
   				<span class="status-message"><%= article.status_message %></span>
 				<% end %>
         <% if article.locked? %>
-				  <span class="lock-status">admin@tsl.pomona.edu</span>
+				  <span class="lock-status"><%= article.locked_by %></span>
 				<% end %>
 			</section>
 	</div>
