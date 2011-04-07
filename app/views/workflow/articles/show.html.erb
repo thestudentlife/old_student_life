@@ -186,7 +186,7 @@
 <script type="text/javascript">
   document.observe ('dom:loaded', function (){
     var button = $("status_message_edit_button");
-    button.writeAttribute("href", "javascript:true");
+    button.writeAttribute("href", "javascript:void(0)");
     button.observe('click', function() {
       $("status_message_show").hide();
       $("status_message_edit").show();
