@@ -1,58 +1,49 @@
-<table>
-<thead>
-  <tr style="text-align: left">
-    <th>Web</th>
-    <th></th>
-    <th>Reviews</th>
-    <th>Titles</th>
-  </tr>
-</thead>
-<tbody>
+<section id="articles">
 <% articles.each do |article| %>
-    <tr style="vertical-align: top;">
-      <td style="font-size: 1.5em; padding-top: 10px"><%= "&#x2713;".html_safe if article.published_online? %></td>
-      <td style="padding: 10px 18px">
-        <h1 style="line-height: 1em; margin: 0; display: inline;"><%= link_to article, workflow_article_path(article) %></h1>
-        <p style="margin-top: 0; margin-bottom: 0; line-height: 1.5em; color: #666">
-          <%= article.authors.any? ? article.authors.map(&:to_s).to_sentence : "nobody" %>
-        </p>
-        <% if article.word_count %>
-          <p style="margin-top: 0; margin-bottom: 0; line-height: 1">
-            <%= article.word_count %> words
-          </p>
-        <% end %>
-      </td>
-      <td>
+<article class="article">
+	<div class="top">
+			<header>
+				<h1><%= link_to article, workflow_article_path(article) %></h1>
+			</header>
+
+			<section class="article-stats">
+			  <% if article.word_count %>
+				  <span class="word-count"><%= article.word_count %> words</span>
+				<% end %>
+				<span class="authors">
+				  <%= article.authors.any? ? article.authors.map(&:to_s).to_sentence : "nobody" %>
+				</span>
+			</section>
+			<section class="article-messages">
+			  <% if article.status_message and not article.status_message.blank? %>
+  				<span class="status-message"><%= article.status_message %></span>
+				<% end %>
         <% if article.locked? %>
-          <p><q><strong>Locked by:</strong> <%= article.locked_by %></q></p>
-        <% end %>
-        <% if article.status_message and not article.status_message.blank? %>
-          <p><span class="status_message"><span style="font-weight: bold">Status:</span> <%= article.status_message %></span></p>
-        <% end %>
-        <% if article.reviews.any? %>
-          <ul>
-            <% article.reviews.each do |review| %>
-              <li class="review">
-                <p><strong><%= review.review_slot %></strong>: <%= review.author %> <%= ("&mdash; " + review.comment).html_safe unless review.comment.blank? %></p>
-              </li>
-            <% end %>
-          </ul>
-        <% else %>
-          Nobody has reviewed this article yet! <span style="color: red; font-weight: bold">FOR SHAME!</span>
-        <% end %>
-      </td>
-      <td>
-        <% if article.titles.try(:any?) %>
-          <ul style="list-style-type: disc">
-            <% article.titles.each do |title| %>
-              <li><%= title %></li>
-            <% end %>
-          </ul>
-        <% else %>
-          Nobody has proposed any titles yet.
-        <% end %>
-      </td>
-    </tr>
+				  <span class="lock-status">admin@tsl.pomona.edu</span>
+				<% end %>
+			</section>
+	</div>
+	<section class="reviews">
+	  <% ReviewSlot.all.each do |slot| %>
+		  <article class="review <%= 'done' if article.has_review?(slot) %>">
+  			<header><h1><%= slot %></h1></header>
+  			<span class="review-user">
+  			  <% if article.has_review?(slot) %>
+  			    <%= article.review_for_slot(slot).author %>
+  			  <% else %>
+  			    nobody
+  			  <% end %>
+  			</span>
+  		</article>
+  	<% end %>
+		<section class="publication-status <%= 'published' if article.published_online? %>">
+			<span class="publication-status-web">
+			  <%= article.published_online? ? 'Online' : 'No' %>
+			</span>
+			<% if article.published_online? %>
+			  <span class="publication-date"><%= time_ago_in_words article.published_online_at %> ago</span>
+			<% end %>
+		</section>
+	</section>
+</article>
 <% end %>
-</tbody>
-</table>

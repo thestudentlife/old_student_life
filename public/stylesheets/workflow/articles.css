@@ -1,0 +1,142 @@
+/* Reset everything */
+
+#main article {
+	border: none;
+}
+
+#main header {
+	background-color: transparent;
+	border: none;
+}
+
+#main > header h1,
+#main #content > h1 {
+	text-shadow: 1px 1px 1px white;
+}
+
+#main #content {
+	padding-top: 0;
+}
+
+/* The real stuff */
+
+#main {
+	background-color: #f6f6f6;
+	background-color: #f6f6f6;
+	font-family: Arial;
+	font-size: 14px;
+	line-height: 16px;
+}
+
+section#articles {
+/*	margin: 0 auto;
+ width: 900px; */
+}
+#articles > .article {
+	margin: 8px 0;
+}
+.review, .publication-status {
+	float: left;
+	width: 18%;
+	margin-right: 1%;
+}
+.status-message {
+	background-color: #F7E20D;
+	padding: 4px;
+	webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-o-border-radius: 2px;
+	border-radius: 2px;
+}
+.status-message:before {
+	content: "Status: ";
+	font-weight: bold;
+}
+section#articles > .article {
+	position: relative;
+	background-color: white;
+	border: 1px solid #999;
+	padding: 8px;
+}
+section#articles > .article .top > header h1 {
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	line-height: 24px;
+}
+.article-stats {
+	font-size: 12px;
+	padding-bottom: 4px;
+}
+.authors:before {
+	content: "by ";
+}
+.article-messages {
+	font-size: 12px;
+}
+.lock-status {
+	padding: 4px;
+}
+.lock-status:before {
+	content: "Locked by: ";
+	font-weight: bold;
+}
+.publication-status {
+	font-size: 12px;
+}
+.publication-status span {
+	display: block;
+}
+.publication-status-web:before {
+	content: "Published: ";
+	font-weight: bold;
+}
+.publication-status.published {
+	padding: 4px;
+}
+.reviews {
+	margin-top: 8px;
+	padding-top: 8px;
+	border-top: 1px solid #999;
+}
+.review {
+	padding: 4px !important;
+}
+.review.done,
+.publication-status.published,
+.lock-status {
+	background-color: #5FA82C;
+	webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-o-border-radius: 2px;
+	border-radius: 2px;
+	color: white !important;
+}
+.reviews header h1 {
+	font-size: 12px !important;
+	line-height: 12px;
+	margin: 0;
+	padding: 0;
+	color: inherit !important;
+}
+.reviews .review-user {
+	font-size: 12px;
+	line-height: 12px;
+}
+.left {
+	float: left;
+	margin-right: -300px;
+	width: 100%;
+}
+.top:after, .reviews:after {
+	clear: both;
+	content: " ";
+	display: block;
+	height: 0;
+	visibility: hidden;
+	font-size: 0;
+}
+.right {
+	float: right;
+	width: 150px;
+}

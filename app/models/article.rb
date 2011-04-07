@@ -41,8 +41,20 @@ class Article < ActiveRecord::Base
     "#{id} #{s}"
   end
   
+  def has_review? (slot)
+    reviews.where(:review_slot_id => slot.id).exists?
+  end
+  
+  def review_for_slot (slot)
+    reviews.where(:review_slot_id => slot.id).first
+  end
+  
   def published_online?
     not web_published_article.nil?
+  end
+  
+  def published_online_at
+    web_published_article.published_at
   end
   
   def open_review_slots
