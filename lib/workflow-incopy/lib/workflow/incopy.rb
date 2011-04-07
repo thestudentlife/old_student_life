@@ -147,8 +147,7 @@ module InCopy
 "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>
 <?aid style=\"33\" type=\"snippet\" DOMVersion=\"5.0\" readerVersion=\"4.0\" featureSet=\"513\" product=\"5.0(682)\" ?>
 <?aid SnippetType=\"InCopyInterchange\"?>
-<SnippetRoot>
-#{content}
+<SnippetRoot>#{content}
 <cflo Self=\"rc_ubd\">
 "
   end
