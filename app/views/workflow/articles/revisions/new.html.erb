@@ -139,7 +139,7 @@
       
       // Possibility #1: Inside a single <span>
       if (ancestor.nodeName == "#text") {
-        var span = assertType(ancestor.parentElement, "SPAN", "parent of #text");
+        var span = assertType(Element.up(ancestor), "SPAN", "parent of #text");
         applyToSplitSpan (span, rng.startOffset, rng.endOffset, function(middle) {
           affected_nodes.push(middle);
         });
