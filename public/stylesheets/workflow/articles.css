@@ -127,6 +127,10 @@ section#articles > .article .top > header h1 {
 	border-radius: 2px;
 	color: white !important;
 }
+.lock-status {
+	background-color: #B00;
+}
+
 .reviews header h1 {
 	font-size: 12px !important;
 	line-height: 12px;
