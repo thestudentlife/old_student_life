@@ -63,7 +63,7 @@
         <% end %>
       </div>
       
-      <%= @revision ? @revision.body.html_safe : 'No revisions have been posted for this article yet!' %>
+      <%= @revision ? @revision.diff.html_safe : 'No revisions have been posted for this article yet!' %>
     </div>
   
     <section class="article-history">
