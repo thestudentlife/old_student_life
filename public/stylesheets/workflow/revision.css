@@ -1,0 +1,189 @@
+/* Reset stuff */
+
+#main article {
+	border: none;
+}
+
+#main header {
+	background-color: transparent;
+	border: none;
+}
+
+#main > header h1,
+#main #content > h1 {
+	text-shadow: 1px 1px 1px white;
+}
+
+body {
+	padding-bottom: 0;
+}
+
+#main {
+	margin: 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	-o-border-radius: 0;
+	border-radius: 0;
+	padding-bottom: 28px;
+	padding-left: 24px;
+	padding-right: 24px;
+}
+
+#main #content {
+	padding-top: 0;
+}
+
+.article > header h1 {
+	font-size: 28px !important;
+	line-height: 32px;
+}
+
+.article section > header h1 {
+	font-weight: bold;
+	color: #333 !important;
+	text-shadow: 1px 1px 1px white;
+	margin: 0;
+	padding: 0;
+}
+
+/* The real stuff */
+
+#main {
+	background-color: #f6f6f6;
+	background-color: #f6f6f6;
+	font-family: Arial;
+	font-size: 14px;
+	line-height: 16px;
+}
+
+#main:after,
+.article:after,
+.below:after {
+	clear: both;
+	content: " ";
+	display: block;
+	height: 0;
+	visibility: hidden;
+	font-size: 0;
+}
+
+.revision {
+	float: left;
+	width: 62%;
+}
+
+.side {
+	float: right;
+	width: 35%;
+	padding: 8px;
+}
+
+.revision header {
+	padding-bottom: 8px;
+}
+
+.revision .revision-warning,
+.lock-status .locked {
+	color: white;
+	background-color: #B00;
+	webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-o-border-radius: 2px;
+	border-radius: 2px;
+	padding: 4px;
+}
+
+.revision-warning:before {
+	content: 'Warning: ';
+	font-weight: bold;
+}
+
+.revision-stats {
+	font-style: italic;
+	color: #999;
+}
+.revision-stats span {
+	display: block;
+}
+
+.revision .body {
+	font: 14px/20px Georgia, serif;
+	padding: 16px;
+	color: #333;
+	background-color: white;
+	border: 1px solid #999 !important;
+}
+
+.article-history {
+	padding-top: 8px;
+}
+
+.reviews header h1 {
+	font-size: 12px !important;
+	line-height: 12px;
+	margin: 0;
+	padding: 0;
+	color: inherit !important;
+}
+.reviews .review-user {
+	font-size: 12px;
+	line-height: 12px;
+}
+
+.review {
+	padding: 4px !important;
+}
+
+.review-comment {
+	padding-left: 8px;
+	font-size: 14px;
+	line-height: 16px;
+}
+
+.review h1 {
+	display: inline;
+}
+
+.review.done,
+.publication-status.published {
+	background-color: #5FA82C;
+	webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-o-border-radius: 2px;
+	border-radius: 2px;
+	color: white !important;
+	margin: 4px 0;
+}
+.publication-status {
+	font-size: 12px;
+}
+.publication-status span {
+	display: block;
+}
+.publication-status-web:before {
+	content: "Published: ";
+	font-weight: bold;
+}
+.publication-status.published {
+	padding: 4px;
+}
+.publication-status .title:before {
+	content: 'Title: ';
+	font-weight: bold;
+}
+
+.revisions ol {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	color: #333;
+	font-size: 11px;
+	line-height: 20px;
+}
+
+.revisions .selected {
+	background-color: #FFC;
+	border: 1px solid #CC6;
+	margin-left: -5px;
+	padding-left: 4px;
+}

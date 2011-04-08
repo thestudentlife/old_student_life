@@ -9,8 +9,9 @@ class Workflow::ArticlesController < WorkflowController
   end
   
   def show
-    respond_with :workflow, @article
+    redirect_to workflow_article_revision_path(@article, @article.latest_revision)
   end
+  
   def edit
     @subsections = @article.section.subsections
     respond_with :workflow, @article
@@ -42,7 +43,7 @@ class Workflow::ArticlesController < WorkflowController
     else
       flash[:warning] = 'Could not lock article'
     end
-    redirect_to :action => :show
+    redirect_to workflow_article_path(@article)
   end
   
   def unlock
@@ -52,6 +53,6 @@ class Workflow::ArticlesController < WorkflowController
     else
       flash[:warning] = 'Could not unlock article'
     end
-    redirect_to :action => :show
+    redirect_to workflow_article_path(@article)
   end
 end

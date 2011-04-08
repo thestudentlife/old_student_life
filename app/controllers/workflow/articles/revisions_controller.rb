@@ -3,6 +3,11 @@ class Workflow::Articles::RevisionsController < WorkflowController
   belongs_to :article
   before_filter :require_user
   
+  def show
+    @article = Article.find params[:article_id]
+    @revision = params[:id] ? Revision.find(params[:id]) : @article.latest_revision
+  end
+  
   def new
     new! do
       if (not @article.locked?) or (@article.locked? and @article.locked_by != current_user)

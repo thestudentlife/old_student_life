@@ -1,0 +1,202 @@
+<% content_for :htmlhead do stylesheet_link_tag('workflow/revision') end %>
+
+<article class="article">
+<header>
+  <h1 style="display: inline"><%= @article %></h1>
+  <%= link_to 'Back to issue', workflow_issue_path(@article.issue) %>
+  <div id="status_message_show">
+      <strong>Status:</strong>
+      <% if @article.status_message and not @article.status_message.empty? %>
+        <span class="status_message"><%= @article.status_message %></span>
+      <% else %>
+        None
+      <% end %>
+      <span style="font-size: 0.9em;">
+      (<%= link_to "Change", edit_workflow_article_path(@article), :id => 'status_message_edit_button', :style => 'display: inline-block; line-height: 2em' %>)
+      </span>
+  </div>
+  <div id="status_message_edit" style="display: none">
+    <%= form_for [:workflow, @article],
+        :html => {:style => 'display: inline'} do |f| %>
+    		<%= f.label :status_message, "Status:", :style => 'float:none' %>
+    		<%= f.text_field :status_message %>
+    		<%= f.submit %>
+    <% end %>
+  </div>
+</header>
+
+  <article class="revision">
+    <div class="body">
+      <header>
+        <% if not @article.latest_revision == @revision %>
+          <div class="revision-warning">
+            This is not the latest revision
+          </div>
+        <% end %>
+        <%= link_to(
+          (@article.revisions.any? ? 'Edit latest revision' : 'Post original revision'),
+          new_workflow_article_revision_path(@article)
+        ) %>
+        <%= link_to 'Article settings', edit_workflow_article_path(@article) %>
+        <div class="lock-status">
+          <strong>Locked by:</strong>
+          <% if @article.locked? %>
+            <span class="locked"><%= @article.locked_by %></span>
+            (<%= link_to 'Unlock', unlock_workflow_article_path(@article),
+              :style => 'display: inline-block; line-height: 2em',
+              :method => 'delete' %>)
+          <% else %>
+            nobody
+            (<%= link_to 'Lock', lock_workflow_article_path(@article),
+              :style => 'display: inline-block; line-height: 2em',
+              :method => 'put' %>)
+          <% end %>
+        </div>
+      </header>
+      
+      <div class="revision-stats">
+        <% if @revision %>
+          <span class="byline">
+            Posted <%= time_ago_in_words @revision.created_at %> ago by <%= @revision.author %>
+          </span>
+          <span class="word-count"><%= @revision.word_count %> words</span>
+        <% end %>
+      </div>
+      
+      <%= @revision ? @revision.body.html_safe : 'No revisions have been posted for this article yet!' %>
+    </div>
+  
+    <section class="article-history">
+      <header>
+        <h1>History for this article</h1>
+        <%= link_to 'Post comment', new_workflow_article_comment_path(@article) %>
+      </header>  
+      <%= render_collection_in_same_controller @article.workflow_history, :layout => "item" %>
+    </section>
+  </article>
+
+  <div class="side">
+    <% if not @article.front_page_article and @article.published_online? and current_user.can_edit_front_page? %>
+      <%= link_to "Add to front page", new_workflow_article_front_page_path(@article) %>
+    <% end %>
+    <section class="reviews">
+      <%= link_to "Add review", new_workflow_article_review_path(@article) if current_user.can_add_review?(@article) %>
+      <% ReviewSlot.all.each do |slot| %>
+        <article class="review <%= 'done' if @article.has_review?(slot) %>">
+          <header><h1><%= slot %>:</h1><span class="review-user">
+    			  <% if @article.has_review?(slot) %>
+    			    <%= @article.review_for_slot(slot).author %>
+    			  <% else %>
+    			    nobody
+    			  <% end %>
+    			</span></header>
+    			<% if @article.has_review?(slot) and not @article.review_for_slot(slot).comment.blank? %>
+  			      <div class="review-comment"><%= @article.review_for_slot(slot).comment %></div>
+			    <% end %>
+        </article>
+      <% end %>
+    </section>
+  	<section class="publication-status <%= 'published' if @article.published_online? %>">
+			<span class="publication-status-web">
+			  <%= @article.published_online? ? 'Online' : 'No' %>
+			</span>
+			<% if @article.published_online? %>
+			  <span class="title"><%= @article.web_published_article.title %></span>
+			  <span class="publication-date"><%= time_ago_in_words @article.published_online_at %> ago</span>
+			<% end %>
+			<% if current_user.can_publish_article? @article %>
+        <% if not @article.published_online? %>
+          <%= link_to 'Publish online', new_workflow_article_web_published_article_path(@article) %>
+        <% else %>
+          <%= link_to "Unpublish", workflow_article_web_published_article_path(@article, @article.web_published_article),
+            :method => :delete, :confirm => "Are you sure you?" %>
+        <% end %>
+      <% end %>
+		</section>
+    <section class="authors">
+      <header>
+        <h1>Authors</h1>
+        <%= link_to "Add author", new_workflow_article_author_path(@article) %>
+      </header>
+      <ul>
+      	<% @article.authors.each do |author| %>
+      		<li>
+      		  <span><%= author %></span>
+      	    <%= link_to 'Remove',
+              workflow_article_author_path(@article, author),
+              :confirm => 'Are you sure?',
+              :method => :delete %>
+      		</li>
+      	<% end %>
+      </ul>
+    </section>
+    <section class="titles">
+      <header>
+        <h1>Proposed Titles</h1>
+        <%= link_to "Add title", new_workflow_article_title_path(@article) %>
+      <ul>
+      	<% @article.titles.each do |title| %>
+      		<li>
+      		  <span><%= title %></span>
+    		    <%#= <%= link_to 'Remove',
+    	        workflow_article_title_path(@article, title),
+    	        :confirm => 'Are you sure?',
+    	        :method => :delete %>
+      		</li>
+      	<% end %> 
+      </ul>
+    </section>
+    <section class="images">
+      <header>
+         <h1>Image</h1>
+         <% if @article.images.empty? %>
+           <%= link_to "Upload image", new_workflow_article_image_path(@article) %>
+         <% end %>
+      </header>
+       <ul style="display: block; float: left; width: 100%">
+         <% @article.images.each do |image| %>
+           <li>
+             <div style="float: right">  
+               <%= image_tag(
+                 image.file.url(:thumb),
+                 :style => "border: 1px white solid; margin-left: 1em; margin-right: 1em") %>
+             </div>
+             <div>
+               <p><strong>Credit:</strong> <%= image.credit %></p>
+               <p><strong>Caption:</strong> <%= image.caption %></p>
+               <p>
+                 <%= link_to "Edit", edit_workflow_article_image_path(@article, image) %>
+                 <%= link_to "Remove", workflow_article_image_path(@article, image),
+                   :confirm => "Are you sure you want to remove this image?", :method => :delete %>
+               </p>
+             </div>
+           </li>
+         <% end %>
+       </ul>
+    </section>
+    <section class="revisions">
+      <header>
+        <h1>Revisions</h1>
+        <ol>
+          <% @article.revisions.each do |revision| %>
+            <li <%= 'class=selected' if revision == @revision %>>
+              <%= link_to (time_ago_in_words(revision.created_at) + " ago"), workflow_article_revision_path(@article, revision) %>
+              <%= revision.author %>
+            </li>
+          <% end %>
+        </ol>
+      </header>
+    </section>
+  </div>
+</article>
+
+<script type="text/javascript">
+  document.observe ('dom:loaded', function (){
+    var button = $("status_message_edit_button");
+    button.writeAttribute("href", "javascript:void(0)");
+    button.observe('click', function() {
+      $("status_message_show").hide();
+      $("status_message_edit").show();
+    })
+  })
+</script>

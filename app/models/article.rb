@@ -90,6 +90,6 @@ class Article < ActiveRecord::Base
   end
   
   def workflow_history
-    (self.workflow_comments + self.revisions + self.workflow_updates).sort_by(&:created_at).reverse
+    (self.workflow_comments + self.workflow_updates).sort_by(&:created_at).reverse
   end
 end
