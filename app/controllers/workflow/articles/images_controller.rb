@@ -16,7 +16,7 @@ class Workflow::Articles::ImagesController < WorkflowController
     @image.article = @article
 
     if @image.save
-      redirect_to workflow_article_path(@article), :notice => 'Image was successfully created.'
+      redirect_to workflow_article_revisions_path(@article), :notice => 'Image was successfully created.'
     else
       render :action => "new"
     end
@@ -26,7 +26,7 @@ class Workflow::Articles::ImagesController < WorkflowController
     @image = Image.find(params[:id])
 
     if @image.update_attributes(params[:image])
-      redirect_to workflow_article_path(@article), :notice => 'Image was successfully updated.'
+      redirect_to workflow_article_revisions_path(@article), :notice => 'Image was successfully updated.'
     else
       render :action => "edit"
     end
@@ -36,6 +36,6 @@ class Workflow::Articles::ImagesController < WorkflowController
     @image = Image.find(params[:id])
     @image.destroy
 
-    redirect_to workflow_article_path(@article)
+    redirect_to workflow_article_revisions_path(@article)
   end
 end

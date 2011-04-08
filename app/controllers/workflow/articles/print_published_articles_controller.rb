@@ -4,11 +4,11 @@ class Workflow::Articles::PrintPublishedArticlesController < WorkflowController
   belongs_to :article
   
   def create
-    create! { workflow_article_path(@article) }
+    create! { workflow_article_revisions_path(@article) }
   end
   
   def destroy
-    destroy! { workflow_article_path(@article) }
+    destroy! { workflow_article_revisions_path(@article) }
   end
   
 end

@@ -3,6 +3,11 @@ class Workflow::Articles::RevisionsController < WorkflowController
   belongs_to :article
   before_filter :require_user
   
+  def index
+    show
+    render :show
+  end
+  
   def show
     @article = Article.find params[:article_id]
     @revision = params[:id] ? Revision.find(params[:id]) : @article.latest_revision
@@ -12,10 +17,10 @@ class Workflow::Articles::RevisionsController < WorkflowController
     new! do
       if (not @article.locked?) or (@article.locked? and @article.locked_by != current_user)
         flash[:error] = 'You must lock an article before editing it.'
-        redirect_to [:workflow, @article] and return
+        redirect_to [:workflow, @article, :revisions] and return
       end
       if @article.revisions.latest.any?
-        @revision.body = @article.revisions.latest.first.body
+        @revision.body = @article.latest_revision.body
       end
     end
   end
@@ -26,12 +31,12 @@ class Workflow::Articles::RevisionsController < WorkflowController
       :author => current_user
     )
     params[:revision][:body] = Revision.clean_markup(params[:revision][:body])
-    create! { [:workflow, @article] }
+    create! { [:workflow, @article, :revisions] }
   end
   
   def body
     @article = Article.find params[:article_id]
-    @revision = @article.revisions.latest.first
+    @revision = @article.latest_revision
     render :layout => false
   end
 end

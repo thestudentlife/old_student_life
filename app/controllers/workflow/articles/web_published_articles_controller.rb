@@ -6,7 +6,7 @@ class Workflow::Articles::WebPublishedArticlesController < WorkflowController
   def new
     if @article.latest_revision.nil?
       flash[:error] = "You must create at least one revision before publishing this article"
-      return redirect_to [:workflow, @article]
+      return redirect_to [:workflow, @article, :revisions]
     end
     
     @web_published_article = WebPublishedArticle.new(
@@ -19,13 +19,13 @@ class Workflow::Articles::WebPublishedArticlesController < WorkflowController
     @web_published_article = WebPublishedArticle.create params[:web_published_article].merge(
       :article_id => @article.id
     )
-    respond_with @web_published_article, :location => workflow_article_path(@article)
+    respond_with @web_published_article, :location => workflow_article_revisions_path(@article)
   end
   
   def destroy
     @web_published_article = WebPublishedArticle.find params[:id]
     @web_published_article.destroy
-    respond_with @web_published_article, :location => workflow_article_path(@article)
+    respond_with @web_published_article, :location => workflow_article_revisions_path(@article)
   end
   
 end

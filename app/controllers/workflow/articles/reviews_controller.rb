@@ -17,7 +17,7 @@ class Workflow::Articles::ReviewsController < WorkflowController
     @article = Article.find params[:article_id]
     @review = resource_class.new @article, params[:review_conductor]
     if @review.save
-      redirect_to workflow_article_path(@article)
+      redirect_to workflow_article_revisions_path(@article)
     else
       render :new
     end

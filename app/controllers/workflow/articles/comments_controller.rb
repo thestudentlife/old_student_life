@@ -14,6 +14,6 @@ class Workflow::Articles::CommentsController < WorkflowController
       :author_id => current_user.id
     })
     
-    respond_with :workflow, @workflow_comment, :location => [:workflow, @article]
+    respond_with :workflow, @workflow_comment, :location => [:workflow, @article, :revisions]
   end
 end

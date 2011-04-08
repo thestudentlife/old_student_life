@@ -15,7 +15,7 @@ class Workflow::Articles::FrontPageController < WorkflowController
       :article => @article,
       :priority => params[:front_page_article][:priority]
     )
-    create! { workflow_article_path(@article) }
+    create! { workflow_article_revisions_path(@article) }
   end
   
 end

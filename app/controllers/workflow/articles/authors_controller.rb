@@ -17,7 +17,7 @@ class Workflow::Articles::AuthorsController < WorkflowController
     elsif @article.authors << @author
       # TODO: Transaction
       workflow_update.save
-      redirect_to workflow_article_path(@article), :notice => 'Author was successfully added'
+      redirect_to workflow_article_revisions_path(@article), :notice => 'Author was successfully added'
     else
       redirect_to new_workflow_article_author_path(@article), :notice => 'Author was not added'
     end
@@ -31,6 +31,6 @@ class Workflow::Articles::AuthorsController < WorkflowController
     @article.authors.delete @author
     # TODO: Transaction
     workflow_update.save
-    respond_with :workflow, @author, :location => [:workflow, @article]
+    respond_with :workflow, @author, :location => [:workflow, @article, :revisions]
   end
 end

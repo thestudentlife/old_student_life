@@ -9,19 +9,19 @@ class Workflow::ArticlesController < WorkflowController
   end
   
   def show
-    redirect_to workflow_article_revision_path(@article, @article.latest_revision)
+    redirect_to workflow_article_revisions_path(@article)
   end
   
   def edit
     @subsections = @article.section.subsections
-    respond_with :workflow, @article
+    respond_with :workflow, @article, :revisions
   end
   def update
     workflow_update = WorkflowUpdate.new_for_article_params(@article, params[:article])
     workflow_update.author = current_user
     
     if @article.update_attributes params[:article] and (workflow_update.updates.any? ? workflow_update.save : true)
-      redirect_to workflow_article_path(@article), :notice => "Article was successfully updated"
+      redirect_to workflow_article_revisions_path(@article), :notice => "Article was successfully updated"
     else
       @subsections = @article.section.map(&:subsections).flatten
       render :action => "edit"
@@ -43,7 +43,7 @@ class Workflow::ArticlesController < WorkflowController
     else
       flash[:warning] = 'Could not lock article'
     end
-    redirect_to workflow_article_path(@article)
+    redirect_to workflow_article_revisions_path(@article)
   end
   
   def unlock
@@ -53,6 +53,6 @@ class Workflow::ArticlesController < WorkflowController
     else
       flash[:warning] = 'Could not unlock article'
     end
-    redirect_to workflow_article_path(@article)
+    redirect_to workflow_article_revisions_path(@article)
   end
 end

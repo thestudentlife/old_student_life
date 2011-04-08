@@ -10,7 +10,7 @@ class Workflow::Articles::TitlesController < WorkflowController
     params[:title_conductor] ||= {}
     params[:title_conductor][:article_id] = params[:article_id]
     @title = TitleConductor.create params[:title_conductor]
-    respond_with @title, :location => workflow_article_path(params[:article_id])
+    respond_with @title, :location => workflow_article_revisions_path(params[:article_id])
   end
   
 end
