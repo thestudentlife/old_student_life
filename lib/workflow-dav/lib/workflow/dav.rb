@@ -142,6 +142,10 @@ module Workflow
       include NamedRoutes
     
       helpers do
+        def current_user
+          params[:user] ||= User.find_by_email env['REMOTE_USER']
+        end
+        
         def multistatus
           xml = Builder::XmlMarkup.new
           xml.instruct!
@@ -194,6 +198,23 @@ module Workflow
             end
           end
         end
+        
+        def authorized?
+          @auth ||= Rack::Auth::Basic::Request.new(request.env)
+          return false unless @auth.provided? && @auth.basic? && @auth.credentials
+          email, password = *@auth.credentials
+          puts "SELECT * FROM 'users' WHERE 'users'.'email' = '#{email}'"
+          puts password
+          user = User.find_by_email(email)
+          user.valid_password?(password) if user
+        end
+        
+        def protected!
+          unless authorized?
+            response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
+            throw(:halt, [401, "Not authorized\n"])
+          end
+        end
       end
     
       # Routes
@@ -201,8 +222,6 @@ module Workflow
       before do
         request.path_info = Rack::Utils.unescape(request.path_info)
         request.script_name = Rack::Utils.unescape(request.script_name)
-        
-        params[:user] = User.find_by_email env['REMOTE_USER']
       end
     
       set :raise_errors, false
@@ -227,7 +246,7 @@ module Workflow
         if @article.locked? and @incopy.lockfile != params[:lock]
           return response.status = 423 # Locked
         else
-          @article.lock params[:user]
+          @article.lock current_user
           @article.save!
           @incopy.lockfile = params[:lock]
           @incopy.lockfile_content = request.body.read
@@ -292,10 +311,10 @@ module Workflow
       put article_incopy_path_template do
         # Allow if user has it locked
         @article = Article.find params[:article]
-        if @article.locked_by == params[:user]
+        if @article.locked_by == current_user
           @incopy = InCopyArticle.for_article(@article)
           @incopy.parse(request.body.read).tap do |rev|
-            rev.author = params[:user]
+            rev.author = current_user
             rev.save!
           end
           @incopy.save!
@@ -307,7 +326,7 @@ module Workflow
       route 'LOCK', article_incopy_path_template do
         @article = Article.find params[:article]
         # Allow if user has it locked
-        # if @article.locked_by == params[:user]
+        # if @article.locked_by == current_user
           token = Rack::Utils.escape(article_incopy_path(@article)) + Time.now.to_i.to_s 
           dav_lock(token)
         #else
@@ -477,6 +496,7 @@ module Workflow
       end
     
       propfind issues_path do
+        protected!
         multistatus do |xml|
           dav_response(xml,
             :href => issues_path,
@@ -492,6 +512,7 @@ module Workflow
       end
     
       propfind '/A' do
+        protected!
         multistatus do |xml|
           dav_response(xml,
             :href => '/A',
@@ -505,6 +526,7 @@ module Workflow
       end
     
       propfind '/' do
+        protected!
         multistatus do |xml|
           dav_response(xml,
             :href => '/',
@@ -518,6 +540,7 @@ module Workflow
       end
     
       options '/' do
+        protected!
         [
           200,
           {
@@ -536,11 +559,6 @@ module Workflow
       
       route 'MKCOL', // do
         response.status = 403 # Forbidden
-      end
-
-      use Rack::Auth::Basic, "WebDAV" do |username, password|
-        user = User.find_by_email(username)
-        user.valid_password? password if user
       end
     end
   end
