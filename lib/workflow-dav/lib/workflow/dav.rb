@@ -255,8 +255,7 @@ module Workflow
         end
       end
       route 'LOCK', article_lockfile_path_template do
-        @article = Article.find params[:article]
-        token = "opaquelocktoken:" + Rack::Utils.escape(article_lockfile_path(@article)) + Time.now.to_i.to_s
+        token = "opaquelocktoken:" + Rack::Utils.escape(request.path_info) + Time.now.to_i.to_s
         dav_lock(token)
       end
       route 'UNLOCK', article_lockfile_path_template do
