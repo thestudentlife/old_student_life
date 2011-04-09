@@ -203,8 +203,7 @@ module Workflow
           @auth ||= Rack::Auth::Basic::Request.new(request.env)
           return false unless @auth.provided? && @auth.basic? && @auth.credentials
           email, password = *@auth.credentials
-          puts "SELECT * FROM 'users' WHERE 'users'.'email' = '#{email}'"
-          puts password
+          env['REMOTE_USER'] = email
           user = User.find_by_email(email)
           user.valid_password?(password) if user
         end
@@ -241,6 +240,7 @@ module Workflow
         end
       end
       put article_lockfile_path_template do
+        protected!
         @article = Article.find params[:article]
         @incopy = InCopyArticle.for_article(@article)
         if @article.locked? and @incopy.lockfile != params[:lock]
@@ -279,6 +279,8 @@ module Workflow
         end
       end
       delete article_lockfile_path_template do
+        protected!
+        
         @article = Article.find params[:article]
         @article.unlock
         @article.save!
@@ -308,6 +310,7 @@ module Workflow
         InCopyArticle.for_article(@article).to_incopy
       end
       put article_incopy_path_template do
+        protected!
         # Allow if user has it locked
         @article = Article.find params[:article]
         if @article.locked_by == current_user
@@ -323,10 +326,9 @@ module Workflow
         end
       end
       route 'LOCK', article_incopy_path_template do
-        @article = Article.find params[:article]
         # Allow if user has it locked
         # if @article.locked_by == current_user
-          token = Rack::Utils.escape(article_incopy_path(@article)) + Time.now.to_i.to_s 
+          token = Rack::Utils.escape(request.path_info) + Time.now.to_i.to_s 
           dav_lock(token)
         #else
         #  response.status = 423 # Locked
@@ -481,7 +483,6 @@ module Workflow
     
       propfind issue_path_template do
         @issue = Issue.find params[:issue]
-        raise NotFound unless @issue
         multistatus do |xml|
           dav_response(xml,
             :href => issue_path(@issue),
