@@ -90,10 +90,10 @@ module Workflow
         end
       
         def article_incopy_path_template
-          File.join article_path_template, 'Body.incx'
+          File.join article_path_template, ':name.incx'
         end
         def article_incopy_path(article)
-          File.join article_path(article), 'Body.incx'
+          File.join article_path(article), "#{article.davslug}.incx"
         end
       
         def article_headline_path_template
