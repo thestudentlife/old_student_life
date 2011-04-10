@@ -229,6 +229,10 @@ module Workflow
       error ActiveRecord::RecordNotFound do
         response.status = 404
       end
+      
+      propfind /\/\._/ do
+        throw(:halt, [404, "Not found\n"])
+      end
     
       get article_lockfile_path_template do
         @article = Article.find params[:article]
@@ -269,7 +273,8 @@ module Workflow
             dav_response(xml,
               :href => article_lockfile_path(@article),
               :mime => 'application/x-idlk',
-              # Change this in article_path
+              # Change this in article_path,
+              :size => @incopy.lockfile_content.size,
               :ctime => @incopy.lockfile_ctime,
               :mtime => @incopy.lockfile_mtime
             )
