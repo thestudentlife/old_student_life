@@ -58,7 +58,7 @@ class Article < ActiveRecord::Base
   end
   
   def open_review_slots
-    ReviewSlot.find_by_sql('SELECT "review_slots".* FROM "review_slots" EXCEPT SELECT "review_slots".* FROM "review_slots" INNER JOIN "workflow_reviews" WHERE ("workflow_reviews"."review_slot_id" = "review_slots"."id") AND ("workflow_reviews"."article_id" = ' + id.to_s + ')')
+    ReviewSlot.find_by_sql('SELECT review_slots.* FROM review_slots EXCEPT SELECT review_slots.* FROM review_slots INNER JOIN workflow_reviews ON (workflow_reviews.review_slot_id = review_slots.id) AND (workflow_reviews.article_id = ' + id.to_s + ')')
   end
   
   def word_count

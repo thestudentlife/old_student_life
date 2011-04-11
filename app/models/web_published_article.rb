@@ -39,11 +39,8 @@ class WebPublishedArticle < ActiveRecord::Base
   
   
   def self.featured
-    joins('INNER JOIN "front_page_articles"').where('"front_page_articles"."article_id" = "web_published_articles"."article_id"').published
-  end
-  
-  def self.not_featured
-    find_by_sql ('SELECT "web_published_articles".* FROM "web_published_articles" WHERE ("web_published_articles"."published_at" < "' + Time.now.to_s(:sql) + '") EXCEPT SELECT "web_published_articles".* FROM "web_published_articles" INNER JOIN "front_page_articles" WHERE ("front_page_articles"."article_id" = "web_published_articles"."article_id") ORDER BY "web_published_articles"."published_at" DESC')
+    joins
+    joins('INNER JOIN (front_page_articles) ON (front_page_articles.article_id = web_published_articles.article_id)').published
   end
   
   def self.published
@@ -62,8 +59,8 @@ class WebPublishedArticle < ActiveRecord::Base
   
   def self.find_all_by_author (author) # shouldn't this be automatic?
     published.joins(:article
-    ).joins('INNER JOIN "articles_authors" ON "articles_authors"."article_id" = "articles"."id"'
-    ).joins('INNER JOIN "authors" ON "authors"."id" = "articles_authors"."author_id"'
+    ).joins('INNER JOIN articles_authors ON articles_authors.article_id = articles.id'
+    ).joins('INNER JOIN authors ON authors.id = articles_authors.author_id'
     ).where(:authors => {:id => author.id })
   end
 end
