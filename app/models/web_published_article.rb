@@ -39,8 +39,7 @@ class WebPublishedArticle < ActiveRecord::Base
   
   
   def self.featured
-    joins
-    joins('INNER JOIN (front_page_articles) ON (front_page_articles.article_id = web_published_articles.article_id)').published
+    joins('INNER JOIN front_page_articles ON (front_page_articles.article_id = web_published_articles.article_id)').published
   end
   
   def self.published

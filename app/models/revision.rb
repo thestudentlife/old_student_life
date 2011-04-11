@@ -39,10 +39,6 @@ class Revision < ActiveRecord::Base
     WebPublishedArticle.where(:revision_id => id).group(:revision_id).first.published_at
   end
   
-  def published_in_print?
-    PrintPublishedArticle.where(:revision_id => id).exists?
-  end
-  
   def previous
     Revision.where(:article_id => article.id).where("created_at < ?", created_at).order("created_at DESC").first
   end
