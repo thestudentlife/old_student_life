@@ -93,3 +93,14 @@ class Article < ActiveRecord::Base
     (self.workflow_comments + self.workflow_updates).sort_by(&:created_at).reverse
   end
 end
+
+# WebDAV really needs to be converted into an Engine
+
+Article.class_eval do
+  after_save do
+    Rails.cache.delete Workflow::Dav::Cache.lockfile_key(id)
+  end
+  before_destroy do
+    Rails.cache.delete Workflow::Dav::Cache.lockfile_key(id)
+  end
+end

@@ -1,12 +1,12 @@
-require 'active_support/core_ext/string/inflections'
 require 'workflow/incopy'
 
+require 'active_record/errors'
+require 'active_support/core_ext/string/inflections'
 require 'builder'
+require 'memcache'
+require 'rack/utils'
 require 'sinatra/base'
 require 'time'
-require 'rack/utils'
-
-require 'active_record/errors'
 
 class String
   def to_slug
@@ -36,6 +36,24 @@ end
 
 module Workflow
   module Dav
+    module Cache
+      def self.cache(key, &block)
+        begin
+          result = Rails.cache.read(key)
+          return result if result
+          result = yield
+          Rails.cache.write(key, result)
+          result
+        rescue
+          yield
+        end
+      end
+
+      def self.lockfile_key(article_id)
+        "articles/#{article_id}/idlk"
+      end
+    end
+    
     module Propfind
       def propfind (path, opts={}, &b)
           route 'PROPFIND', path, opts, &b
@@ -132,6 +150,7 @@ module Workflow
         def article_lockfile_path(article)
           File.join article_path(article), "#{InCopyArticle.for_article(article).lockfile}.idlk"
         end
+        
       end
     end
   
@@ -223,9 +242,7 @@ module Workflow
         request.script_name = Rack::Utils.unescape(request.script_name)
       end
     
-      set :raise_errors, false
-      set :show_exceptions, false
-      set :dump_errors, false
+
       error ActiveRecord::RecordNotFound do
         response.status = 404
       end
@@ -266,21 +283,23 @@ module Workflow
         response.status = 204 # No Content
       end
       propfind article_lockfile_path_template do
-        @article = Article.find params[:article]
-        @incopy = InCopyArticle.for_article(@article)
-        if @article.locked? and @incopy.lockfile == params[:lock]
-          multistatus do |xml|
-            dav_response(xml,
-              :href => article_lockfile_path(@article),
-              :mime => 'application/x-idlk',
-              # Change this in article_path,
-              :size => @incopy.lockfile_content.size,
-              :ctime => @incopy.lockfile_ctime,
-              :mtime => @incopy.lockfile_mtime
-            )
+        Cache.cache(Cache.lockfile_key params[:article].to_i) do
+          @article = Article.find params[:article]
+          @incopy = InCopyArticle.for_article(@article)
+          if @article.locked? and @incopy.lockfile == params[:lock]
+            multistatus do |xml|
+              dav_response(xml,
+                :href => article_lockfile_path(@article),
+                :mime => 'application/x-idlk',
+                # Change this in article_path,
+                :size => @incopy.lockfile_content.size,
+                :ctime => @incopy.lockfile_ctime,
+                :mtime => @incopy.lockfile_mtime
+              )
+            end
+          else
+            404
           end
-        else
-          response.status = 404
         end
       end
       delete article_lockfile_path_template do
