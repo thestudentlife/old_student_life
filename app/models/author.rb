@@ -2,7 +2,7 @@ class Author < ActiveRecord::Base
   
   belongs_to :user
   has_and_belongs_to_many :articles
-  validates_presence_of :name
+  validates :name, :presence => true, :uniqueness => true
 
   searchable do
     text :name
