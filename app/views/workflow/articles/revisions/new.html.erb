@@ -13,6 +13,12 @@
   
   <p>To make text <strong>italic</strong>, select it and hit the <strong>Italic</strong> button below.</p>
   
+  <p><strong>Do not press Apple+B/I or Ctrl+B/I! It will not work</strong></p>
+  
+  <p><strong>If you're having problems (weird sizes, weird fonts, error popups), copy the entire article, paste it into TextEdit (for Macs) or Notepad (for Windows), then copy it back onto Workflow. If you're using TextEdit, make sure to convert it into plain text first (Format->Make Plain Text)! This will typically solve most problems</strong></p>
+  
+  <p><strong>As always, please do not use Internet Explorer</strong></p>
+  
 <%= form_for [:workflow, @article, @revision] do |f| %>
   <% if @revision.errors.any? %>
     <div id="error_explanation">
@@ -38,7 +44,7 @@
 	  <a id="editor_bold" href="javascript:void(0)" style="padding: 5px; display: inline-block">Bold</a> <a id="editor_italic" href="javascript:void(0)" style="padding: 5px; display: inline-block;">Italic</a>
   </div>
   <input type="hidden" id="editor_innerhtml_size" value="0"/>
-	<iframe id="editor" src="<%= body_workflow_article_revision_path @article, @revision.id || 'new' %>" style="width: 100%; border: 1px solid #999; font-family: Georgia; background-color: #ffd; height: 20em"></iframe>
+	<iframe id="editor" src="<%= body_workflow_article_revision_path @article, @revision.id || 'new' %>" style="width: 100%; border: 1px solid #999; font-family: Georgia; background-color: #ffd; height: 50em"></iframe>
 
   <div class="actions">
     <%= f.submit %>
