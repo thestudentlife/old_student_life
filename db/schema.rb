@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110406212628) do
+ActiveRecord::Schema.define(:version => 20110414065253) do
 
   create_table "articles", :force => true do |t|
     t.string   "status_message"
@@ -63,11 +63,11 @@ ActiveRecord::Schema.define(:version => 20110406212628) do
 
   create_table "in_copy_articles", :force => true do |t|
     t.integer  "article_id"
-    t.string   "header"
     t.string   "lockfile"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "lockfile_content"
+    t.text     "header"
   end
 
   create_table "issues", :force => true do |t|
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(:version => 20110406212628) do
 
   create_table "review_slots", :force => true do |t|
     t.string   "name"
-    t.boolean  "requires_admin", :default => false, :null => false
+    t.boolean  "requires_admin"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
