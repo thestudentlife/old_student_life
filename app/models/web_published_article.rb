@@ -39,7 +39,7 @@ class WebPublishedArticle < ActiveRecord::Base
   
   
   def self.featured
-    joins('INNER JOIN front_page_articles ON (front_page_articles.article_id = web_published_articles.article_id)').published
+    joins('INNER JOIN front_page_articles ON (front_page_articles.article_id = web_published_articles.article_id)').published.order('front_page_articles.priority ASC')
   end
   
   def self.published
