@@ -50,10 +50,10 @@ class Revision < ActiveRecord::Base
     sum = sentences.shift
     sum = body if not sum
     while sum.length < length and sentences.first
-      sum = sum + sentences.shift
+      sum = sum + ' ' + sentences.shift
     end
     while sum =~ /((Jan)|(Feb)|(Mar)|(Apr)|(Aug)|(Sep)|(Oct)|(Nov)|(Dec))\.$/ and sentences.first
-      sum = sum + sentences.shift
+      sum = sum + ' ' + sentences.shift
     end
     # why wasn't it already stripping? hmm
     return strip_tags(sum)
