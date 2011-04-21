@@ -93,6 +93,10 @@
     			<% if @article.has_review?(slot) and not @article.review_for_slot(slot).comment.blank? %>
   			      <div class="review-comment"><%= @article.review_for_slot(slot).comment %></div>
 			    <% end %>
+			    <% if @article.has_review?(slot) %>
+			      <%= link_to "Undo review", workflow_article_review_path(@article, @article.review_for_slot(slot)),
+			          :method => :delete, :confirm => "Are you sure?" %>
+			    <% end %>
         </article>
       <% end %>
     </section>

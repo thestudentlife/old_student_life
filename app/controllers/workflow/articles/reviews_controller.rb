@@ -1,6 +1,6 @@
 class Workflow::Articles::ReviewsController < WorkflowController
   inherit_resources
-  actions :new, :create
+  actions :new, :create, :destroy
   defaults :resource_class => ReviewConductor
   belongs_to :article
   
@@ -17,9 +17,13 @@ class Workflow::Articles::ReviewsController < WorkflowController
     @article = Article.find params[:article_id]
     @review = resource_class.new @article, params[:review_conductor]
     if @review.save
-      redirect_to workflow_article_revisions_path(@article)
+      redirect_to workflow_article_path(@article)
     else
       render :new
     end
+  end
+  
+  def destroy
+    destroy! { workflow_article_path(@article) }
   end
 end

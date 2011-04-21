@@ -76,7 +76,7 @@ TslRails::Application.routes.draw do
       resources :authors, :controller => "articles/authors"
       resources :comments, :controller => "articles/comments"
       resources :images, :controller => "articles/images"
-      resources :reviews, :controller => 'articles/reviews', :only => [:new, :create]
+      resources :reviews, :controller => 'articles/reviews', :only => [:new, :create, :destroy]
       resources :revisions, :controller => "articles/revisions" do
         get 'body', :on => :member
       end
