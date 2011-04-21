@@ -10,7 +10,7 @@ class Workflow::Articles::WebPublishedArticlesController < WorkflowController
     end
     
     @web_published_article = WebPublishedArticle.new(
-      :published_at => (Time.now - 7.hours)
+      :published_at => Time.zone.now
     )
     respond_with @web_published_article
   end
