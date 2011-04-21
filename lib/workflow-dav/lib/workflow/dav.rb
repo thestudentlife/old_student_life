@@ -204,7 +204,7 @@ module Workflow
           }.merge(opts)
         
           xml.D :response do
-            xml.D :href, Rack::Utils.escape(File.join(request.env['SCRIPT_NAME'], opts[:href])).gsub("%2F", "/").gsub("+", "%20")
+            xml.D :href, Rack::Utils.escape(File.join(request.env['SCRIPT_NAME'], opts[:href]).gsub("#",'')).gsub("%2F", "/").gsub("+", "%20")
             xml.D :propstat do
               xml.D :prop do
                 xml.D :creationdate, opts[:ctime].httpdate
