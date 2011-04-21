@@ -339,12 +339,12 @@ module Workflow
         @article = Article.find params[:article]
         if @article.locked_by == current_user
           @incopy = InCopyArticle.for_article(@article)
-          @incopy.parse(request.body.read).tap do |rev|
-            rev.author = current_user
+          rev = @incopy.parse(request.body.read)
+          rev.author = current_user
+          unless rev.body.strip.empty?
             rev.save!
+            @incopy.save!
           end
-          @incopy.save!
-          puts @incopy.header
         else
           response.status = 423 # Locked
         end
