@@ -42,11 +42,11 @@ class Article < ActiveRecord::Base
   end
   
   def has_review? (slot)
-    reviews.where(:review_slot_id => slot.id).exists?
+    review_for_slot(slot) ? true : false
   end
   
   def review_for_slot (slot)
-    reviews.where(:review_slot_id => slot.id).first
+    reviews.to_a.find { |r| r.review_slot_id == slot.id }
   end
   
   def published_online?

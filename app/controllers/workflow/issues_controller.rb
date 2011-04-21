@@ -5,7 +5,13 @@ class Workflow::IssuesController < WorkflowController
     super do
       @articles_by_section = {}
       Section.all.each do |section|
-        @articles_by_section[section] = @issue.articles.where(:section_id => section.id).sort_by(&:name)
+        @articles_by_section[section] = @issue.articles.
+        includes(:reviews => [:author]).
+        includes(:revisions).
+        includes(:authors).
+        includes(:web_published_article).
+        where(:section_id => section.id).
+        sort_by(&:name)
       end
       
     end
