@@ -118,14 +118,14 @@ class Revision < ActiveRecord::Base
     html = Nokogiri::XML::NodeSet.new(doc, html.select { |p| not p.text.strip.empty? })
     
     (html/'span').each do |span|
-      span.attributes.each do |key, attr|
-        span.remove_attribute attr unless key == 'class'
+      span.keys.each do |a|
+        span.remove_attribute a unless a == 'class'
       end
     end
     
     html.each do |p|
-      p.keys.each do |attr|
-        p.remove_attribute attr
+      p.keys.each do |a|
+        p.remove_attribute a
       end
       
       p.children.each do |child|
