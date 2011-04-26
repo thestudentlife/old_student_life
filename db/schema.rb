@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110414065253) do
+ActiveRecord::Schema.define(:version => 20110426202430) do
 
   create_table "articles", :force => true do |t|
     t.string   "status_message"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20110414065253) do
     t.string   "name"
     t.integer  "locked_by"
     t.string   "titles"
+    t.text     "body"
   end
 
   create_table "articles_authors", :id => false, :force => true do |t|

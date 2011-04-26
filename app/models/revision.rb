@@ -22,6 +22,13 @@ class Revision < ActiveRecord::Base
   
   default_scope :order => 'created_at DESC'
   
+  after_save do
+    if self == self.article.latest_revision
+      article.body = self.body
+      article.save!
+    end
+  end
+  
   include ActionView::Helpers::SanitizeHelper
   def word_count
     strip_tags(body).scan(/\s+/).length
