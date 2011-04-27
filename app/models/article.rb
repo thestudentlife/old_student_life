@@ -61,8 +61,9 @@ class Article < ActiveRecord::Base
     ReviewSlot.all - ReviewSlot.joins("INNER JOIN workflow_reviews ON (workflow_reviews.review_slot_id = review_slots.id AND workflow_reviews.article_id = #{id})")
   end
   
+  include ActionView::Helpers::SanitizeHelper
   def word_count
-    latest_revision.word_count if revisions.any?
+    strip_tags(body).scan(/\s+/).length if body
   end
   
   def to_s
@@ -73,8 +74,19 @@ class Article < ActiveRecord::Base
     revisions.latest.first
   end
   
-  def teaser(count=nil)
-    count ? latest_revision.teaser(count) : latest_revision.teaser
+  include ActionView::Helpers::TextHelper
+  def teaser(length=100)
+    sentences = strip_tags(self.body).scan(/.*?[\.\!\?]/)
+    sum = sentences.shift
+    sum = self.body if not sum
+    while sum.length < length and sentences.any?
+      sum = sum + ' ' + sentences.shift
+    end
+    while sum =~ /((Jan)|(Feb)|(Mar)|(Apr)|(Aug)|(Sep)|(Oct)|(Nov)|(Dec))\.$/ and sentences.any?
+      sum = sum + ' ' + sentences.shift
+    end
+    # why wasn't it already stripping? hmm
+    return strip_tags(sum)
   end
   
   def status

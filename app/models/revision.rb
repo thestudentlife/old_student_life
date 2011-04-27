@@ -50,22 +50,6 @@ class Revision < ActiveRecord::Base
     Revision.where(:article_id => article.id).where("created_at < ?", created_at).order("created_at DESC").first
   end
   
-  include ActionView::Helpers::SanitizeHelper
-  include ActionView::Helpers::TextHelper
-  def teaser(length=100)
-    sentences = strip_tags(body).scan(/.*?[\.\!\?]/)
-    sum = sentences.shift
-    sum = body if not sum
-    while sum.length < length and sentences.first
-      sum = sum + ' ' + sentences.shift
-    end
-    while sum =~ /((Jan)|(Feb)|(Mar)|(Apr)|(Aug)|(Sep)|(Oct)|(Nov)|(Dec))\.$/ and sentences.first
-      sum = sum + ' ' + sentences.shift
-    end
-    # why wasn't it already stripping? hmm
-    return strip_tags(sum)
-  end
-  
   def diff
     return self.body unless previous
     require 'htmldiff'

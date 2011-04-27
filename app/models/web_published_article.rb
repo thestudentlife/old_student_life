@@ -34,7 +34,7 @@ class WebPublishedArticle < ActiveRecord::Base
   end
   
   def teaser(count=nil)
-    article.teaser(count)
+    count ? article.teaser(count) : article.teaser
   end
   
   
