@@ -1,0 +1,46 @@
+<section id="aColumn" class="section">
+  <header>
+    <h1>Search</h1>
+  </header>
+  
+  <%= form_tag search_path, :method => :get do %>
+    <%= label_tag :q, "Search for:" %>
+    <%= text_field_tag :q, params[:q] %>
+    <%= submit_tag "Search" %>
+  <% end %>
+  
+  <% unless @search.nil? %>
+    <% if @search.any? %>
+	    <% @search.each do |article| %>
+    		<article class="teaser">
+    			<% if article.images.any? %>
+    				<div class="thumbnail">
+    					<%= link_to(
+    						image_tag(
+    							article.images.first.file.url(:thumb),
+    							:width => 75,
+    							:height => 75), 
+    					    article_path(article)) %>
+    				</div>
+    			<% end %>
+    			<header>
+    				<h1><%= link_to article, article_path(article) %></h1>
+    				<span class="byline">
+    					By
+    					<%= article.authors.map{|a|
+    						content_tag :span, a, :class=>'author'
+    					}.to_sentence.html_safe %>
+    					<span class="timestamp">
+    						<%= time_ago_in_words article.published_at %> ago
+    					</span>
+    				</span>
+    			</header>
+    			<p class="summary"><%= article.teaser %></p>
+    		</article>
+    	<% end %>
+    <% else %>
+      No results found!
+    <% end %>
+  <% end %>
+</section>
+<%= render "articles/most_popular_and_facebook" %>

@@ -54,4 +54,15 @@ class ArticlesController < ApplicationController
     
     render :action => "section"
   end
+  
+  def search
+    @search = unless params[:q].blank?
+      Article.search(:include => [:web_published_article]) do
+        keywords params[:q]
+        without(:published_at, nil)
+      end.results.map &:web_published_article
+    else
+      nil
+    end
+  end
 end

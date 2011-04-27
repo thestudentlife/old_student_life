@@ -29,6 +29,7 @@ TslRails::Application.routes.draw do
   match '/articles/:section' => "articles#section"
   match '/authors/:author' => "articles#author"
   match '/blogs' => "blogs#index"
+  match '/search' => "articles#search", :as => 'search'
   
   resources :pages
   

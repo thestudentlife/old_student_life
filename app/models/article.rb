@@ -24,6 +24,14 @@ class Article < ActiveRecord::Base
   
   belongs_to :locked_by, :class_name => 'User', :foreign_key => 'locked_by'
   
+  searchable do
+    text :title do web_published_article.title if published_online? end
+    text :body
+    integer :author_ids, :multiple => true
+    integer :section_id
+    time :published_at do published_online_at if published_online? end
+  end
+  
   def locked?
     not locked_by.nil?
   end

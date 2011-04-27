@@ -301,6 +301,9 @@
 			text-transform: uppercase;
 			padding-left: 0.2em;
 		}
+		#searchBar {
+			float: right;
+		}
 		
 		@media print {
 			body {
@@ -390,6 +393,12 @@
 </head>
 <body>
 	<header>
+		<div id="searchBar">
+			<%= form_tag search_path, :method => :get do %>
+		    <%= text_field_tag :q, params[:q] %>
+		    <%= submit_tag "Search" %>
+		  <% end %>
+		</div>
 		<%= link_to image_tag("tslbanner2.jpg"), root_path %>
 	</header>
 	<nav>
