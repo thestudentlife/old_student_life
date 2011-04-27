@@ -84,15 +84,25 @@
 			clear: both;
 		}
 		#aColumn {
-			float: left;
-			width: 600px;
-			border-right: 1px solid #cbcbcb;
+			float: right;
+			width: 550px;
 			padding: 9px;
 		}
 		#cColumn {
+			float: left;
+			width: 384px;
+			padding: 9px;
+		}
+		
+		body#index #aColumn {
+			float: left;
+			width: 600px;
+			border-right: 1px solid #cbcbcb;
+		}
+		
+		body#index #cColumn {
 			float: right;
 			width: 334px;
-			padding: 9px;
 		}
 		
 		article.teaser {
@@ -253,6 +263,8 @@
 		.fullArticle h1 {
 			font-size: 24px;
 			line-height: 26px;
+			font-weight: bold;
+			color: #333;
 		}
 		
 		.fullArticle {
@@ -272,13 +284,11 @@
 			font: 24px/27px Palatino,serif;
 		}
 		#aColumn > header {
-			margin-top: -9px;
 			padding-bottom: 9px;
 			margin-bottom: 9px;
 		}
 		.articleImage {
 			margin-bottom: 9px;
-			margin-top: 9px;
 		}
 		/*a:visited {
 			color: #669;
@@ -391,7 +401,7 @@
 
 	</script>
 </head>
-<body>
+<body id="<%= yield :body_id %>">
 	<header>
 		<div id="searchBar">
 			<%= form_tag search_path, :method => :get do %>
