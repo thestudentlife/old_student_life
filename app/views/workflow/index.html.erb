@@ -3,30 +3,7 @@
 <% end %>
 
 <% content_for :side do %>
-  <header>
-    <h1>Changelog</h1>
-  </header>
-  <div class="content" style="color: white;">
-    <% changes = [
-      ['Update', '(Apr 5) Delete articles from Article Settings page'],
-      ['Update', '(Apr 5) When posting a review, users must post a title, and an author if one doesn\'t exist '],
-      ['Update', '(Apr 5) Link to wiki'],
-      ['Update', '(Apr 4) INCOPY WORKS!'],
-      ['Update', '(Apr 2) Writing to InCopy file submits revision'],
-      ['Update', '(Mar 31) InCopy can lock WebDAV'],
-      ['Update', '(Mar 31) Log-in required for WebDAV'],
-      ['Update', '(Mar 30) Locking of articles'],
-      ['Update', '(Mar 29) Removed \'Publish Article in Print\''],
-      ['Bug fix', '(Mar 29) Looks good in Internet Explorer'],
-      ['Update', '(Mar 28) New article editor'],
-      ['Tech note', '(Mar 26) Faster WebDAV server']
-    ] %>
-    <ol style="list-style: disc; margin-left: 0; padding-left: 0">
-      <% changes.each do |change| %>
-        <li style="margin-bottom: 5px"><strong><%= change[0] %></strong> <%= change[1] %></li>
-      <% end %>
-    </ol>
-  </div>
+  &nbsp;
 <% end %>
 
 <div style="font-family: Georgia; font-size: 16px; line-height: 24px">
