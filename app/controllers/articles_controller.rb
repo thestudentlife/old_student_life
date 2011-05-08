@@ -46,15 +46,6 @@ class ArticlesController < ApplicationController
     @articles = WebPublishedArticle.find_all_by_section(@section).order('published_at DESC')
   end
   
-  def subsection
-    @section = Section.find_by_url! params[:section]
-    @subsection = @section.subsections.find_by_url! params[:subsection]
-    
-    @articles = WebPublishedArticle.find_all_by_subsection @subsection
-    
-    render :action => "section"
-  end
-  
   def search
     @search = unless params[:q].blank?
       Article.search(:include => [:web_published_article]) do

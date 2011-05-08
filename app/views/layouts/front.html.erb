@@ -416,9 +416,7 @@
 		<ul>
 			<% @sections.each do |section| %>
 				<%= li_tag link_to(section.name, section_path(section)),
-					:class => [
-						section_is_selected?(section),
-						("withSecondary" if section.subsections.any?)] %>
+					:class => section_is_selected?(section) %>
 			<% end %>
 			<!--<%= li_tag link_to("Blogs", blogs_path), :class => ("selected" if request.fullpath == blogs_path) %>-->
 			<%= li_tag link_to('Staff', page_path(:staff)),
@@ -429,15 +427,6 @@
 				:class => ('selected' if request.fullpath == page_path(:about)) %>
 			<div style="clear: both;"></div>
 		</ul>
-		<% if @section and @section.subsections.any? %>
-		    <ul class="secondary">
-		      <% @section.subsections.each do |subsection| %>
-		        <%= li_tag link_to(subsection, subsection_path(subsection)),
-		 			:class => ("selected" if @subsection and subsection == @subsection) %>
-		    	<% end %>
-		    	<div style="clear: both">
-		    </ul>
-		<% end %>
 	</nav>
 	<div id="main">
 		<%= yield %>

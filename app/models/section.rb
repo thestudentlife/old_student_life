@@ -5,7 +5,6 @@ class Section < ActiveRecord::Base
   validates :priority, :numericality => { :only_integer => true }
 
   has_many :articles
-  has_many :subsections
 
   default_scope :order => "priority"
 

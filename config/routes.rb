@@ -24,8 +24,6 @@ TslRails::Application.routes.draw do
   match '/articles/:year/:month/:day/:section/:id' => 'articles#article',
     :year => /\d+/, :month => /\d+/, :day => /\d+/, :id => /\d.*/
   match '/articles/:section/:id' => "articles#article", :id => /\d.*/
-  match '/articles/:section/:subsection/:id' => "articles#article"
-  match '/articles/:section/:subsection' => "articles#subsection", :subsection => /\w.*/
   match '/articles/:section' => "articles#section"
   match '/authors/:author' => "articles#author"
   match '/blogs' => "blogs#index"
@@ -59,10 +57,6 @@ TslRails::Application.routes.draw do
     
     def section_path(section)
       File.join articles_path, section.url
-    end
-    
-    def subsection_path(subsection)
-      File.join section_path(subsection.section), subsection.url
     end
   end
   
