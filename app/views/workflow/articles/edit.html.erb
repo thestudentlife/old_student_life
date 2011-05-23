@@ -5,7 +5,7 @@
   </span>
 <% end %>
 
-<%= form_for(@article, :url => workflow_article_path(@article)) do |f| %>
+<%= form_for(@article.workflow, :url => workflow_article_path(@article)) do |f| %>
 	<% if @article.errors.any? %>
 		<div id="errorExplanation">
 			<h2><%= pluralize(@article.errors.count, "error") %> prohibited this article from being saved:</h2>
@@ -25,10 +25,6 @@
 		<%= f.label :status_message %>
 		<%= f.text_field :status_message %>
 	</div>
-	<div class="field">
-	  <%= f.label :subsection %>
-	  <%= collection_select :article, :subsection_id, @subsections, :id, :full_name, :include_blank => "(none)" %>
-  </div>
 	<div class="actions">
 		<%= f.submit %>
 	</div>

@@ -4,7 +4,6 @@ class Workflow::Issues::ArticlesController < WorkflowController
   before_filter { @issue = Issue.find params[:issue_id] }
   def new
     @sections = Section.all
-    @subsections = Subsection.all
     respond_with :workflow, @issue, @article = Article.new
   end
   def create

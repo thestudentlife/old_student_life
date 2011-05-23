@@ -15,7 +15,8 @@ class Workflow::Articles::RevisionsController < WorkflowController
   
   def new
     new! do
-      if (not @article.locked?) or (@article.locked? and @article.locked_by != current_user)
+      workflow = @article.workflow
+      if (not workflow.locked?) or (workflow.locked? and workflow.locked_by != current_user)
         flash[:error] = 'You must lock an article before editing it.'
         redirect_to [:workflow, @article, :revisions] and return
       end

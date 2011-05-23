@@ -10,19 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110508152313) do
+ActiveRecord::Schema.define(:version => 20110522000915) do
 
   create_table "articles", :force => true do |t|
-    t.string   "status_message"
     t.integer  "headline_id"
     t.integer  "section_id"
     t.integer  "subsection_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "issue_id"
-    t.string   "name"
-    t.integer  "locked_by"
-    t.string   "titles"
     t.text     "body"
   end
 
@@ -133,6 +129,16 @@ ActiveRecord::Schema.define(:version => 20110508152313) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
+  end
+
+  create_table "workflow_articles", :force => true do |t|
+    t.integer  "article_id"
+    t.string   "status_message"
+    t.string   "name"
+    t.string   "proposed_titles"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "locked_by"
   end
 
   create_table "workflow_comments", :force => true do |t|

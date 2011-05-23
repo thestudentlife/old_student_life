@@ -18,7 +18,7 @@
   <div class="field">
 	  <%= f.label :title, "Title" %>
 	  <%= collection_select :web_published_article, :title,
-   	    @article.titles, :to_s, :to_s %>
+   	    @article.workflow.proposed_titles, :to_s, :to_s %>
 	</div>
 	<div class="field">
     <%= f.label :published_at %>

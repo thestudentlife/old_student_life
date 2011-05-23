@@ -1,6 +1,5 @@
 class Article < ActiveRecord::Base
   belongs_to :section
-  belongs_to :subsection
   has_and_belongs_to_many :authors
   has_many :revisions
   has_many :workflow_comments
@@ -8,8 +7,7 @@ class Article < ActiveRecord::Base
   has_many :images
   belongs_to :issue
   
-  serialize :titles, Array
-  
+  has_one :workflow, :class_name => "WorkflowArticle", :dependent => :destroy
   has_one :front_page_article, :dependent => :destroy
   has_one :web_published_article, :dependent => :destroy
   has_many :viewed_articles, :dependent => :destroy
@@ -17,12 +15,9 @@ class Article < ActiveRecord::Base
   has_many :reviews, :class_name => "WorkflowReview"
   has_many :review_slots, :through => :reviews
   
-  validates_presence_of :name
   validates_presence_of :section
   
   default_scope :order => 'created_at DESC'
-  
-  belongs_to :locked_by, :class_name => 'User', :foreign_key => 'locked_by'
   
   searchable do
     text :title do web_published_article.title if published_online? end
@@ -32,20 +27,13 @@ class Article < ActiveRecord::Base
     time :published_at do published_online_at if published_online? end
   end
   
-  def locked?
-    not locked_by.nil?
+  def workflow_with_guard
+    self.workflow_without_guard || WorkflowArticle.new(:article => self)
   end
-  
-  def lock(user)
-    self.locked_by = user
-  end
-  
-  def unlock
-    self.locked_by = nil
-  end
+  alias_method_chain :workflow, :guard
   
   def davslug
-    s = to_s.gsub('/', '-')
+    s = workflow.to_s.gsub('/', '-')
     "#{id} #{s}"
   end
   
@@ -111,16 +99,5 @@ class Article < ActiveRecord::Base
   
   def workflow_history
     (self.workflow_comments + self.workflow_updates).sort_by(&:created_at).reverse
-  end
-end
-
-# WebDAV really needs to be converted into an Engine
-
-Article.class_eval do
-  after_save do
-    Rails.cache.delete Workflow::Dav::Cache.lockfile_key(id)
-  end
-  before_destroy do
-    Rails.cache.delete Workflow::Dav::Cache.lockfile_key(id)
   end
 end

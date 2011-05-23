@@ -247,14 +247,15 @@ module Workflow
         response.status = 404
       end
       
-      propfind /\/\._/ do
+      propfind /\/\./ do
         throw(:halt, [404, "Not found\n"])
       end
     
       get article_lockfile_path_template do
-        @article = Article.find params[:article]
-        @incopy = InCopyArticle.for_article(@article)
-        if @article.locked? and @incopy.lockfile == params[:lock]
+        article = Article.find(params[:article])
+        @workflow = article.workflow
+        @incopy = InCopyArticle.for_article(article)
+        if @workflow.locked? and @incopy.lockfile == params[:lock]
           @incopy.lockfile_content || ''
         else
           response.status = 404
@@ -262,13 +263,14 @@ module Workflow
       end
       put article_lockfile_path_template do
         protected!
-        @article = Article.find params[:article]
-        @incopy = InCopyArticle.for_article(@article)
-        if @article.locked? and @incopy.lockfile != params[:lock]
+        article = Article.find(params[:article])
+        @workflow = article.workflow
+        @incopy = InCopyArticle.for_article(article)
+        if @workflow.locked? and @incopy.lockfile != params[:lock]
           return response.status = 423 # Locked
         else
-          @article.lock current_user
-          @article.save!
+          @workflow.lock current_user
+          @workflow.save!
           @incopy.lockfile = params[:lock]
           @incopy.lockfile_content = request.body.read
           @incopy.save!
@@ -284,12 +286,13 @@ module Workflow
       end
       propfind article_lockfile_path_template do
         Cache.cache(Cache.lockfile_key params[:article].to_i) do
-          @article = Article.find params[:article]
-          @incopy = InCopyArticle.for_article(@article)
-          if @article.locked? and @incopy.lockfile == params[:lock]
+          article = Article.find(params[:article])
+          @workflow = article.workflow
+          @incopy = InCopyArticle.for_article(article)
+          if @workflow.locked? and @incopy.lockfile == params[:lock]
             multistatus do |xml|
               dav_response(xml,
-                :href => article_lockfile_path(@article),
+                :href => article_lockfile_path(article),
                 :mime => 'application/x-idlk',
                 # Change this in article_path,
                 :size => @incopy.lockfile_content.size,
@@ -305,10 +308,11 @@ module Workflow
       delete article_lockfile_path_template do
         protected!
         
-        @article = Article.find params[:article]
-        @article.unlock
-        @article.save!
-        incopy = InCopyArticle.for_article(@article)
+        article = Article.find(params[:article])
+        @workflow = article.workflow
+        @workflow.unlock
+        @workflow.save!
+        incopy = InCopyArticle.for_article(article)
         incopy.lockfile = nil
         incopy.save!
         
@@ -316,7 +320,7 @@ module Workflow
       end
     
       get article_authors_path_template do
-        @article = Article.find params[:article]
+        @article = Article.find(params[:article])
         @article.authors.map(&:to_s).to_sentence
       end
       propfind article_authors_path_template do
@@ -337,7 +341,7 @@ module Workflow
         protected!
         # Allow if user has it locked
         @article = Article.find params[:article]
-        if @article.locked_by == current_user
+        if @article.workflow.locked_by == current_user
           @incopy = InCopyArticle.for_article(@article)
           rev = @incopy.parse(request.body.read)
           rev.author = current_user
@@ -377,8 +381,8 @@ module Workflow
       end
     
       get article_headline_path_template do
-        @article = Article.find params[:article]
-        @article.titles.map(&:to_s).join("\n")
+        @workflow = Article.find(params[:article]).workflow
+        @workflow.proposed_titles.map(&:to_s).join("\n")
       end
       propfind article_headline_path_template do
         @article = Article.find params[:article]
@@ -461,7 +465,7 @@ module Workflow
             :href => article_headline_path(@article),
             :mime => 'text/plain'
           )
-          if @article.locked? and not @incopy.lockfile.blank?
+          if @article.workflow.locked? and not @incopy.lockfile.blank?
             dav_response(xml,
               :href => article_lockfile_path(@article),
               :mime => 'application/x-idlk',
