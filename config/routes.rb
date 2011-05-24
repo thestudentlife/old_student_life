@@ -76,8 +76,7 @@ TslRails::Application.routes.draw do
         get 'body', :on => :member
       end
       resources :titles, :controller => "articles/titles"
-      resources :print_published_articles, :controller => 'articles/print_published_articles', :only => [:new, :create, :destroy]
-      resources :web_published_articles, :controller => 'articles/web_published_articles', :only => [:new, :create, :destroy]
+      resource :publish, :controller => 'articles/publish'
       
       resource :front_page, :controller => "articles/front_page", :only => [:new, :create]
     end

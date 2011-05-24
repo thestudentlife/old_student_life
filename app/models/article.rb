@@ -20,17 +20,50 @@ class Article < ActiveRecord::Base
   default_scope :order => 'created_at DESC'
   
   searchable do
-    text :title do web_published_article.title if published_online? end
+    text :title do title if published? end
     text :body
     integer :author_ids, :multiple => true
     integer :section_id
-    time :published_at do published_online_at if published_online? end
+    time :published_at do published__at if published? end
   end
+  
   
   def workflow_with_guard
     self.workflow_without_guard || WorkflowArticle.new(:article => self)
   end
   alias_method_chain :workflow, :guard
+  
+  def self.featured
+    joins('INNER JOIN front_page_articles ON (front_page_articles.article_id = articles.id)').published.order('front_page_articles.priority ASC')
+  end
+  
+  def self.published
+    where(:published => true).
+    where("published_at < ?", Time.now)
+  end
+  
+  def self.latest_most_viewed (count)
+    ViewedArticle.latest_most_viewed(count).map do |article_id|
+      published.find article_id
+    end
+  end
+  
+  def self.find_all_published_in_section (section) # shouldn't this be automatic?
+    published.
+    where(:section_id => section.id).
+    order('published_at DESC')
+  end
+  
+  def self.find_all_by_author (author) # shouldn't this be automatic?
+    published.
+    joins(:authors).
+    where(:authors => {:id => author.id })
+  end
+  
+  def slug
+    t = to_s.to_slug.gsub(/(^-)|(-$)/,'')
+    "#{id}-#{t}"
+  end
   
   def davslug
     s = workflow.to_s.gsub('/', '-')
@@ -45,14 +78,6 @@ class Article < ActiveRecord::Base
     reviews.to_a.find { |r| r.review_slot_id == slot.id }
   end
   
-  def published_online?
-    not web_published_article.nil?
-  end
-  
-  def published_online_at
-    web_published_article.published_at
-  end
-  
   def open_review_slots
     ReviewSlot.all - ReviewSlot.joins("INNER JOIN workflow_reviews ON (workflow_reviews.review_slot_id = review_slots.id AND workflow_reviews.article_id = #{id})")
   end
@@ -63,7 +88,7 @@ class Article < ActiveRecord::Base
   end
   
   def to_s
-    name
+    title.gsub(/"(.*?)"/) { "“#{$1}”" }
   end
   
   def latest_revision

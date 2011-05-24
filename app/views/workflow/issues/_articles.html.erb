@@ -36,12 +36,12 @@
   			</span>
   		</article>
   	<% end %>
-		<section class="publication-status <%= 'published' if article.published_online? %>">
+		<section class="publication-status <%= 'published' if article.published? %>">
 			<span class="publication-status-web">
-			  <%= article.published_online? ? 'Online' : 'No' %>
+			  <%= article.published? ? 'Online' : 'No' %>
 			</span>
-			<% if article.published_online? %>
-			  <span class="publication-date"><%= time_ago_in_words article.published_online_at %> ago</span>
+			<% if article.published? %>
+			  <span class="publication-date"><%= time_ago_in_words article.published_at %> ago</span>
 			<% end %>
 		</section>
 	</section>
