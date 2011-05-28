@@ -20,11 +20,12 @@ class Article < ActiveRecord::Base
   default_scope :order => 'created_at DESC'
   
   searchable do
-    text :title do title if published? end
+    text :title
     text :body
     integer :author_ids, :multiple => true
     integer :section_id
-    time :published_at do published__at if published? end
+    boolean :published
+    time :published_at
   end
   
   

@@ -32,4 +32,10 @@ class ApplicationController < ActionController::Base
       redirect_to(session[:return_to] || default)
       session[:return_to] = nil
     end
+    
+    def enforce_url(url)
+      if request.fullpath != url
+        redirect_to url, :status => :moved_permanently
+      end
+    end
 end

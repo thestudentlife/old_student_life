@@ -13,10 +13,7 @@ class ArticlesController < ApplicationController
   
   def article
     @article = Article.published.find_by_id! params[:id]
-    
-    if request.fullpath != view_context.article_path(@article)
-      redirect_to view_context.article_path(@article), :status => :moved_permanently
-    end
+    enforce_url view_context.article_path(@article)
     # This might fail. If it does, it shouldn't effect the render.
     # There's gotta be logging functionality around here somewhere..
     #ViewedArticle.new(:article => @article).save
@@ -24,29 +21,25 @@ class ArticlesController < ApplicationController
   
   def author
     @author = Author.find params[:author]
-    if request.fullpath != view_context.author_path(@author)
-      redirect_to view_context.author_path(@author), :status => :moved_permanently
-    end
+    enforce_url view_context.author_path(@author)
     
     @articles = Article.find_all_by_author(@author).order('published_at DESC')
   end
   
   def section
     @section = Section.find_by_url! params[:section]
-    
-    if request.fullpath != view_context.section_path(@section)
-      redirect_to view_context.section_path(@section), :status => :moved_permanently
-    end
+    enforce_url view_context.section_path(@section)
     
     @articles = Article.find_all_published_in_section(@section)
   end
   
   def search
     @search = unless params[:q].blank?
-      Article.search(:include => [:web_published_article]) do
+      Article.search do
         keywords params[:q]
-        without(:published_at, nil)
-      end.results.map &:web_published_article
+        with(:published, true)
+        with(:published_at).less_than Time.now
+      end.results
     else
       nil
     end
