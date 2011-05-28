@@ -9,7 +9,6 @@ class Workflow::IssuesController < WorkflowController
         includes(:reviews => [:author]).
         includes(:revisions).
         includes(:authors).
-        includes(:web_published_article).
         where(:section_id => section.id).
         sort_by { |a| a.workflow.name }
       end

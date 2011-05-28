@@ -4,7 +4,7 @@
 </header>
 
 <div id="content">
-<%= form_for [:workflow, @issue, @article] do |f| %>
+<%= form_for [:workflow, @issue, @article], :as => :article, :url => workflow_issue_articles_path(@issue) do |f| %>
 	<% if @article.errors.any? %>
 		<div id="errorExplanation">
 			<h2><%= pluralize(@article.errors.count, "error") %> prohibited this article from being saved:</h2>
