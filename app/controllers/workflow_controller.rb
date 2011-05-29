@@ -1,5 +1,5 @@
 class WorkflowController < ApplicationController
-  before_filter :require_user
+  before_filter :authenticate_user!
   responders :flash
   layout 'workflow'
   

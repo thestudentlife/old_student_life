@@ -1,6 +1,4 @@
 class Workflow::Articles::ImagesController < WorkflowController
-  
-  before_filter :require_user
   before_filter { @article = Article.find params[:article_id] }
 
   def new

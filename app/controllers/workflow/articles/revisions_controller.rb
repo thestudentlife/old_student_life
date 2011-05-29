@@ -1,7 +1,6 @@
 class Workflow::Articles::RevisionsController < WorkflowController
   inherit_resources
   belongs_to :article
-  before_filter :require_user
   
   def index
     show

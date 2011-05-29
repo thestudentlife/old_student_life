@@ -307,7 +307,7 @@
 			border-radius: 5px 5px 0 0;
 			padding: 9px;
 		}
-		.flash_warning p, .flash_error p {
+		.flash_warning p, .flash_error p, .flash_alert p {
 			background-color: red;
 		}
 		.flash_notice p {
@@ -414,7 +414,7 @@
 			<span id="user-info">
 				Logged in as <%= current_user %>.
 				<%= link_to "My account", edit_workflow_user_path(current_user) %> |
-				<%= link_to "Log out", workflow_logout_path %>
+				<%= link_to "Log out", destroy_user_session_path %>
 				<a href="/workflow/help" id="help">Help</a>
 			</span>
 		<nav>

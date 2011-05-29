@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110524043547) do
+ActiveRecord::Schema.define(:version => 20110528231825) do
 
   create_table "articles", :id => false, :force => true do |t|
     t.integer  "id",            :limit => 11, :null => false
@@ -124,14 +124,12 @@ ActiveRecord::Schema.define(:version => 20110524043547) do
   end
 
   create_table "users", :id => false, :force => true do |t|
-    t.integer  "id",                :limit => 11,                :null => false
-    t.string   "email",                                          :null => false
-    t.string   "crypted_password",                               :null => false
-    t.string   "password_salt",                                  :null => false
-    t.string   "persistence_token",                              :null => false
+    t.integer  "id",                 :limit => 11,                  :null => false
+    t.string   "email",                                             :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "is_admin",          :limit => 1,  :default => 0
+    t.integer  "is_admin",           :limit => 1,   :default => 0
+    t.string   "encrypted_password", :limit => 128, :default => "", :null => false
   end
 
   create_table "viewed_articles", :id => false, :force => true do |t|

@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   class NotAuthorized < Exception; end
   
-  acts_as_authentic
+  devise :database_authenticatable, :validatable
   
   has_one :author
   

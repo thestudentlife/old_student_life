@@ -6,8 +6,8 @@
   &nbsp;
 <% end %>
 
-<%= form_for :user_session, :url => workflow_login_path do |f| %>
-  <% if @user_session.errors.any? %>
+<%= form_for :user, :url => user_session_path do |f| %>
+  <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user_session.errors.count, "error") %> prohibited login:</h2>
 

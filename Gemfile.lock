@@ -4,6 +4,16 @@ GIT
   specs:
     htmldiff (0.0.1)
 
+GIT
+  remote: git://github.com/plataformatec/devise.git
+  revision: 9f763d082a51d5b0c50c884b044a8900faada8bf
+  tag: v1.3.4
+  specs:
+    devise (1.3.4)
+      bcrypt-ruby (~> 2.1.2)
+      orm_adapter (~> 0.0.3)
+      warden (~> 1.0.3)
+
 PATH
   remote: lib/workflow-conductor
   specs:
@@ -71,6 +81,7 @@ GEM
     arel (2.0.9)
     authlogic (2.1.6)
       activesupport
+    bcrypt-ruby (2.1.4)
     builder (2.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -106,6 +117,7 @@ GEM
     multipart-post (1.1.0)
     mysql2 (0.2.7)
     nokogiri (1.4.4)
+    orm_adapter (0.0.5)
     paperclip (2.3.8)
       activerecord
       activesupport
@@ -162,6 +174,8 @@ GEM
     unicorn (3.5.0)
       kgio (~> 2.3)
       rack
+    warden (1.0.4)
+      rack (>= 1.0)
     yaml_db (0.2.0)
 
 PLATFORMS
@@ -169,6 +183,7 @@ PLATFORMS
 
 DEPENDENCIES
   authlogic
+  devise!
   factory_girl_rails
   high_voltage
   htmldiff!
