@@ -22,7 +22,6 @@ gem 'rails', '3.0.5'
 #gem 'arel', :git => 'https://github.com/rails/arel.git', :ref => 'e8563'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'unicorn'
-gem "authlogic"
 gem "paperclip", "~> 2.3"
 gem "htmldiff", :git => "git://github.com/mikemaltese/htmldiff.git"
 gem "high_voltage"

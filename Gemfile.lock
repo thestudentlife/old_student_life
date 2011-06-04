@@ -94,8 +94,6 @@ GEM
     activesupport (3.0.5)
     addressable (2.2.4)
     arel (2.0.9)
-    authlogic (2.1.6)
-      activesupport
     bcrypt-ruby (2.1.4)
     builder (2.1.2)
     erubis (2.6.6)
@@ -197,7 +195,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  authlogic
   devise!
   factory_girl_rails
   high_voltage
