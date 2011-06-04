@@ -28,6 +28,5 @@ gem "htmldiff", :git => "git://github.com/mikemaltese/htmldiff.git"
 gem "high_voltage"
 gem "responders"
 gem "inherited_resources", '~> 1.2.1'
-gem "factory_girl_rails"
 gem 'yaml_db'
 gem 'memcache-client'
