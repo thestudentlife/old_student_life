@@ -10,7 +10,11 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.summary = ""
 
-  s.add_dependency('activerecord')
-  s.add_dependency('rails')
+  {
+    'activerecord' => nil,
+    'rails' => nil,
+    'paperclip' => '~>2.3'
+  }.
+  map &s.method(:add_dependency)
 end
 

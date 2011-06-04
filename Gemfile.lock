@@ -19,6 +19,7 @@ PATH
   specs:
     sl_data (0.0.0)
       activerecord
+      paperclip (~> 2.3)
       rails
 
 PATH

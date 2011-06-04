@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rack', '~> 1.2.2' # Security fix
+gem 'rails', '3.0.5'
 
 gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :tag => 'v1.3.4'
 gem 'sl_data', :path => 'lib/sl_data'
@@ -21,9 +22,8 @@ group :production do
 end
 
 # workflow
-gem 'rails', '3.0.5'
+gem 'paperclip', '~> 2.3'
 gem 'unicorn'
-gem "paperclip", "~> 2.3"
 gem "htmldiff", :git => "git://github.com/mikemaltese/htmldiff.git"
 gem "high_voltage"
 gem "responders"
