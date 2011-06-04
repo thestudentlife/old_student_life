@@ -13,9 +13,15 @@ gem 'workflow-twitter', :require => 'workflow/twitter', :path => 'lib/workflow-t
 
 gem 'sunspot_rails', '~> 1.2.1'
 
+group :development do
+	gem 'sqlite3-ruby', :require => 'sqlite3'
+end
+group :production do
+	gem 'mysql2'
+end
+
 # workflow
 gem 'rails', '3.0.5'
-gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'unicorn'
 gem "paperclip", "~> 2.3"
 gem "htmldiff", :git => "git://github.com/mikemaltese/htmldiff.git"
@@ -24,5 +30,4 @@ gem "responders"
 gem "inherited_resources", '~> 1.2.1'
 gem "factory_girl_rails"
 gem 'yaml_db'
-gem 'mysql2'
 gem 'memcache-client'
