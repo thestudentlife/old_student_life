@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
     'sl_data',
     'sl_markup',
     'activerecord',
+    'htmldiff',
     'htmlentities',
     'rails',
   ].

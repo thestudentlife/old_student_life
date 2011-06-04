@@ -42,6 +42,7 @@ PATH
   specs:
     sl_workflow_data (0)
       activerecord
+      htmldiff
       htmlentities
       rails
       sl_data
