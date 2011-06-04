@@ -207,7 +207,6 @@ DEPENDENCIES
   rack (~> 1.2.2)
   rails (= 3.0.5)
   responders
-  sinatra
   sl_data!
   sl_markup!
   sl_webdav!

@@ -4,7 +4,6 @@ gem 'rack', '~> 1.2.2' # Security fix
 
 gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :tag => 'v1.3.4'
 gem 'htmlentities'
-gem 'sinatra'
 gem 'sl_data', :path => 'lib/sl_data'
 gem 'sl_markup', :path => 'lib/sl_markup'
 gem 'sl_webdav', :path => 'lib/sl_webdav'
