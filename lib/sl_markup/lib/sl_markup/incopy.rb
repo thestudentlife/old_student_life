@@ -1,7 +1,7 @@
 require 'nokogiri'
 require 'active_support/core_ext/object/blank'
 
-module Workflow
+module Markup
 module InCopy
   
   def self.extract_headers (incopy)
@@ -178,4 +178,4 @@ module InCopy
   end
   
 end # module InCopy
-end # module Workflow
+end # module Markup

@@ -22,12 +22,19 @@ PATH
       rails
 
 PATH
+  remote: lib/sl_markup
+  specs:
+    sl_markup (0)
+      nokogiri
+
+PATH
   remote: lib/sl_workflow_data
   specs:
-    sl_workflow_data (0.0.0)
+    sl_workflow_data (0)
       activerecord
       rails
       sl_data
+      sl_markup
 
 PATH
   remote: lib/workflow-conductor
@@ -38,23 +45,16 @@ PATH
 PATH
   remote: lib/workflow-dav
   specs:
-    workflow-dav (0.1.0)
+    workflow-dav (0)
       activesupport
-      builder
       rack
       sinatra
-      workflow-incopy
+      sl_workflow_data
 
 PATH
   remote: lib/workflow-forms
   specs:
     workflow-forms (0.0.0)
-
-PATH
-  remote: lib/workflow-incopy
-  specs:
-    workflow-incopy (0.1.0)
-      nokogiri
 
 PATH
   remote: lib/workflow-twitter
@@ -212,6 +212,7 @@ DEPENDENCIES
   responders
   sinatra
   sl_data!
+  sl_markup!
   sl_workflow_data!
   sqlite3-ruby
   sunspot_rails (~> 1.2.1)
@@ -219,6 +220,5 @@ DEPENDENCIES
   workflow-conductor!
   workflow-dav!
   workflow-forms!
-  workflow-incopy!
   workflow-twitter!
   yaml_db

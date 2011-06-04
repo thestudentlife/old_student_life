@@ -1,21 +1,17 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = "workflow-dav"
+  s.name = "sl_markup"
   s.version = "0"
 
   s.authors = ["Michael Maltese"]
   s.email = "mike@mikemaltese.com"
-  s.files = ["lib/**/*"]
+  s.files = Dir["lib/**/*"]
   s.require_paths = ["lib"]
   s.summary = ""
-
-  [
-    'activesupport',
-    'rack',
-    'sinatra',
-    'sl_workflow_data'
-  ].
+  
+  ['nokogiri'].
   map &s.method(:add_dependency)
+
 end
 

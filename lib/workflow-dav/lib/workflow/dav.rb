@@ -1,5 +1,3 @@
-require 'workflow/incopy'
-
 require 'active_record/errors'
 require 'active_support/core_ext/string/inflections'
 require 'builder'

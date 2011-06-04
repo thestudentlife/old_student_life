@@ -7,11 +7,11 @@ gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :tag => 'v1.3
 gem 'htmlentities'
 gem 'sinatra'
 gem 'sl_data', :path => 'lib/sl_data'
+gem 'sl_markup', :path => 'lib/sl_markup'
 gem 'sl_workflow_data', :path => 'lib/sl_workflow_data'
 gem 'workflow-conductor', :require => 'workflow/conductor', :path => 'lib/workflow-conductor'
 gem 'workflow-dav', :require => 'workflow/dav', :path => 'lib/workflow-dav'
 gem 'workflow-forms', :require => 'workflow/forms', :path => 'lib/workflow-forms'
-gem 'workflow-incopy', :require => 'workflow/incopy', :path => 'lib/workflow-incopy'
 gem 'workflow-twitter', :require => 'workflow/twitter', :path => 'lib/workflow-twitter'
 
 gem 'sunspot_rails', '~> 1.2.1'
