@@ -112,7 +112,6 @@ GEM
     has_scope (0.5.0)
     hashie (1.0.0)
     high_voltage (0.9.3)
-    htmlentities (4.3.0)
     i18n (0.5.0)
     inherited_resources (1.2.1)
       has_scope (~> 0.5.0)
@@ -199,7 +198,6 @@ DEPENDENCIES
   factory_girl_rails
   high_voltage
   htmldiff!
-  htmlentities
   inherited_resources (~> 1.2.1)
   memcache-client
   mysql2
