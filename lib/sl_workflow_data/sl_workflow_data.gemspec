@@ -14,7 +14,8 @@ Gem::Specification.new do |s|
     'sl_data',
     'sl_markup',
     'activerecord',
-    'rails'
+    'htmlentities',
+    'rails',
   ].
   map &s.method(:add_dependency)
 end
