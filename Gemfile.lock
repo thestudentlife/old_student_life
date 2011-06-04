@@ -15,6 +15,13 @@ GIT
       warden (~> 1.0.3)
 
 PATH
+  remote: lib/sl_data
+  specs:
+    sl_data (0.0.0)
+      activerecord
+      rails
+
+PATH
   remote: lib/workflow-conductor
   specs:
     workflow-conductor (0.0.0)
@@ -196,6 +203,7 @@ DEPENDENCIES
   rails (= 3.0.5)
   responders
   sinatra
+  sl_data!
   sqlite3-ruby
   sunspot_rails (~> 1.2.1)
   unicorn

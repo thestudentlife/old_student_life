@@ -6,6 +6,7 @@ gem 'rack', '~> 1.2.2' # Security fix
 gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :tag => 'v1.3.4'
 gem 'htmlentities'
 gem 'sinatra'
+gem 'sl_data', :path => 'lib/sl_data'
 gem 'workflow-conductor', :require => 'workflow/conductor', :path => 'lib/workflow-conductor'
 gem 'workflow-dav', :require => 'workflow/dav', :path => 'lib/workflow-dav'
 gem 'workflow-forms', :require => 'workflow/forms', :path => 'lib/workflow-forms'
