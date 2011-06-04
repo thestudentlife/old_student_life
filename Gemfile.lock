@@ -22,6 +22,14 @@ PATH
       rails
 
 PATH
+  remote: lib/sl_workflow_data
+  specs:
+    sl_workflow_data (0.0.0)
+      activerecord
+      rails
+      sl_data
+
+PATH
   remote: lib/workflow-conductor
   specs:
     workflow-conductor (0.0.0)
@@ -204,6 +212,7 @@ DEPENDENCIES
   responders
   sinatra
   sl_data!
+  sl_workflow_data!
   sqlite3-ruby
   sunspot_rails (~> 1.2.1)
   unicorn
