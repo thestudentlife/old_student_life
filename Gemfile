@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
 
 gem 'rack', '~> 1.2.2' # Security fix
-# gem 'rack', :git => 'https://github.com/rack/rack.git', :ref => 'ee1285'
 
 gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :tag => 'v1.3.4'
 gem 'htmlentities'
@@ -18,8 +17,6 @@ gem 'sunspot_rails', '~> 1.2.1'
 
 # workflow
 gem 'rails', '3.0.5'
-#gem 'rails', :git => 'https://github.com/rails/rails.git', :ref => 'a000f'
-#gem 'arel', :git => 'https://github.com/rails/arel.git', :ref => 'e8563'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'unicorn'
 gem "paperclip", "~> 2.3"
