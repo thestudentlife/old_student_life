@@ -32,8 +32,8 @@ class String
   end
 end
 
-module Workflow
-  module Dav
+module SL
+  module WebDav
     module Cache
       def self.cache(key, &block)
         begin

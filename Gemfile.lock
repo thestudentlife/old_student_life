@@ -28,6 +28,15 @@ PATH
       nokogiri
 
 PATH
+  remote: lib/sl_webdav
+  specs:
+    sl_webdav (0)
+      activesupport
+      rack
+      sinatra
+      sl_workflow_data
+
+PATH
   remote: lib/sl_workflow_data
   specs:
     sl_workflow_data (0)
@@ -41,15 +50,6 @@ PATH
   specs:
     workflow-conductor (0.0.0)
       rails
-
-PATH
-  remote: lib/workflow-dav
-  specs:
-    workflow-dav (0)
-      activesupport
-      rack
-      sinatra
-      sl_workflow_data
 
 PATH
   remote: lib/workflow-forms
@@ -213,12 +213,12 @@ DEPENDENCIES
   sinatra
   sl_data!
   sl_markup!
+  sl_webdav!
   sl_workflow_data!
   sqlite3-ruby
   sunspot_rails (~> 1.2.1)
   unicorn
   workflow-conductor!
-  workflow-dav!
   workflow-forms!
   workflow-twitter!
   yaml_db

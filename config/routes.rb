@@ -1,8 +1,6 @@
-require 'workflow/dav'
-
 TslRails::Application.routes.draw do
 
-  mount Workflow::Dav::App => '/webdav'
+  mount SL::WebDav::App => '/webdav'
 
   devise_for :users
 

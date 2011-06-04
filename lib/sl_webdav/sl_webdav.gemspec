@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = "workflow-dav"
+  s.name = "sl_webdav"
   s.version = "0"
 
   s.authors = ["Michael Maltese"]
