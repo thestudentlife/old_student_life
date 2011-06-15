@@ -21,9 +21,9 @@ end
 
 WorkflowArticle.class_eval do
   after_save do
-    Rails.cache.delete Workflow::Dav::Cache.lockfile_key(id)
+    Rails.cache.delete SL::WebDav::Cache.lockfile_key(id)
   end
   before_destroy do
-    Rails.cache.delete Workflow::Dav::Cache.lockfile_key(id)
+    Rails.cache.delete SL::WebDav::Cache.lockfile_key(id)
   end
 end
