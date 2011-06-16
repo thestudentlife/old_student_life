@@ -5,6 +5,6 @@ class FrontPageArticle < ActiveRecord::Base
   default_scope :order => 'priority ASC'
   
   def to_s
-    WebPublishedArticle.published.find_by_article_id(article.id).title.to_s
+    article.title.to_s
   end
 end

@@ -120,7 +120,7 @@ class Article < ActiveRecord::Base
   end
   
   def full_section_name
-    subsection ? subsection.full_name : section.name
+    section.name
   end
   
   def workflow_history
