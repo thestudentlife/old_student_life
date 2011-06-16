@@ -12,10 +12,19 @@ class Conductor
   def transact(&b)
     begin
       ActiveRecord::Base.transaction(&b)
-    rescue
-      false
+    rescue => e
+      errors.add_to_base e.to_s
+      return false
     end
     true
+  end
+  
+  def persisted?
+    false
+  end
+  
+  def to_key
+    nil
   end
   
   def self.model_name

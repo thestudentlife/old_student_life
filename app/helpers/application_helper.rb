@@ -1,4 +1,37 @@
+module PathHelpers
+  def wiki_path
+    '/wiki'
+  end
+  
+  def article_path(article)
+    File.join articles_path,
+      article.published_at.year.to_s,
+      article.published_at.month.to_s,
+      article.published_at.day.to_s,
+      article.section.url,
+      article.slug
+  end
+  
+  def authors_path
+    "/authors"
+  end
+  
+  def author_path(author)
+    File.join authors_path, author.slug
+  end
+  
+  def section_path(section)
+    File.join articles_path, section.url
+  end
+  
+  def workflow_article_headline_path(article)
+    workflow_article_path(article) + "/headline"
+  end
+end
+
 module ApplicationHelper
+  include PathHelpers
+  
   def li_tag(text, options={})
     content_tag :li, text, :class => options[:class]
   end

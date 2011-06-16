@@ -3,7 +3,7 @@
 <article class="article">
 	<div class="top">
 			<header>
-				<h1><%= link_to article, workflow_article_path(article) %></h1>
+				<h1><%= link_to article.workflow, workflow_article_path(article) %></h1>
 			</header>
 
 			<section class="article-stats">
@@ -15,11 +15,11 @@
 				</span>
 			</section>
 			<section class="article-messages">
-			  <% if article.status_message and not article.status_message.blank? %>
-  				<span class="status-message"><%= article.status_message %></span>
+			  <% if article.workflow.status_message and not article.workflow.status_message.blank? %>
+  				<span class="status-message"><%= article.workflow.status_message %></span>
 				<% end %>
-        <% if article.locked? %>
-				  <span class="lock-status"><%= article.locked_by %></span>
+        <% if article.workflow.locked? %>
+				  <span class="lock-status"><%= article.workflow.locked_by %></span>
 				<% end %>
 			</section>
 	</div>
@@ -36,12 +36,12 @@
   			</span>
   		</article>
   	<% end %>
-		<section class="publication-status <%= 'published' if article.published_online? %>">
+		<section class="publication-status <%= 'published' if article.published? %>">
 			<span class="publication-status-web">
-			  <%= article.published_online? ? 'Online' : 'No' %>
+			  <%= article.published? ? 'Online' : 'No' %>
 			</span>
-			<% if article.published_online? %>
-			  <span class="publication-date"><%= time_ago_in_words article.published_online_at %> ago</span>
+			<% if article.published? %>
+			  <span class="publication-date"><%= time_ago_in_words article.published_at %> ago</span>
 			<% end %>
 		</section>
 	</section>

@@ -12,30 +12,13 @@
         <p style="margin-top: 0; text-align: center; line-height:18px; padding-top: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 0px">P<%= section.priority %></p>
       </div>
       <div class="mid">
-      <header>
+      <header class="mid">
         <h1 style="line-height: 1em; margin: 0; display: inline;"><%= section %></h1>
         —
         <h1 style="margin: 0; display: inline">/articles/<%= section.url %></h1>
         <span style="color: #666; margin-top: 0;">
         </span>
       </header>
-      <p style="color: #666;">
-        Subsections:
-        <%= link_to 'Add subsection', new_workflow_section_subsection_path(section) %>
-      </p>
-      <ul>
-        <% section.subsections.each do |subsection| %>
-          <li style="line-height: 1.5em">
-            P<%= subsection.priority %>
-            <span class="change"><%= subsection %></span>
-            —
-            <span class="change">/articles/<%= section.url %>/<%= subsection.url %></span>
-            <%= link_to 'Edit', edit_workflow_section_subsection_path(section, subsection) %>
-            <%= link_to 'Remove', workflow_section_subsection_path(section, subsection),
-              :confirm => 'Are you sure?', :method => :delete %>
-          </li>
-        <% end %>
-      </ul>
       </div>
       <div class="right">
         <%= link_to 'Edit', edit_workflow_section_path(section), :class => 'button' %>

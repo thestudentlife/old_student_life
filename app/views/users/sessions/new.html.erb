@@ -1,0 +1,25 @@
+<% content_for :header do %>
+  <h1>Login</h1>
+<% end %>
+
+<% content_for :side do %>
+  &nbsp;
+<% end %>
+
+<p><strong>Notice:</strong> All passwords have been reset after moving to a new (and better!) authentication system. If you need access, shoot me an email at <a href="mailto:michael.maltese@pomona.edu">michael.maltese@pomona.edu</a>. Thanks for your patience!</p>
+
+<%= form_for :user, :url => user_session_path do |f| %>
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit "Login" %>
+  </div>
+<% end %>

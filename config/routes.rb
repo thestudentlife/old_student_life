@@ -1,14 +1,8 @@
-require 'workflow/dav'
-
 TslRails::Application.routes.draw do
 
-  mount Workflow::Dav::App => '/webdav'
+  mount SL::WebDav::App => '/webdav'
 
-  namespace :workflow do
-    match '/login' => 'user_sessions#new', :via => :get, :as => "login"
-    match '/login' => 'user_sessions#create', :via => :post, :as => "login"
-    match '/logout' => 'user_sessions#destroy', :as => "logout"
-  end
+  devise_for :users
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -24,47 +18,12 @@ TslRails::Application.routes.draw do
   match '/articles/:year/:month/:day/:section/:id' => 'articles#article',
     :year => /\d+/, :month => /\d+/, :day => /\d+/, :id => /\d.*/
   match '/articles/:section/:id' => "articles#article", :id => /\d.*/
-  match '/articles/:section/:subsection/:id' => "articles#article"
-  match '/articles/:section/:subsection' => "articles#subsection", :subsection => /\w.*/
   match '/articles/:section' => "articles#section"
   match '/authors/:author' => "articles#author"
   match '/blogs' => "blogs#index"
   match '/search' => "articles#search", :as => 'search'
   
   resources :pages
-  
-  module WorkflowHelper
-    def wiki_path
-      '/wiki'
-    end
-  end
-  
-  module ArticlesHelper
-    def article_path(article)
-      File.join articles_path,
-        article.published_at.year.to_s,
-        article.published_at.month.to_s,
-        article.published_at.day.to_s,
-        article.section.url,
-        article.slug
-    end
-    
-    def authors_path
-      "/authors"
-    end
-    
-    def author_path(author)
-      File.join authors_path, author.slug
-    end
-    
-    def section_path(section)
-      File.join articles_path, section.url
-    end
-    
-    def subsection_path(subsection)
-      File.join section_path(subsection.section), subsection.url
-    end
-  end
   
   match 'workflow/' => "workflow#index"
   namespace :workflow do
@@ -82,8 +41,7 @@ TslRails::Application.routes.draw do
         get 'body', :on => :member
       end
       resources :titles, :controller => "articles/titles"
-      resources :print_published_articles, :controller => 'articles/print_published_articles', :only => [:new, :create, :destroy]
-      resources :web_published_articles, :controller => 'articles/web_published_articles', :only => [:new, :create, :destroy]
+      resource :publish, :controller => 'articles/publish'
       
       resource :front_page, :controller => "articles/front_page", :only => [:new, :create]
     end
@@ -97,22 +55,16 @@ TslRails::Application.routes.draw do
       resources :editors, :controller => "sections/editors"
       resources :subsections, :controller => "sections/subsections"
     end
-    resources :users, :except => [:create]
+    resources :users, :except => [:create] do
+      collection do
+        post 'new' => "users#create"
+      end
+      member do
+        post 'reset' => "users#reset"
+      end
+    end
     match "users/new" => "users#create", :via => :post
-    match "users/:id/reset" => "users#reset", :via => :post
     resources :statuses, :controller => "workflow_statuses"
-  end
-  
-  module ArticlesHelper
-    def workflow_article_headline_path(article)
-      workflow_article_path(article) + "/headline"
-    end
-  end
-  
-  module UsersHelper
-    def reset_workflow_user_path(user)
-      workflow_user_path(user) + "/reset"
-    end
   end
 
   # Sample of named route:

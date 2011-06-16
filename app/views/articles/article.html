@@ -1,3 +1,7 @@
+<%= content_for :head do %>
+	<title><%= @article %> – The Student Life</title>
+<% end %>
+
 <article id="aColumn" class="fullArticle">
 	<header>
 		<h1><%= @article %></h1>
@@ -30,7 +34,7 @@
 			<% end %>
 
 		    // The following are highly recommended additional parameters. Remove the slashes in front to use.
-		    var disqus_identifier = 'aardvark_<%= @article.article_id %>';
+		    var disqus_identifier = 'aardvark_<%= @article.id %>';
 		    //var disqus_url = 'http://example.com/permalink-to-page.html';
 
 		    /* * * DON'T EDIT BELOW THIS LINE * * */

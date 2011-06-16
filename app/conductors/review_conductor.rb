@@ -1,6 +1,8 @@
 class ReviewConductor < Workflow::Conductor
   def initialize(article, opts={})
     @article = article
+    
+    @workflow = @article.workflow
     @review = WorkflowReview.new(
       :author_id => opts[:review_author_id],
       :comment => opts[:review_comment],
@@ -8,9 +10,9 @@ class ReviewConductor < Workflow::Conductor
       :article_id => @article.id
     )
     @author = Author.find opts[:author_id] if opts[:author_id]
-    @title = opts[:title_text].try(:strip) || ''
+    @title = opts[:title_text].try(:strip)
     @author.articles << article if @author
-    @article.titles << @title
+    @workflow.proposed_titles << @title if @title
   end
   
   def title_text
@@ -33,7 +35,7 @@ class ReviewConductor < Workflow::Conductor
     valid? ? transact do
       @review.save!
       @author.save! if needs_author?
-      @article.save!
+      @workflow.save!
     end : false
   end
   
@@ -47,7 +49,7 @@ class ReviewConductor < Workflow::Conductor
   
   validate do
     add_errors(@review)
-    add_errors(@article)
+    add_errors(@workflow)
     if needs_author?
       if @author.nil?
         errors.add :author, 'needs to be added to this article'

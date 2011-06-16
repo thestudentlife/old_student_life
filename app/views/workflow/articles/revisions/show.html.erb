@@ -2,12 +2,12 @@
 
 <article class="article">
 <header>
-  <h1 style="display: inline"><%= @article %></h1>
+  <h1 style="display: inline"><%= @article.workflow %></h1>
   <%= link_to 'Back to issue', workflow_issue_path(@article.issue) %>
   <div id="status_message_show">
       <strong>Status:</strong>
-      <% if @article.status_message and not @article.status_message.empty? %>
-        <span class="status_message"><%= @article.status_message %></span>
+      <% if @article.workflow.status_message and not @article.workflow.status_message.empty? %>
+        <span class="status_message"><%= @article.workflow.status_message %></span>
       <% else %>
         None
       <% end %>
@@ -16,7 +16,8 @@
       </span>
   </div>
   <div id="status_message_edit" style="display: none">
-    <%= form_for [:workflow, @article],
+    <%= form_for [:workflow, @article, @article.workflow],
+        :url => [:workflow, @article],
         :html => {:style => 'display: inline'} do |f| %>
     		<%= f.label :status_message, "Status:", :style => 'float:none' %>
     		<%= f.text_field :status_message %>
@@ -40,8 +41,8 @@
         <%= link_to 'Article settings', edit_workflow_article_path(@article) %>
         <div class="lock-status">
           <strong>Locked by:</strong>
-          <% if @article.locked? %>
-            <span class="locked"><%= @article.locked_by %></span>
+          <% if @article.workflow.locked? %>
+            <span class="locked"><%= @article.workflow.locked_by %></span>
             (<%= link_to 'Unlock', unlock_workflow_article_path(@article),
               :style => 'display: inline-block; line-height: 2em',
               :method => 'delete' %>)
@@ -76,7 +77,7 @@
   </article>
 
   <div class="side">
-    <% if not @article.front_page_article and @article.published_online? and current_user.can_edit_front_page? %>
+    <% if not @article.front_page_article and @article.published? and current_user.can_edit_front_page? %>
       <%= link_to "Add to front page", new_workflow_article_front_page_path(@article) %>
     <% end %>
     <section class="reviews">
@@ -100,19 +101,19 @@
         </article>
       <% end %>
     </section>
-  	<section class="publication-status <%= 'published' if @article.published_online? %>">
+  	<section class="publication-status <%= 'published' if @article.published? %>">
 			<span class="publication-status-web">
-			  <%= @article.published_online? ? 'Online' : 'No' %>
+			  <%= @article.published? ? 'Online' : 'No' %>
 			</span>
-			<% if @article.published_online? %>
-			  <span class="title"><%= @article.web_published_article.title %></span>
-			  <span class="publication-date"><%= time_ago_in_words @article.published_online_at %> ago</span>
+			<% if @article.published? %>
+			  <span class="title"><%= @article.title %></span>
+			  <span class="publication-date"><%= time_ago_in_words @article.published_at %> ago</span>
 			<% end %>
 			<% if current_user.can_publish_article? @article %>
-        <% if not @article.published_online? %>
-          <%= link_to 'Publish online', new_workflow_article_web_published_article_path(@article) %>
+        <% if not @article.published? %>
+          <%= link_to 'Publish online', workflow_article_publish_path(@article) %>
         <% else %>
-          <%= link_to "Unpublish", workflow_article_web_published_article_path(@article, @article.web_published_article),
+          <%= link_to "Unpublish", workflow_article_publish_path(@article),
             :method => :delete, :confirm => "Are you sure you?" %>
         <% end %>
       <% end %>
@@ -139,7 +140,7 @@
         <h1>Proposed Titles</h1>
         <%= link_to "Add title", new_workflow_article_title_path(@article) %>
       <ul>
-      	<% @article.titles.each do |title| %>
+      	<% @article.workflow.proposed_titles.each do |title| %>
       		<li>
       		  <span><%= title %></span>
     		    <%#= <%= link_to 'Remove',

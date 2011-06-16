@@ -1,7 +1,6 @@
 class Workflow::UsersController < WorkflowController
   respond_to :html
   
-  before_filter :require_user
   before_filter(:except => [:edit, :update]) {current_user.can_edit_users!}
   
   def index
