@@ -29,3 +29,4 @@ gem "factory_girl_rails"
 gem 'yaml_db'
 gem 'mysql2'
 gem 'memcache-client'
+gem 'pg'
