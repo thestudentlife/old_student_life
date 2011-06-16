@@ -6,7 +6,7 @@ class CreateWorkflowArticles < ActiveRecord::Migration
       t.string :status_message
       t.string :name
       t.belongs_to :locked_by
-      t.string :proposed_titles
+      t.text :proposed_titles
       
 
       t.timestamps

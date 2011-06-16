@@ -12,14 +12,13 @@
 
 ActiveRecord::Schema.define(:version => 20110528231825) do
 
-  create_table "articles", :id => false, :force => true do |t|
-    t.integer  "id",            :limit => 11, :null => false
-    t.integer  "headline_id",   :limit => 11
-    t.integer  "section_id",    :limit => 11
-    t.integer  "subsection_id", :limit => 11
+  create_table "articles", :force => true do |t|
+    t.integer  "headline_id"
+    t.integer  "section_id"
+    t.integer  "subsection_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "issue_id",      :limit => 11
+    t.integer  "issue_id"
     t.text     "body"
     t.boolean  "published"
     t.datetime "published_at"
@@ -27,48 +26,43 @@ ActiveRecord::Schema.define(:version => 20110528231825) do
   end
 
   create_table "articles_authors", :id => false, :force => true do |t|
-    t.integer "article_id", :limit => 11, :null => false
-    t.integer "author_id",  :limit => 11, :null => false
+    t.integer "article_id", :null => false
+    t.integer "author_id",  :null => false
   end
 
-  create_table "authors", :id => false, :force => true do |t|
-    t.integer "id",      :limit => 11, :null => false
-    t.integer "user_id", :limit => 11
+  create_table "authors", :force => true do |t|
+    t.integer "user_id"
     t.string  "name"
   end
 
-  create_table "forms", :id => false, :force => true do |t|
-    t.integer  "id",         :limit => 11, :null => false
+  create_table "forms", :force => true do |t|
     t.string   "name"
     t.string   "definition"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "front_page_articles", :id => false, :force => true do |t|
-    t.integer  "id",         :limit => 11, :null => false
-    t.integer  "article_id", :limit => 11, :null => false
-    t.integer  "priority",   :limit => 11
+  create_table "front_page_articles", :force => true do |t|
+    t.integer  "article_id", :null => false
+    t.integer  "priority"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "images", :id => false, :force => true do |t|
-    t.integer  "id",                 :limit => 11,                :null => false
-    t.integer  "article_id",         :limit => 11,                :null => false
-    t.integer  "published_online",   :limit => 1,  :default => 0
-    t.integer  "published_in_print", :limit => 1,  :default => 0
+  create_table "images", :force => true do |t|
+    t.integer  "article_id",                            :null => false
+    t.boolean  "published_online",   :default => false
+    t.boolean  "published_in_print", :default => false
     t.string   "caption"
     t.string   "credit"
     t.string   "file_file_name"
     t.string   "file_content_type"
-    t.integer  "file_file_size",     :limit => 11
+    t.integer  "file_file_size"
     t.datetime "file_updated_at"
   end
 
-  create_table "in_copy_articles", :id => false, :force => true do |t|
-    t.integer  "id",               :limit => 11, :null => false
-    t.integer  "article_id",       :limit => 11
+  create_table "in_copy_articles", :force => true do |t|
+    t.integer  "article_id"
     t.string   "lockfile"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -76,65 +70,57 @@ ActiveRecord::Schema.define(:version => 20110528231825) do
     t.text     "header"
   end
 
-  create_table "issues", :id => false, :force => true do |t|
-    t.integer  "id",         :limit => 11, :null => false
+  create_table "issues", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "review_slots", :id => false, :force => true do |t|
-    t.integer  "id",             :limit => 11, :null => false
+  create_table "review_slots", :force => true do |t|
     t.string   "name"
-    t.integer  "requires_admin", :limit => 1
+    t.boolean  "requires_admin"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "revisions", :id => false, :force => true do |t|
-    t.integer  "id",         :limit => 11, :null => false
-    t.integer  "article_id", :limit => 11, :null => false
-    t.integer  "author_id",  :limit => 11, :null => false
+  create_table "revisions", :force => true do |t|
+    t.integer  "article_id", :null => false
+    t.integer  "author_id",  :null => false
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "sections", :id => false, :force => true do |t|
-    t.integer  "id",         :limit => 11, :null => false
-    t.string   "name",                     :null => false
-    t.integer  "priority",   :limit => 11, :null => false
+  create_table "sections", :force => true do |t|
+    t.string   "name",       :null => false
+    t.integer  "priority",   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "url"
   end
 
-  create_table "submissions", :id => false, :force => true do |t|
-    t.integer  "id",         :limit => 11, :null => false
-    t.integer  "form_id",    :limit => 11
+  create_table "submissions", :force => true do |t|
+    t.integer  "form_id"
     t.string   "data"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "user_sessions", :id => false, :force => true do |t|
-    t.integer  "id",         :limit => 11, :null => false
+  create_table "user_sessions", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "users", :id => false, :force => true do |t|
-    t.integer  "id",                 :limit => 11,                  :null => false
-    t.string   "email",                                             :null => false
+  create_table "users", :force => true do |t|
+    t.string   "email",                                                :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "is_admin",           :limit => 1,   :default => 0
-    t.string   "encrypted_password", :limit => 128, :default => "", :null => false
+    t.boolean  "is_admin",                          :default => false
+    t.string   "encrypted_password", :limit => 128, :default => "",    :null => false
   end
 
-  create_table "viewed_articles", :id => false, :force => true do |t|
-    t.integer  "id",         :limit => 11, :null => false
-    t.integer  "article_id", :limit => 11, :null => false
+  create_table "viewed_articles", :force => true do |t|
+    t.integer  "article_id", :null => false
     t.datetime "created_at"
   end
 
@@ -142,35 +128,32 @@ ActiveRecord::Schema.define(:version => 20110528231825) do
     t.integer  "article_id"
     t.string   "status_message"
     t.string   "name"
-    t.string   "proposed_titles"
+    t.text     "proposed_titles"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "locked_by"
   end
 
-  create_table "workflow_comments", :id => false, :force => true do |t|
-    t.integer  "id",         :limit => 11, :null => false
-    t.integer  "article_id", :limit => 11, :null => false
-    t.integer  "author_id",  :limit => 11, :null => false
+  create_table "workflow_comments", :force => true do |t|
+    t.integer  "article_id", :null => false
+    t.integer  "author_id",  :null => false
     t.string   "text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "workflow_reviews", :id => false, :force => true do |t|
-    t.integer  "id",             :limit => 11, :null => false
-    t.integer  "review_slot_id", :limit => 11, :null => false
-    t.integer  "article_id",     :limit => 11, :null => false
+  create_table "workflow_reviews", :force => true do |t|
+    t.integer  "review_slot_id", :null => false
+    t.integer  "article_id",     :null => false
     t.string   "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "author_id",      :limit => 11
+    t.integer  "author_id"
   end
 
-  create_table "workflow_updates", :id => false, :force => true do |t|
-    t.integer  "id",         :limit => 11, :null => false
-    t.integer  "article_id", :limit => 11, :null => false
-    t.integer  "author_id",  :limit => 11, :null => false
+  create_table "workflow_updates", :force => true do |t|
+    t.integer  "article_id", :null => false
+    t.integer  "author_id",  :null => false
     t.string   "updates"
     t.datetime "created_at"
     t.datetime "updated_at"
