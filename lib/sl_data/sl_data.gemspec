@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
 
   {
     'activerecord' => nil,
+    'authlogic' => nil,
     'rails' => nil,
     'paperclip' => '~>2.3'
   }.
