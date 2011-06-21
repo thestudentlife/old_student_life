@@ -10,12 +10,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110528231825) do
+ActiveRecord::Schema.define(:version => 20110621023354) do
 
   create_table "articles", :force => true do |t|
     t.integer  "headline_id"
     t.integer  "section_id"
-    t.integer  "subsection_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "issue_id"
