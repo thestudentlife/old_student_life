@@ -1,11 +1,23 @@
 GIT
-  remote: git://github.com/mikemaltese/htmldiff.git
+  remote: http://github.com/mikemaltese/htmldiff.git
   revision: 0941b8159d6d122aa4aee68f8eff1621ed46478d
   specs:
     htmldiff (0.0.1)
 
 GIT
-  remote: git://github.com/plataformatec/devise.git
+  remote: http://github.com/mikemaltese/sunspot.git
+  revision: 6891af90bf2d07eede28f05776f5458d2d702b63
+  specs:
+    sunspot (1.2.1)
+      escape (= 0.0.4)
+      pr_geohash (~> 1.0)
+      rsolr (= 0.12.1)
+    sunspot_rails (1.2.1)
+      nokogiri
+      sunspot (= 1.2.1)
+
+GIT
+  remote: http://github.com/plataformatec/devise.git
   revision: 9f763d082a51d5b0c50c884b044a8900faada8bf
   tag: v1.3.4
   specs:
@@ -95,48 +107,48 @@ GEM
       activemodel (= 3.0.5)
       activesupport (= 3.0.5)
     activesupport (3.0.5)
-    addressable (2.2.4)
-    arel (2.0.9)
+    addressable (2.2.6)
+    arel (2.0.10)
     bcrypt-ruby (2.1.4)
     builder (2.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     escape (0.0.4)
-    faraday (0.5.7)
+    faraday (0.6.1)
       addressable (~> 2.2.4)
       multipart-post (~> 1.1.0)
       rack (>= 1.1.0, < 2)
-    faraday_middleware (0.3.2)
-      faraday (~> 0.5.4)
+    faraday_middleware (0.6.5)
+      faraday (~> 0.6.0)
     has_scope (0.5.0)
     hashie (1.0.0)
-    high_voltage (0.9.3)
+    high_voltage (0.9.4)
     htmlentities (4.3.0)
-    i18n (0.5.0)
-    inherited_resources (1.2.1)
+    i18n (0.6.0)
+    inherited_resources (1.2.2)
       has_scope (~> 0.5.0)
       responders (~> 0.6.0)
-    kgio (2.3.3)
-    mail (2.2.15)
+    kgio (2.5.0)
+    mail (2.2.19)
       activesupport (>= 2.3.6)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     memcache-client (1.8.5)
     mime-types (1.16)
-    multi_json (0.0.5)
+    multi_json (1.0.3)
     multi_xml (0.2.2)
-    multipart-post (1.1.0)
-    mysql2 (0.2.7)
-    nokogiri (1.4.4)
+    multipart-post (1.1.2)
+    mysql2 (0.3.6)
+    nokogiri (1.4.6)
     orm_adapter (0.0.5)
-    paperclip (2.3.8)
-      activerecord
-      activesupport
-    pg (0.10.1)
+    paperclip (2.3.11)
+      activerecord (>= 2.3.0)
+      activesupport (>= 2.3.2)
+    pg (0.11.0)
     polyglot (0.3.1)
     pr_geohash (1.0.0)
-    rack (1.2.2)
+    rack (1.2.3)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
     rack-test (0.5.7)
@@ -154,42 +166,38 @@ GEM
       activesupport (= 3.0.5)
       rake (>= 0.8.7)
       thor (~> 0.14.4)
-    rake (0.8.7)
-    responders (0.6.2)
+    rake (0.9.2)
+    rash (0.3.0)
+      hashie (~> 1.0.0)
+    responders (0.6.4)
     rsolr (0.12.1)
       builder (>= 2.1.2)
-    simple_oauth (0.1.4)
-    sinatra (1.2.1)
+    simple_oauth (0.1.5)
+    sinatra (1.2.6)
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
     sqlite3 (1.3.3)
     sqlite3-ruby (1.3.3)
       sqlite3 (>= 1.3.3)
-    sunspot (1.2.1)
-      escape (= 0.0.4)
-      pr_geohash (~> 1.0)
-      rsolr (= 0.12.1)
-    sunspot_rails (1.2.1)
-      nokogiri
-      sunspot (= 1.2.1)
     thor (0.14.6)
-    tilt (1.2.2)
+    tilt (1.3.2)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
-    twitter (1.2.0)
-      faraday (~> 0.5.4)
-      faraday_middleware (~> 0.3.2)
+    twitter (1.5.0)
+      faraday (~> 0.6.1)
+      faraday_middleware (~> 0.6.3)
       hashie (~> 1.0.0)
-      multi_json (~> 0.0.5)
+      multi_json (~> 1.0.0)
       multi_xml (~> 0.2.0)
-      simple_oauth (~> 0.1.4)
-    tzinfo (0.3.26)
-    unicorn (3.5.0)
+      rash (~> 0.3.0)
+      simple_oauth (~> 0.1.5)
+    tzinfo (0.3.28)
+    unicorn (3.7.0)
       kgio (~> 2.3)
       rack
     warden (1.0.4)
       rack (>= 1.0)
-    yaml_db (0.2.0)
+    yaml_db (0.2.1)
 
 PLATFORMS
   ruby
@@ -211,7 +219,7 @@ DEPENDENCIES
   sl_webdav!
   sl_workflow_data!
   sqlite3-ruby
-  sunspot_rails (~> 1.2.1)
+  sunspot_rails!
   unicorn
   workflow-conductor!
   workflow-forms!
