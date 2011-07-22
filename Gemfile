@@ -5,7 +5,6 @@ gem 'rails', '3.0.5'
 
 gem 'devise', :git => 'http://github.com/plataformatec/devise.git', :tag => 'v1.3.4'
 gem 'sl_data', :path => 'lib/sl_data'
-gem 'sl_markup', :path => 'lib/sl_markup'
 gem 'sl_webdav', :path => 'lib/sl_webdav'
 gem 'sl_workflow_data', :path => 'lib/sl_workflow_data'
 gem 'workflow-conductor', :require => 'workflow/conductor', :path => 'lib/workflow-conductor'

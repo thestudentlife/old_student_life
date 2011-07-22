@@ -35,12 +35,6 @@ PATH
       rails
 
 PATH
-  remote: lib/sl_markup
-  specs:
-    sl_markup (0)
-      nokogiri
-
-PATH
   remote: lib/sl_webdav
   specs:
     sl_webdav (0)
@@ -58,7 +52,6 @@ PATH
       htmlentities
       rails
       sl_data
-      sl_markup
 
 PATH
   remote: lib/workflow-conductor
@@ -215,7 +208,6 @@ DEPENDENCIES
   rails (= 3.0.5)
   responders
   sl_data!
-  sl_markup!
   sl_webdav!
   sl_workflow_data!
   sqlite3-ruby
