@@ -66,11 +66,6 @@ PATH
       rails
 
 PATH
-  remote: lib/workflow-forms
-  specs:
-    workflow-forms (0.0.0)
-
-PATH
   remote: lib/workflow-twitter
   specs:
     workflow-twitter (0.0.0)
@@ -223,6 +218,5 @@ DEPENDENCIES
   sunspot_rails!
   unicorn
   workflow-conductor!
-  workflow-forms!
   workflow-twitter!
   yaml_db
