@@ -65,12 +65,6 @@ PATH
     workflow-conductor (0.0.0)
       rails
 
-PATH
-  remote: lib/workflow-twitter
-  specs:
-    workflow-twitter (0.0.0)
-      twitter
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -101,7 +95,6 @@ GEM
       activemodel (= 3.0.7)
       activesupport (= 3.0.7)
     activesupport (3.0.7)
-    addressable (2.2.6)
     arel (2.0.10)
     bcrypt-ruby (2.1.4)
     builder (2.1.2)
@@ -109,14 +102,7 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     escape (0.0.4)
-    faraday (0.6.1)
-      addressable (~> 2.2.4)
-      multipart-post (~> 1.1.0)
-      rack (>= 1.1.0, < 2)
-    faraday_middleware (0.6.5)
-      faraday (~> 0.6.0)
     has_scope (0.5.0)
-    hashie (1.0.0)
     high_voltage (1.0.0)
     htmlentities (4.3.0)
     i18n (0.5.0)
@@ -131,9 +117,6 @@ GEM
       treetop (~> 1.4.8)
     memcache-client (1.8.5)
     mime-types (1.16)
-    multi_json (1.0.3)
-    multi_xml (0.2.2)
-    multipart-post (1.1.3)
     mysql2 (0.3.6)
     nokogiri (1.5.0)
     orm_adapter (0.0.5)
@@ -168,7 +151,6 @@ GEM
     responders (0.6.4)
     rsolr (0.12.1)
       builder (>= 2.1.2)
-    simple_oauth (0.1.5)
     sinatra (1.2.6)
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
@@ -179,13 +161,6 @@ GEM
     tilt (1.3.2)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
-    twitter (1.6.0)
-      faraday (~> 0.6.1)
-      faraday_middleware (~> 0.6.3)
-      hashie (~> 1.0.0)
-      multi_json (~> 1.0.0)
-      multi_xml (~> 0.2.0)
-      simple_oauth (~> 0.1.5)
     tzinfo (0.3.29)
     unicorn (4.0.1)
       kgio (~> 2.4)
@@ -218,5 +193,4 @@ DEPENDENCIES
   sunspot_rails!
   unicorn
   workflow-conductor!
-  workflow-twitter!
   yaml_db

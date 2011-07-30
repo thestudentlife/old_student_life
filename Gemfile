@@ -9,7 +9,6 @@ gem 'daffy', :git => 'http://github.com/mikemaltese/daffy.git'
 gem 'sl_webdav', :path => 'lib/sl_webdav'
 gem 'sl_workflow_data', :path => 'lib/sl_workflow_data'
 gem 'workflow-conductor', :require => 'workflow/conductor', :path => 'lib/workflow-conductor'
-gem 'workflow-twitter', :require => 'workflow/twitter', :path => 'lib/workflow-twitter'
 
 # gem 'sunspot_rails', '~> 1.2.1'
 gem 'sunspot_rails', :git => "http://github.com/mikemaltese/sunspot.git"
