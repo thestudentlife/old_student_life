@@ -1,6 +1,8 @@
+require 'sl_webdav'
+
 TslRails::Application.routes.draw do
 
-  mount SL::WebDav::App => '/webdav'
+  mount SL::WebDAV::App, :at => '/webdav'
 
   devise_for :users
 

@@ -1,10 +1,11 @@
 source 'http://rubygems.org'
 
 gem 'rack', '~> 1.2.2' # Security fix
-gem 'rails', '3.0.5'
+gem 'rails', '3.0.7'
 
 gem 'devise', :git => 'http://github.com/plataformatec/devise.git', :tag => 'v1.3.4'
 gem 'sl_data', :path => 'lib/sl_data'
+gem 'daffy', :git => 'http://github.com/mikemaltese/daffy.git'
 gem 'sl_webdav', :path => 'lib/sl_webdav'
 gem 'sl_workflow_data', :path => 'lib/sl_workflow_data'
 gem 'workflow-conductor', :require => 'workflow/conductor', :path => 'lib/workflow-conductor'
