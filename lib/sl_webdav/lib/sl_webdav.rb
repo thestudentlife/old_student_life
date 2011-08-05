@@ -13,7 +13,7 @@ module SL
 		end
 	end
 	
-  module WebDAV
+	module WebDAV
 		
 		class ArticleXML
 			def initialize(context)
@@ -39,7 +39,7 @@ module SL
 					interpolate :section => "section.url"
 
 					collection "Article.includes(:workflow).where(:issue_id => issue.id, :section_id => section.id)" do
-						path ':article'	
+						path ':article' 
 						find :find
 						interpolate :article => "article.davslug"
 
@@ -57,11 +57,11 @@ module SL
 				response.status = 404
 			end
 			set :raise_errors, false
-	    set :show_exceptions, false
-	    route 'PROPFIND', /[\/^]\./ do
-        throw(:halt, [404, "Not found\n"])
-      end
+			set :show_exceptions, false
+			route 'PROPFIND', /[\/^]\./ do
+				throw(:halt, [404, "Not found\n"])
+			end
 		end
 		App.daffy! root
-  end
+	end
 end
