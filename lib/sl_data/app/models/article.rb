@@ -67,8 +67,8 @@ class Article < ActiveRecord::Base
   end
   
   def davslug
-    s = workflow.to_s.gsub('/', '-')
-    "#{id} #{s}"
+    s = workflow.to_s.to_slug
+    "#{id}-#{s}"
   end
   
   def has_review? (slot)

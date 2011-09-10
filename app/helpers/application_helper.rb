@@ -55,7 +55,7 @@ class String
     ret.gsub! /\s*&\s*/, " and "
 
     #replace all non alphanumeric, underscore or periods with hyphen
-     ret.gsub! /\s*[^A-Za-z0-9\.\-]\s*/, '-'  
+     ret.gsub! /\s*[^A-Za-z0-9\.\/\_]\s*/, '-'  
 
      #convert double hyphens to single
      ret.gsub! /-+/,"-"
