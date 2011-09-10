@@ -1,33 +1,28 @@
 require 'daffy'
+require 'sinatra/base'
 
 module SL
 	module WebDAV
-		
-		class InCopyXML
-			def initialize(article)
-				@article = article
-			end
-			def to_xml
-				"<#{slug}><body>#{@article.body}</body></#{slug}></articles>"
-			end
-			def slug
-				self.workflow.to_s.scan(/\w+/).join("-")
-			end
-		end
-		
 		class ArticleXML
 			def initialize(context)
 				@article = context.article
 			end
 
-			def get; InCopyXML.new(@article).to_xml; end
+			def get; xml; end
 			def mime; "text/xml"; end
-			def size; InCopyXML.new(@article).to_xml.size; end
+			def size; xml.size; end
 			def mtime; @article.updated_at; end
+			
+			def xml
+				"<#{slug}><body>#{@article.body}</body></#{slug}></articles>"
+			end
+			def slug
+				@article.workflow.to_s.scan(/\w+/).join("-")
+			end
 		end
 		
-		root = Daffy::Root.new
-		root.config do
+		Root = Daffy::Root.new
+		Root.config do
 			collection "Issue.scoped" do
 				path ':issue'
 				find :find
@@ -52,15 +47,26 @@ module SL
 			end
 		end
 		
-		class App < Daffy::Sinatra.new(root)
+		class App < Sinatra::Base
 			error ActiveRecord::RecordNotFound do
 				response.status = 404
 			end
-			set :raise_errors, false
+			set :raise_errors, true
 			set :show_exceptions, false
-			route 'PROPFIND', /[\/^]\./ do
+			
+			route 'PROPFIND', /((^)|(\/))\./ do
 				throw(:halt, [404, "Not found\n"])
 			end
+			
+			get "/test" do
+				"{\n" +
+				"  request.script_name: \"" + request.script_name + "\"\n" +
+				"  request.path_info: \"" + request.path_info + "\"\n" +
+				"}\n"
+			end
+			
+			include Daffy::Sinatra
+			daffy Root
 		end
 	end
 end

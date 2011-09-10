@@ -1,8 +1,8 @@
 GIT
   remote: http://github.com/mikemaltese/daffy.git
-  revision: 5072022acacc12a7971f8a296ec0ac404e4bb172
+  revision: 82280556a7e0e1128aedf319498b65164f9ac7a2
   specs:
-    daffy (0.0.1)
+    daffy (0.0.2)
 
 GIT
   remote: http://github.com/mikemaltese/htmldiff.git
@@ -174,7 +174,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  daffy!
+  daffy (= 0.0.2)!
   devise!
   high_voltage
   htmldiff!
