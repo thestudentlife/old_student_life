@@ -14,10 +14,7 @@ module SL
 			def mtime; @article.updated_at; end
 			
 			def xml
-				"<#{slug}><body>#{@article.body}</body></#{slug}></articles>"
-			end
-			def slug
-				@article.workflow.to_s.scan(/\w+/).join("-")
+				"<#{@article.davslug}><body>#{@article.body}</body></#{@article.davslug}></articles>"
 			end
 		end
 		
