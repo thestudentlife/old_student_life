@@ -1,28 +1,28 @@
 require 'daffy'
 
 module SL
-	module ArticleExtensions
-		module InCopyXML
-			def xml_slug
-				self.workflow.to_s.scan(/\w+/).join("-")
+	module WebDAV
+		
+		class InCopyXML
+			def initialize(article)
+				@article = article
 			end
 			def to_xml
-				require 'pp'
-				"<#{self.xml_slug}><body>#{self.body}</body></#{self.xml_slug}></articles>"
+				"<#{slug}><body>#{@article.body}</body></#{slug}></articles>"
+			end
+			def slug
+				self.workflow.to_s.scan(/\w+/).join("-")
 			end
 		end
-	end
-	
-	module WebDAV
 		
 		class ArticleXML
 			def initialize(context)
-				@article = context.article.extend(ArticleExtensions::InCopyXML)
+				@article = context.article
 			end
 
-			def get; @article.to_xml; end
+			def get; InCopyXML.new(@article).to_xml; end
 			def mime; "text/xml"; end
-			def size; @article.to_xml.size; end
+			def size; InCopyXML.new(@article).to_xml.size; end
 			def mtime; @article.updated_at; end
 		end
 		
@@ -52,7 +52,7 @@ module SL
 			end
 		end
 		
-		class App < Daffy::Sinatra
+		class App < Daffy::Sinatra.new(root)
 			error ActiveRecord::RecordNotFound do
 				response.status = 404
 			end
@@ -62,6 +62,5 @@ module SL
 				throw(:halt, [404, "Not found\n"])
 			end
 		end
-		App.daffy! root
 	end
 end
