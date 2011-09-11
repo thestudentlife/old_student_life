@@ -69,6 +69,10 @@ class Article < ActiveRecord::Base
   def davslug
     workflow.to_s.to_slug
   end
+
+  def davslug_with_id
+    "#{id}-#{davslug}"
+  end
   
   def has_review? (slot)
     review_for_slot(slot) ? true : false

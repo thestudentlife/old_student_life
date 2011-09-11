@@ -33,11 +33,11 @@ module SL
 					collection "Article.includes(:workflow).where(:issue_id => issue.id, :section_id => section.id)" do
 						path ':article' 
 						find :find
-						interpolate :article => "article.davslug"
+						interpolate :article => "article.davslug_with_id"
 
 						file ArticleXML do
 							path ':file.indesign.xml'
-							interpolate :file => "article.davslug"
+							interpolate :file => "article.davslug_with_id"
 						end
 					end
 				end
