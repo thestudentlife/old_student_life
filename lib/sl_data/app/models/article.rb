@@ -19,14 +19,14 @@ class Article < ActiveRecord::Base
   
   default_scope :order => 'created_at DESC'
   
-  searchable do
-    text :title
-    text :body
-    integer :author_ids, :multiple => true
-    integer :section_id
-    boolean :published
-    time :published_at
-  end
+  #searchable do
+  #  text :title
+  #  text :body
+  #  integer :author_ids, :multiple => true
+  #  integer :section_id
+  #  boolean :published
+  #  time :published_at
+  #end
   
   
   def workflow_with_guard
