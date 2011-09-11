@@ -8,8 +8,6 @@ class Workflow::Issues::ArticleConductor < Workflow::Conductor
   end
   
   def id
-    require 'pp'
-    pp @article.id
     @article.id
   end
   
@@ -26,8 +24,6 @@ class Workflow::Issues::ArticleConductor < Workflow::Conductor
       transact do
         @workflow.save!
         @article.save!
-        puts "Article:"
-        pp @article
       end
     else
       false
