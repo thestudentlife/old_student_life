@@ -16,14 +16,3 @@ class WorkflowArticle < ActiveRecord::Base
   
   def to_s; name; end
 end
-
-# WebDAV really needs to be converted into an Engine
-
-WorkflowArticle.class_eval do
-  after_save do
-    Rails.cache.delete SL::WebDav::Cache.lockfile_key(id)
-  end
-  before_destroy do
-    Rails.cache.delete SL::WebDav::Cache.lockfile_key(id)
-  end
-end
