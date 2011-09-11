@@ -14,7 +14,7 @@ module SL
 			def mtime; @article.updated_at; end
 			
 			def xml
-				"<articles><#{@article.davslug}><body>#{@article.body}</body></#{@article.davslug}></articles>"
+				"<#{@article.davslug}><body>#{@article.body}</body></#{@article.davslug}>"
 			end
 		end
 		
