@@ -2,7 +2,7 @@ class Workflow::Issues::ArticleConductor < Workflow::Conductor
   def initialize(opts={})
     @article = Article.new
     @article.section_id = opts[:section_id]
-    @article.issue_id = opts[:issue_id]
+    @article.issue_id = (opts[:issue].try(:id) or opts[:issue_id])
     @workflow = @article.workflow
     @workflow.name = opts[:name]
   end
