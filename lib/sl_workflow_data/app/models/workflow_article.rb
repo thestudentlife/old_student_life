@@ -11,6 +11,11 @@ class WorkflowArticle < ActiveRecord::Base
   belongs_to :locked_by, :class_name => 'User', :foreign_key => 'locked_by'
   
   serialize :proposed_titles, Array
+
+	def proposed_titles_with_guard
+		proposed_titles_without_guard || []
+	end
+	alias_method_chain :proposed_titles, :guard
   
   validates_presence_of :name
   
