@@ -99,7 +99,7 @@ class Article < ActiveRecord::Base
   
   include ActionView::Helpers::TextHelper
   def teaser
-		truncate(strip_tags(self.body), :length => 300, :separator => " ")
+		truncate(strip_tags(self.body), :length => 300, :separator => " ").html_safe
   end
   
   def status
