@@ -19,8 +19,8 @@ module SL
 			
 			def body
 				if @article.body
-					@article.body.gsub("&nbsp;", " ").gsub(/\r\n/,'').gsub("</p>","</p>\n").gsub("&", "&amp;").
-					gsub(/[\r\n]/,'').gsub(/\s+class=".*?"/,'').gsub("&nbsp;",'').gsub(/<\/?o:.*?>/,'').
+					@article.body.gsub("&nbsp;", " ").gsub(/[\r\n]/,'').gsub("</p>","</p>\n").gsub("&", "&amp;").
+					gsub(/\s+class=".*?"/,'').gsub("&nbsp;",'').gsub(/<\/?o:.*?>/,'').
 					gsub(/\s+style=".*?"/,'').gsub(/<\/?span.*?>/,'').gsub(/<\/?font.*?>/,'').
 					gsub(/<\/?xml.*?>/,'').gsub(/<\/?style.*?>/,'').gsub(/<br\/?>/, "\n")
 				else
