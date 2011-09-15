@@ -179,19 +179,6 @@
          <% end %>
        </ul>
     </section>
-    <section class="revisions">
-      <header>
-        <h1>Revisions</h1>
-        <ol>
-          <% @article.revisions.each do |revision| %>
-            <li <%= 'class=selected' if revision == @revision %>>
-              <%= link_to (time_ago_in_words(revision.created_at) + " ago"), workflow_article_revision_path(@article, revision) %>
-              <%= revision.author %>
-            </li>
-          <% end %>
-        </ol>
-      </header>
-    </section>
   </div>
 </article>
 
