@@ -67,7 +67,7 @@ class Article < ActiveRecord::Base
   end
   
   def davslug
-    workflow.to_s.to_slug
+    workflow.to_s.scan(/[\w\d]+/).join("-")
   end
 
   def davslug_with_id
