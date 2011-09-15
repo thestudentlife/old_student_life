@@ -98,18 +98,8 @@ class Article < ActiveRecord::Base
   end
   
   include ActionView::Helpers::TextHelper
-  def teaser(length=100)
-    sentences = strip_tags(self.body).scan(/.*?[\.\!\?]/)
-    sum = sentences.shift
-    sum = self.body if not sum
-    while sum.length < length and sentences.any?
-      sum = sum + ' ' + sentences.shift
-    end
-    while sum =~ /((Jan)|(Feb)|(Mar)|(Apr)|(Aug)|(Sep)|(Oct)|(Nov)|(Dec))\.$/ and sentences.any?
-      sum = sum + ' ' + sentences.shift
-    end
-    # why wasn't it already stripping? hmm
-    return strip_tags(sum)
+  def teaser
+		truncate(strip_tags(self.body), :length => 300, :separator => " ")
   end
   
   def status

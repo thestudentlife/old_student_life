@@ -34,7 +34,7 @@
 					</div>-->
 				</div>
 			<% end %>
-			<p class="summary"><%= article.teaser(300) %></p>
+			<p class="summary"><%= article.teaser %></p>
 			<span class="actions">
 				<%= link_to "Read more", article_path(article) %>
 			</span>
@@ -78,7 +78,7 @@
 					</span>
 				</span>
 			</header>
-			<p class="summary"><%= article.teaser %></p>
+			<p class="summary"><%= article.teaser %> (<%= link_to "read more", article_path(article) %>)</p>
 		</article>
 	<% end %>
 </div>
