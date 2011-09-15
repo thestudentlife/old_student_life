@@ -1,20 +1,3 @@
-# The body of a revision must be in a special format, to expidite
-# conversion between HTML and InCopy.
-#
-# Basic ideas:
-# At the toplevel, there exist only <p> nodes
-# Inside each <p>, there exist only <span> nodes
-# Inside each <span>, there exists only one text node
-# <span> elements have various classes applied to them
-#
-# The trick here is taking raw HTML (which can look like anything)
-# and converting it into this schema. However, we don't want to be
-# too strict: the user shouldn't ever be penalized because their
-# browser does something slightly differently.
-#
-
-require 'nokogiri'
-
 class Revision < ActiveRecord::Base
   belongs_to :article
   belongs_to :author, :class_name => "User"
@@ -22,6 +5,10 @@ class Revision < ActiveRecord::Base
   
   default_scope :order => 'created_at DESC'
   
+	before_save do
+		self.body = HtmlSanitizer.new(self.body).sanitize
+	end
+
   after_save do
     if self == self.article.latest_revision
       article.body = self.body
