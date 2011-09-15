@@ -14,7 +14,18 @@ module SL
 			def mtime; @article.updated_at; end
 			
 			def xml
-				"<#{@article.davslug}><body>#{@article.body}</body></#{@article.davslug}>"
+				"<#{@article.davslug}><body>#{body}</body></#{@article.davslug}>"
+			end
+			
+			def body
+				if @article.body
+					@article.body.gsub("&nbsp;", " ").gsub(/\r\n/,'').gsub("</p>","</p>\n").gsub("&", "&amp;").
+					gsub(/[\r\n]/,'').gsub(/\s+class=".*?"/,'').gsub("&nbsp;",'').gsub(/<\/?o:.*?>/,'').
+					gsub(/\s+style=".*?"/,'').gsub(/<\/?span.*?>/,'').gsub(/<\/?font.*?>/,'').
+					gsub(/<\/?xml.*?>/,'').gsub(/<\/?style.*?>/,'').gsub(/<br\/?>/,'')
+				else
+					""
+				end
 			end
 		end
 		
