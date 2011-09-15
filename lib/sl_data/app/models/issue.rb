@@ -6,8 +6,8 @@ class Issue < ActiveRecord::Base
   end
   
   def davslug
-    s = to_s.gsub('/','-')
-    "#{id} #{s}"
+    s = to_s.scan(/[\w\d]+/).join("-")
+    "#{id}-#{s}"
   end
   def sections
     Section.joins(:articles => :issue).where(:issues => {:id => id}).group(:id)
