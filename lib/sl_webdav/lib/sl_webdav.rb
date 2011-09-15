@@ -22,7 +22,7 @@ module SL
 					@article.body.gsub("&nbsp;", " ").gsub(/\r\n/,'').gsub("</p>","</p>\n").gsub("&", "&amp;").
 					gsub(/[\r\n]/,'').gsub(/\s+class=".*?"/,'').gsub("&nbsp;",'').gsub(/<\/?o:.*?>/,'').
 					gsub(/\s+style=".*?"/,'').gsub(/<\/?span.*?>/,'').gsub(/<\/?font.*?>/,'').
-					gsub(/<\/?xml.*?>/,'').gsub(/<\/?style.*?>/,'').gsub(/<br\/?>/,'')
+					gsub(/<\/?xml.*?>/,'').gsub(/<\/?style.*?>/,'').gsub(/<br\/?>/, "\n")
 				else
 					""
 				end
