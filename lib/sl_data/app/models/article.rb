@@ -9,8 +9,6 @@ class Article < ActiveRecord::Base
   
   has_one :workflow, :class_name => "WorkflowArticle", :dependent => :destroy
   has_one :front_page_article, :dependent => :destroy
-  has_one :web_published_article, :dependent => :destroy
-  has_many :viewed_articles, :dependent => :destroy
   
   has_many :reviews, :class_name => "WorkflowReview"
   has_many :review_slots, :through => :reviews
