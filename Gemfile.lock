@@ -120,6 +120,8 @@ GEM
     mysql2 (0.3.6)
     nokogiri (1.5.0)
     orm_adapter (0.0.5)
+    paper_trail (2.3.3)
+      rails (~> 3)
     paperclip (2.3.15)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
@@ -181,6 +183,7 @@ DEPENDENCIES
   inherited_resources (~> 1.2.1)
   memcache-client
   mysql2
+  paper_trail
   paperclip (~> 2.3)
   pg
   rack (~> 1.2.2)
