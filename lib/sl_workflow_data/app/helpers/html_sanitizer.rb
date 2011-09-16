@@ -61,6 +61,7 @@ class HtmlSanitizer
 				inside_p = true
 			elsif not inside_p and tokens.first == "</p>"
 				# weirddd
+				tokens.shift
 			elsif inside_p and tokens.first == "</p>"
 				fixed << tokens.shift
 				inside_p = false
