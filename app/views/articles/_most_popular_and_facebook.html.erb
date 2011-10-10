@@ -1,11 +1,6 @@
 <div id="cColumn">
 	<section class="columnGroup mostPopular">
-		<h1>Most popular</h1>
-		<ol>
-			<% @most_viewed.each do |viewed| %>
-				<li><%= link_to viewed, article_path(viewed) %></li>
-			<% end %>
-		</ol>
+	 <div id="popularthreads" class="dsq-widget"><h1 class="dsq-widget-title">Most Popular</h1><script type="text/javascript" src="http://pomonatsl.disqus.com/popular_threads_widget.js?num_items=5"></script></div><a href="http://disqus.com/">Powered by Disqus</a>
 	</section>
 	<!--<section class="columnGroup">
 		<iframe src="http://www.facebook.com/plugins/likebox.php?id=26158013294&amp;width=330&amp;connections=10&amp;stream=false&amp;header=false&amp;height=287&amp;border=none" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width: 330px; height:287px;" allowtransparency="false"></iframe>
