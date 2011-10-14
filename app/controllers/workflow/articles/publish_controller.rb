@@ -8,7 +8,7 @@ class Workflow::Articles::PublishController < WorkflowController
       return redirect_to [:workflow, @article, :revisions]
     end
     
-    @article.published_at = Time.zone.now
+    @article.published_at = Time.zone.now unless @article.published?
     respond_with @article
   end
   
