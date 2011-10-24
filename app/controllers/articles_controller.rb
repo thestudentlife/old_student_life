@@ -34,14 +34,5 @@ class ArticlesController < ApplicationController
   end
   
   def search
-    @search = unless params[:q].blank?
-      Article.search do
-        keywords params[:q]
-        with(:published, true)
-        with(:published_at).less_than Time.now
-      end.results
-    else
-      nil
-    end
   end
 end
