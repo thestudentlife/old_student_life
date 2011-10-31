@@ -65,7 +65,8 @@ class Article < ActiveRecord::Base
   end
   
   def davslug
-    workflow.to_s.scan(/[\w\d]+/).join("-")
+    s = workflow.to_s.scan(/[\w\d]+/).join("-")
+		s =~ /^\d/ ? "dont-start-article-names-with-numbers-#{s}" : s
   end
 
   def davslug_with_id
