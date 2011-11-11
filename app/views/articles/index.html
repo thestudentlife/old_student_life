@@ -19,6 +19,9 @@
 					</span>
 				</span>
 			</header>
+			<div class="ledevideo">
+				<%= youtube_embed article.video_youtube_id, :width => 600, :height => 350 %>
+			</div>
 			<% if article.images.any? %>
 				<div class="ledephoto">
 					<%= link_to(
@@ -38,7 +41,6 @@
 			<span class="actions">
 				<%= link_to "Read more", article_path(article) %>
 			</span>
-			<div style="clear: both;"></div>
 		</article>
 	<% end %>
 	</div>
@@ -83,18 +85,3 @@
 	<% end %>
 </div>
 <%= render "most_popular_and_facebook" %>
-<script>
-  $(document).ready (function(){
-    $("#ledes").slides({
-		preload: true,
-		generatePagination: false,
-		hoverPause: true,
-		play: 5000,
-		pause: 5000,
-		slideSpeed: 1000,
-		fadeEasing: "easeInOutQuad",
-		effect: "fade"
-	});
-	$(".pagination").show();
-  });
-</script>

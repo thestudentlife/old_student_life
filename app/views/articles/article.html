@@ -5,6 +5,14 @@
 <article id="aColumn" class="fullArticle">
 	<header>
 		<h1><%= @article %></h1>
+		<%= youtube_embed @article.video_youtube_id, :width => 550, :height => 350 %>
+		<% @article.images.each do |image| %>
+			<div class="articleImage columnGroup">
+				<%= image_tag image.file.url(:two_columns), :width => "100%" %>
+				<div class="credit"><%= image.credit %></div>
+				<div class="caption"><%= image.caption %></div>
+			</div>
+		<% end %>
 		<div class="byline">
 			<div class="section_name" style="padding-left:0"><%= @article.section %></div>
 			By <%= @article.authors.map{|a|
@@ -52,13 +60,6 @@
 <%#= render "most_popular_and_facebook" %>
 
 <div id="cColumn">
-	<% @article.images.each do |image| %>
-		<div class="articleImage columnGroup">
-			<%= image_tag image.file.url(:two_columns), :width => "100%" %>
-			<div class="credit"><%= image.credit %></div>
-			<div class="caption"><%= image.caption %></div>
-		</div>
-	<% end %>
 	<section class="columnGroup mostPopular">
 		<h1>Most popular</h1>
 		<ol>
