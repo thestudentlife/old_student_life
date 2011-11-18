@@ -35,4 +35,9 @@ class ArticlesController < ApplicationController
   
   def search
   end
+
+	def wfj
+		@articles = Article.order("published_at DESC").where("body ILIKE '%wfj%' OR body ILIKE '%workers for justice%'").where(:published => true)
+		puts @articles.to_sql
+	end
 end

@@ -1,0 +1,32 @@
+<section>
+  <header>
+    <h1>Workers For Justice</h1>
+  </header>  
+	<% @articles.each do |article| %>
+		<article class="teaser">
+			<% if article.images.any? %>
+				<div class="thumbnail">
+					<%= link_to(
+						image_tag(
+							article.images.first.file.url(:thumb),
+							:width => 75,
+							:height => 75), 
+					    article_path(article)) %>
+				</div>
+			<% end %>
+			<header>
+				<h1><%= link_to article, article_path(article) %></h1>
+				<span class="byline">
+					By
+					<%= article.authors.map{|a|
+						content_tag :span, a, :class=>'author'
+					}.to_sentence.html_safe %>
+					<span class="timestamp">
+						<%= time_ago_in_words article.published_at %> ago
+					</span>
+				</span>
+			</header>
+			<p class="summary"><%= article.teaser %></p>
+		</article>
+	<% end %>
+</section>

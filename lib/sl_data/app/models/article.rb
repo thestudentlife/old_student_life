@@ -15,8 +15,6 @@ class Article < ActiveRecord::Base
   
   validates_presence_of :section
   
-  default_scope :order => 'created_at DESC'
-  
   #searchable do
   #  text :title
   #  text :body
