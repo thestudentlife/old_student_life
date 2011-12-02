@@ -24,7 +24,7 @@ TslRails::Application.routes.draw do
   match '/authors/:author' => "articles#author"
   match '/blogs' => "blogs#index"
   match '/search' => "articles#search", :as => 'search'
-	match '/wfj' => "articles#wfj", :as => 'wfj'
+  match '/wfj_and_documents' => "articles#wfj", :as => 'wfj'
   
   resources :pages
   
