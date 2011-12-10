@@ -13,7 +13,7 @@
 				<div class="caption"><%= image.caption %></div>
 			</div>
 		<% end %>
-		<%= @article.header_html.html_safe %>
+		<%= @article.header_html.try(:html_safe) %>
 		<div class="byline">
 			<div class="section_name" style="padding-left:0"><%= @article.section %></div>
 			By <%= @article.authors.map{|a|
