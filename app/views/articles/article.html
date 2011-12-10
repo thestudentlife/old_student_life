@@ -6,6 +6,7 @@
 	<header>
 		<h1><%= @article %></h1>
 		<%= youtube_embed @article.video_youtube_id, :width => 550, :height => 350 %>
+		<%= @article.header_html.html_safe %>
 		<% @article.images.each do |image| %>
 			<div class="articleImage columnGroup">
 				<%= image_tag image.file.url(:two_columns), :width => "100%" %>
