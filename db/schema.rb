@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111113005655) do
+ActiveRecord::Schema.define(:version => 20111210222141) do
 
   create_table "articles", :force => true do |t|
     t.integer  "headline_id"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20111113005655) do
     t.datetime "published_at"
     t.string   "title"
     t.string   "video_youtube_id", :limit => 50
+    t.text     "header_html"
   end
 
   create_table "articles_authors", :id => false, :force => true do |t|
