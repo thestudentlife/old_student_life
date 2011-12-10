@@ -79,3 +79,4 @@ background-color:white; padding:0px; margin:0; display:block; width: 100%;
 div.wysiwyg ul.toolbar li { display: none; }
 div.wysiwyg ul.toolbar li.bold { display: block; }
 div.wysiwyg ul.toolbar li.italic { display: block; }
+div.wysiwyg ul.toolbar li.underline { display: block; }

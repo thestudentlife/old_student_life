@@ -47,7 +47,10 @@
   $(function() {
     $("#revision_body").wysiwyg({
       autoSave: true,
-      minHeight: 500
+      minHeight: 500,
+      controls: {
+        underline: { visible: true }
+      }
     });
     $(".wysiwyg")[0].style.width = "100%";
     $(".wysiwyg iframe")[0].style.width = "100%";
