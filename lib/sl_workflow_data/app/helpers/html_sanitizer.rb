@@ -13,7 +13,7 @@ class HtmlSanitizer
 			:fix_paragraphs)
 	end
 	def allowed_tags
-		%w{p i b em strong a}
+		%w{p i b em strong a u}
 	end
 	protected
 	def pipe(s, *methods)
