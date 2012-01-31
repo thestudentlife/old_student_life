@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source :rubygems
 
 gem 'rack', '~> 1.2.2' # Security fix
 gem 'rails', '3.0.7'
@@ -10,24 +10,12 @@ gem 'sl_webdav', :path => 'lib/sl_webdav'
 gem 'sl_workflow_data', :path => 'lib/sl_workflow_data'
 gem 'workflow-conductor', :require => 'workflow/conductor', :path => 'lib/workflow-conductor'
 
-# gem 'sunspot_rails', '~> 1.2.1'
-gem 'sunspot_rails', :git => "http://github.com/mikemaltese/sunspot.git"
 
-group :development do
-	gem 'sqlite3-ruby', :require => 'sqlite3'
-end
-group :production do
-	gem 'mysql2'
-end
-
+gem "pg"
 # workflow
-gem 'paperclip', '~> 2.3'
+gem 'paperclip', '~> 2'
 gem 'unicorn'
 gem "htmldiff", :git => "http://github.com/mikemaltese/htmldiff.git"
 gem "high_voltage"
 gem "responders"
 gem "inherited_resources", '~> 1.2.1'
-gem 'yaml_db'
-gem 'memcache-client'
-gem 'pg'
-gem 'paper_trail'
