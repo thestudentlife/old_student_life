@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111210222141) do
+ActiveRecord::Schema.define(:version => 20120131235831) do
 
   create_table "articles", :force => true do |t|
     t.integer  "headline_id"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20111210222141) do
   create_table "authors", :force => true do |t|
     t.integer "user_id"
     t.string  "name"
+    t.integer "legacy_id"
   end
 
   create_table "forms", :force => true do |t|
