@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120131235831) do
+ActiveRecord::Schema.define(:version => 20120201000123) do
 
   create_table "articles", :force => true do |t|
     t.integer  "headline_id"
@@ -37,13 +37,6 @@ ActiveRecord::Schema.define(:version => 20120131235831) do
     t.integer "legacy_id"
   end
 
-  create_table "forms", :force => true do |t|
-    t.string   "name"
-    t.string   "definition"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "front_page_articles", :force => true do |t|
     t.integer  "article_id", :null => false
     t.integer  "priority"
@@ -63,23 +56,10 @@ ActiveRecord::Schema.define(:version => 20120131235831) do
     t.datetime "file_updated_at"
   end
 
-  create_table "in_copy_articles", :force => true do |t|
-    t.integer  "article_id"
-    t.string   "lockfile"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "lockfile_content"
-    t.text     "header"
-  end
-
   create_table "issues", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "legacy_articles", :force => true do |t|
-    t.integer "article_id"
   end
 
   create_table "review_slots", :force => true do |t|
@@ -105,13 +85,6 @@ ActiveRecord::Schema.define(:version => 20120131235831) do
     t.string   "url"
   end
 
-  create_table "submissions", :force => true do |t|
-    t.integer  "form_id"
-    t.string   "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "user_sessions", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -123,11 +96,6 @@ ActiveRecord::Schema.define(:version => 20120131235831) do
     t.datetime "updated_at"
     t.boolean  "is_admin",                          :default => false
     t.string   "encrypted_password", :limit => 128, :default => "",    :null => false
-  end
-
-  create_table "viewed_articles", :force => true do |t|
-    t.integer  "article_id", :null => false
-    t.datetime "created_at"
   end
 
   create_table "workflow_articles", :force => true do |t|
