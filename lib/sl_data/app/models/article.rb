@@ -89,7 +89,7 @@ class Article < ActiveRecord::Base
   end
   
   def to_s
-    title.gsub(/"(.*?)"/) { "“#{$1}”" }
+    title.gsub(/"(.*?)"/) { "&ldquo;#{$1}&rdquo;" }
   end
   
   def latest_revision
