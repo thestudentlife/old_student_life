@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120201000123) do
+ActiveRecord::Schema.define(:version => 20120201000331) do
 
   create_table "articles", :force => true do |t|
     t.integer  "headline_id"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20120201000123) do
     t.string   "title"
     t.string   "video_youtube_id", :limit => 50
     t.text     "header_html"
+    t.integer  "legacy_id"
   end
 
   create_table "articles_authors", :id => false, :force => true do |t|
