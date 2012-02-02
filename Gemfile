@@ -19,3 +19,4 @@ gem "htmldiff", :git => "http://github.com/mikemaltese/htmldiff.git"
 gem "high_voltage"
 gem "responders"
 gem "inherited_resources", '~> 1.2.1'
+gem "sanitize"
