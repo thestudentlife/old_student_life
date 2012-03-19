@@ -1,5 +1,5 @@
 <select name="<%= filter.name %>">
-	<option value="">-- <%= filter.name.capitalize %></option>
+	<option value="">-- <%= filter.name.to_s.capitalize %></option>
 	<% filter.pretty_collection.each do |item| %>
 		<option value="<%= item.value %>"
   		<% if params[filter.name] == item.value.to_s %>
