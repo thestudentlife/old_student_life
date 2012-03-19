@@ -1,0 +1,40 @@
+<header>
+  <h1>New image</h1>
+  <div style="clear: both;"></div>
+</header>
+
+<div id="content">
+  <%= form_for [:workflow, @photo_set, @photo],
+      :url => workflow_photo_set_photos_path(params[:photo_set_id]),
+      :html => {:multipart => true} do |f| %>
+    <% if @photo.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@photo.errors.count, "error") %> prohibited this image from being saved:</h2>
+
+        <ul>
+        <% @photo.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :file %>
+      <%= f.file_field :file %>
+    </div>
+    <!--<div class="field">
+    	<%= f.label :caption %>
+    	<%= f.text_area :caption %>
+    </div>
+    <div class="field">
+    	<%= f.label :credit %>
+    	<%= f.text_field :credit %>
+    </div>-->
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
+
+</div>

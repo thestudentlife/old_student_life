@@ -1,0 +1,12 @@
+<select name="<%= filter.name %>">
+	<option value="">-- <%= filter.name.capitalize %></option>
+	<% filter.pretty_collection.each do |item| %>
+		<option value="<%= item.value %>"
+  		<% if params[filter.name] == item.value.to_s %>
+  		  selected="selected"
+  		<% end %>
+		>
+		  <%= item.name %>
+		</option>
+	<% end %>
+</select>

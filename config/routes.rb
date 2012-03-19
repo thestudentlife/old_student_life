@@ -1,8 +1,6 @@
-require 'sl_webdav'
-
 TslRails::Application.routes.draw do
 
-  mount SL::WebDAV::App, :at => '/webdav'
+  mount Daffy, :at => '/webdav'
 
   devise_for :users
 
@@ -52,6 +50,9 @@ TslRails::Application.routes.draw do
     resources :front_page_articles, :except => [:show, :new, :create]
     resources :issues do
       resources :articles, :only => [:new, :create], :controller => "issues/articles"
+    end
+    resources :photo_sets do
+      resources :photos, :controller => "photo_sets/photos"
     end
     resources :review_slots, :except => [:show]
     resources :sections do

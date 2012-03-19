@@ -8,6 +8,7 @@ class Article < ActiveRecord::Base
   belongs_to :issue
   
   has_one :workflow, :class_name => "WorkflowArticle", :dependent => :destroy
+  has_one :photo_set, :dependent => :destroy
   has_one :front_page_article, :dependent => :destroy
   
   has_many :reviews, :class_name => "WorkflowReview"
@@ -29,6 +30,11 @@ class Article < ActiveRecord::Base
     self.workflow_without_guard || WorkflowArticle.new(:article => self)
   end
   alias_method_chain :workflow, :guard
+  
+  def photo_set_with_guard
+    self.photo_set_without_guard || PhotoSet.new(:article => self)
+  end
+  alias_method_chain :photo_set, :guard
   
   def self.featured
     joins('INNER JOIN front_page_articles ON (front_page_articles.article_id = articles.id)').published.order('front_page_articles.priority ASC')

@@ -1,0 +1,27 @@
+<% content_for :htmlhead do stylesheet_link_tag('workflow/revision') end %>
+
+<article class="article">
+  <header>
+    <h1><%= @photo_set.title %></h1>
+  </header>
+
+  <div>
+    <p><strong>Description:</strong> <%= @photo_set.description %></p>
+  </div>
+  
+  <div>
+    <%= link_to "Add photo", new_workflow_photo_set_photo_path(@photo_set), :class => "positive button" %>
+  </div>
+  
+  <div>
+    <% @photo_set.photos.each do |photo| %>
+      <%= image_tag photo.file.url(:small) %>
+			<div class="credit"><%= photo.credit %></div>
+			<div class="caption"><%= photo.caption %></div>
+			<div class="naem"><%= photo.file.original_filename %></div>
+    <% end %>
+    <% if @photo_set.photos.empty? %>
+      No photos!
+    <% end %>
+  </div>
+</article>

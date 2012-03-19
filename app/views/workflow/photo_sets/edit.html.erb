@@ -1,0 +1,26 @@
+<% content_for :header do %>
+  <h1>Editing photo set</h1>
+<% end %>
+
+<%= form_for [:workflow, @photo_set], :url => workflow_photo_set_path(params[:id]) do |f| %>
+  <% if @photo_set.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@photo_set.errors.count, "error") %> prohibited this issue from being saved:</h2>
+
+      <ul>
+      <% @photo_set.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+

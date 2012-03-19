@@ -1,2 +1,0 @@
-module Workflow::EditorsHelper
-end
