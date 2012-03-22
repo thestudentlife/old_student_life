@@ -1,4 +1,5 @@
 require 'builder'
+require 'rack/utils'
 
 class Daffy
 	
@@ -109,6 +110,10 @@ class Daffy
 		end
 	end
 	
+	def self.escape_path(path)
+		Rack::Utils.escape(path).gsub("#",'').gsub("%2F", "/").gsub("+", "%20")
+	end
+	
 	def self.multistatus
 		xml = Builder::XmlMarkup.new :indent=>2
 		xml.instruct!
@@ -127,7 +132,7 @@ class Daffy
 		}.merge(opts)
 
 		xml.D :response do
-			xml.D :href, opts[:path]
+			xml.D :href, escape_path(opts[:path])
 			xml.D :propstat do
 				xml.D :prop do
 					xml.D :creationdate, opts[:ctime].httpdate
