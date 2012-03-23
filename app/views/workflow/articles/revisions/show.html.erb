@@ -95,7 +95,7 @@
   			      <div class="review-comment"><%= @article.review_for_slot(slot).comment %></div>
 			    <% end %>
 			    <% if @article.has_review?(slot) %>
-			      <%= link_to "Undo review", workflow_article_review_path(@article, @article.review_for_slot(slot)),
+			      <%= button_to "Undo review", workflow_article_review_path(@article, @article.review_for_slot(slot)),
 			          :method => :delete, :confirm => "Are you sure?" %>
 			    <% end %>
         </article>
@@ -114,7 +114,7 @@
           <%= link_to 'Publish online', workflow_article_publish_path(@article) %>
         <% else %>
           <%= link_to "Edit", workflow_article_publish_path(@article) %> | 
-          <%= link_to "Unpublish", workflow_article_publish_path(@article),
+          <%= button_to "Unpublish", workflow_article_publish_path(@article),
             :method => :delete, :confirm => "Are you sure you?" %>
         <% end %>
       <% end %>
@@ -128,7 +128,7 @@
       	<% @article.authors.each do |author| %>
       		<li>
       		  <span><%= author %></span>
-      	    <%= link_to 'Remove',
+      	    <%= button_to 'Remove',
               workflow_article_author_path(@article, author),
               :confirm => 'Are you sure?',
               :method => :delete %>
@@ -144,7 +144,7 @@
       	<% @article.workflow.proposed_titles.each do |title| %>
       		<li>
       		  <span><%= title %></span>
-    		    <%#= <%= link_to 'Remove',
+    		    <%#= <%= button_to 'Remove',
     	        workflow_article_title_path(@article, title),
     	        :confirm => 'Are you sure?',
     	        :method => :delete %>
@@ -172,7 +172,7 @@
                <p><strong>Caption:</strong> <%= image.caption %></p>
                <p>
                  <%= link_to "Edit", edit_workflow_article_image_path(@article, image) %>
-                 <%= link_to "Remove", workflow_article_image_path(@article, image),
+                 <%= button_to "Remove", workflow_article_image_path(@article, image),
                    :confirm => "Are you sure you want to remove this image?", :method => :delete %>
                </p>
              </div>
