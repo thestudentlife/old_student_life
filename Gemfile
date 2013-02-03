@@ -1,7 +1,6 @@
 source :rubygems
 
-gem 'rack', '~> 1.2.2' # Security fix
-gem 'rails', '3.0.7'
+gem 'rails', '3.0.20'
 
 # gem 'devise', :git => 'http://github.com/plataformatec/devise.git', :tag => 'v1.3.4'
 gem "devise"
@@ -14,7 +13,7 @@ gem "pg"
 # workflow
 gem 'paperclip', '~> 2'
 gem 'unicorn'
-gem "htmldiff", :git => "http://github.com/mikemaltese/htmldiff.git"
+gem "htmldiff", :git => "http://github.com/michaelmaltese/htmldiff.git"
 gem "high_voltage"
 gem "responders"
 gem "inherited_resources", '~> 1.2.1'
