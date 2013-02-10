@@ -18,7 +18,7 @@
 							content_tag :span, a, :class=>'author'
 						}.to_sentence.html_safe %>
 					<span class="timestamp">
-						<%= time_ago_in_words article.published_at %> ago
+						<%= article.published_at %>
 					</span>
 				</span>
 			</header>
@@ -79,7 +79,7 @@
 						content_tag :span, a, :class=>'author'
 					}.to_sentence.html_safe %>
 					<span class="timestamp">
-						<%= time_ago_in_words article.published_at %> ago
+						<%= article.published_at %>
 					</span>
 				</span>
 			</header>
