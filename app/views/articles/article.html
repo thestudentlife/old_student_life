@@ -20,7 +20,7 @@
 					link_to a, author_path(a), :class=>'author'
 				}.to_sentence.html_safe %>
 			<div class="timestamp">
-				Published <%= time_ago_in_words @article.published_at %> ago
+				Published <%= @article.published_at %> ago
 			</div>
 		</div>
 	</header>
