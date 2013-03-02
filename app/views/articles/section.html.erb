@@ -2,10 +2,7 @@
   <header>
     <h1><%= @subsection or @section %></h1>
   </header>  
-  	<% if (defined? @page) == nil) %>
-  		<% @page = 0 %>
-  	<% end %>
-	<% @articles.values_at((@page*20)..(@page*20+20)).each do |article| %>
+	<% @articles.values_at(0..47).each do |article| %>
 		<article class="teaser">
 			<% if article.images.any? %>
 				<div class="thumbnail">
@@ -31,9 +28,6 @@
 			</header>
 			<p class="summary"><%= article.teaser %></p>
 		</article>
-	<% end %>
-	<% if @page > @articles.size %>
-		<%= link_to "Next Page", section_path(@page + 47)%>
 	<% end %>
 </section>
 <%= render "articles/most_popular_and_facebook" %>
