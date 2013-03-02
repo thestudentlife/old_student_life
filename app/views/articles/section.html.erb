@@ -2,7 +2,7 @@
   <header>
     <h1><%= @subsection or @section %></h1>
   </header>  
-	<% @articles.values_at(0..47).each do |article| %>
+	<% @articles.first(47).each do |article| %>
 		<article class="teaser">
 			<% if article.images.any? %>
 				<div class="thumbnail">
