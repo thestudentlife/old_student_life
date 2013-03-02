@@ -3,7 +3,7 @@
     <h1><%= @subsection or @section %></h1>
   </header>  
   	<% if (defined? @page) == nil) %>
-  		<% @page = 0 &>
+  		<% @page = 0 %>
   	<% end %>
 	<% @articles.values_at((@page*20)..(@page*20+20)).each do |article| %>
 		<article class="teaser">
