@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120305001811) do
+ActiveRecord::Schema.define(:version => 20130914234711) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -155,6 +155,10 @@ ActiveRecord::Schema.define(:version => 20120305001811) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "locked_by"
+    t.boolean  "has_photographer"
+    t.string   "photographer_name"
+    t.boolean  "is_photo_submitted"
+    t.boolean  "is_photo_edited"
   end
 
   create_table "workflow_comments", :force => true do |t|
