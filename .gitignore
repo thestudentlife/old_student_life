@@ -6,3 +6,4 @@ public/uploads
 solr
 public/pdfarchive
 db/development
+.DS_Store
