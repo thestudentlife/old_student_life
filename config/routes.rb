@@ -42,7 +42,8 @@ TslRails::Application.routes.draw do
         get 'body', :on => :member
       end
       resources :titles, :controller => "articles/titles"
-      resource :publish, :controller => 'articles/publish'
+      resource :publish, :controller => "articles/publish"
+      resource :photography, :controller => "articles/photography"
       
       resource :front_page, :controller => "articles/front_page", :only => [:new, :create]
     end

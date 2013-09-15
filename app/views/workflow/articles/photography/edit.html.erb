@@ -1,0 +1,41 @@
+<% content_for :header do %>
+  <h1>Edit photography data</h1>
+<% end %>
+
+<%= form_for [@article.workflow], :url => workflow_article_path(@article) do |f| %>
+  <% if @article.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@article.errors.count, "error") %> prohibited this article from being saved:</h2>
+
+      <ul>
+      <% @article.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<div class="field wide-field">
+		<%= f.label :has_photograph %>
+		<%= f.check_box :has_photographer %>
+	</div>
+
+  <div class="field wide-field">
+    <%= f.label :photographer_name %>
+    <%= f.text_field :photographer_name %>
+  </div>
+
+  <div class="field wide-field">
+    <%= f.label :is_photo_submitted %>
+    <%= f.check_box :is_photo_submitted %>
+  </div>
+
+  <div class="field wide-field">
+    <%= f.label :is_photo_edited %>
+    <%= f.check_box :is_photo_edited %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
