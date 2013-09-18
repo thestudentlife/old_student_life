@@ -67,6 +67,18 @@ section#articles {
 	content: "Status: ";
 	font-weight: bold;
 }
+.photograph-status {
+	background-color: #87CEFA;
+	padding: 4px;
+	webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-o-border-radius: 2px;
+	border-radius: 2px;
+}
+.photograph-status:before {
+	content: "Has Photo: ";
+	font-weight: bold;
+}
 section#articles > .article {
 	position: relative;
 	background-color: white;

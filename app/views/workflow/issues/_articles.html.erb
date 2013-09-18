@@ -18,7 +18,10 @@
 			  <% if article.workflow.status_message and not article.workflow.status_message.blank? %>
   				<span class="status-message"><%= article.workflow.status_message %></span>
 				<% end %>
-        <% if article.workflow.locked? %>
+	          <% if article.workflow.has_photographer %>
+				  <span class="photograph-status"><%= article.workflow.photographer_name ? article.workflow.photographer_name : "photographer details have not been added" %></span>
+				<% end %>
+	          <% if article.workflow.locked? %>
 				  <span class="lock-status"><%= article.workflow.locked_by %></span>
 				<% end %>
 			</section>
