@@ -13,7 +13,7 @@ gem "pg"
 # workflow
 gem 'paperclip', '~> 2'
 gem 'unicorn'
-gem "htmldiff", :git => "http://github.com/michaelmaltese/htmldiff.git"
+gem "htmldiff", :git => "http://github.com/thestudentlife/htmldiff.git"
 gem "high_voltage"
 gem "responders"
 gem "inherited_resources", '~> 1.2.1'
