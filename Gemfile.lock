@@ -1,5 +1,5 @@
 GIT
-  remote: http://github.com/michaelmaltese/htmldiff.git
+  remote: http://github.com/thestudentlife/htmldiff.git
   revision: 0941b8159d6d122aa4aee68f8eff1621ed46478d
   specs:
     htmldiff (0.0.1)
