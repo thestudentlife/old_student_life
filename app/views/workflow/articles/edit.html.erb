@@ -25,6 +25,18 @@
 		<%= f.label :status_message %>
 		<%= f.text_field :status_message %>
 	</div>
+	<div class="field">
+		<%= label_tag :author_id %>
+		<%= select_tag :author_id, options_from_collection_for_select(@authors, :id, :to_s) %>
+	</div>
+	<div class="field wide-field">
+		<%= f.label :has_photograph %>
+		<%= f.check_box :has_photographer %>
+	</div>
+  <div class="field wide-field">
+    <%= f.label :photographer_name %>
+    <%= f.text_field :photographer_name %>
+  </div>
 	<div class="actions">
 		<%= f.submit %>
 	</div>
