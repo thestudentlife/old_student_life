@@ -42,7 +42,7 @@ class Daffy
 		end
 		def body
 			if @article.body
-				@article.body.gsub("&nbsp;", " ").gsub(/\s+/,' ').gsub("</p>","</p>\n").gsub("&amp;", "&").
+				@article.body.gsub("&nbsp;", " ").gsub(/\s+/,' ').gsub("&amp;", "&").
 				gsub("&", "&amp;"). gsub(/\s+class=".*?"/,'').gsub(/<\/?o:.*?>/,'').gsub(/\s+style=".*?"/,'').
 				gsub(/<\/?span.*?>/,'').gsub(/<\/?font.*?>/,'').gsub(/<\/?xml.*?>/,'').gsub(/<\/?style.*?>/,'').
 				gsub(/<br\/?>/, "\n").gsub("</div>", "</div>\n").gsub(/<b>\s*<\/b>/, '').gsub(/<p>\s*<\/p>/, '')
