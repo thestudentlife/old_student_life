@@ -45,7 +45,8 @@ class Daffy
 				@article.body.gsub("&nbsp;", " ").gsub(/\s+/,' ').gsub("&amp;", "&").
 				gsub("&", "&amp;"). gsub(/\s+class=".*?"/,'').gsub(/<\/?o:.*?>/,'').gsub(/\s+style=".*?"/,'').
 				gsub(/<\/?span.*?>/,'').gsub(/<\/?font.*?>/,'').gsub(/<\/?xml.*?>/,'').gsub(/<\/?style.*?>/,'').
-				gsub(/<br\/?>/, "\n").gsub("</div>", "</div>\n").gsub(/<b>\s*<\/b>/, '').gsub(/<p>\s*<\/p>/, '')
+				gsub(/<br\/?>/, "\n").gsub("</div>", "</div>\n").gsub(/<b>\s*<\/b>/, '').gsub(/<p>\s*<\/p>/, '').
+				gsub("</p>","</p>\n")
 			else
 				""
 			end
