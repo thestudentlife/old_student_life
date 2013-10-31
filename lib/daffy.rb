@@ -46,6 +46,7 @@ class Daffy
 				gsub("&", "&amp;"). gsub(/\s+class=".*?"/,'').gsub(/<\/?o:.*?>/,'').gsub(/\s+style=".*?"/,'').
 				gsub(/<\/?span.*?>/,'').gsub(/<\/?font.*?>/,'').gsub(/<\/?xml.*?>/,'').gsub(/<\/?style.*?>/,'').
 				gsub(/<br\/?>/, "\n").gsub("</div>", "</div>\n").gsub(/<b>\s*<\/b>/, '').gsub(/<p>\s*<\/p>/, '')
+				gsub(/<\/p>\s*<p>/,/<\/p>\n<p>/)
 			else
 				""
 			end
