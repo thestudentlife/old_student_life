@@ -12,16 +12,6 @@ PATH
       paperclip
       rails
 
-PATH
-  remote: lib/sl_workflow_data
-  specs:
-    sl_workflow_data (0)
-      activerecord
-      htmldiff
-      htmlentities
-      rails
-      sl_data
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -135,6 +125,7 @@ DEPENDENCIES
   devise
   high_voltage
   htmldiff!
+  htmlentities
   inherited_resources (~> 1.2.1)
   kaminari
   paperclip (~> 2)
@@ -143,5 +134,4 @@ DEPENDENCIES
   responders
   sanitize
   sl_data!
-  sl_workflow_data!
   unicorn
