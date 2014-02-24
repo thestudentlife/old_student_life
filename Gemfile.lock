@@ -4,14 +4,6 @@ GIT
   specs:
     htmldiff (0.0.1)
 
-PATH
-  remote: lib/sl_data
-  specs:
-    sl_data (0.0.0)
-      activerecord
-      paperclip
-      rails
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -133,5 +125,4 @@ DEPENDENCIES
   rails (= 3.0.20)
   responders
   sanitize
-  sl_data!
   unicorn

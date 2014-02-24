@@ -4,7 +4,6 @@ gem 'rails', '3.0.20'
 
 # gem 'devise', :git => 'http://github.com/plataformatec/devise.git', :tag => 'v1.3.4'
 gem "devise"
-gem 'sl_data', :path => 'lib/sl_data'
 
 gem "pg"
 # workflow
