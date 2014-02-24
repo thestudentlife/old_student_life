@@ -1,4 +1,4 @@
-class ReviewConductor < Workflow::Conductor
+class ReviewConductor < Conductor
   def initialize(article, opts={})
     @article = article
     

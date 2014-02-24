@@ -1,4 +1,4 @@
-class TitleConductor < Workflow::Conductor
+class TitleConductor < Conductor
   def initialize(opts={})
     @article = Article.find opts[:article_id] if opts[:article_id]
     @workflow = @article.try(:workflow)

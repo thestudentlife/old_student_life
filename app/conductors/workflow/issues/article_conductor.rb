@@ -1,4 +1,4 @@
-class Workflow::Issues::ArticleConductor < Workflow::Conductor
+class Workflow::Issues::ArticleConductor < Conductor
   def initialize(opts={})
     @article = Article.new
     @article.section_id = opts[:section_id]

@@ -22,12 +22,6 @@ PATH
       rails
       sl_data
 
-PATH
-  remote: lib/workflow-conductor
-  specs:
-    workflow-conductor (0.0.0)
-      rails
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -151,4 +145,3 @@ DEPENDENCIES
   sl_data!
   sl_workflow_data!
   unicorn
-  workflow-conductor!

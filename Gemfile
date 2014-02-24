@@ -6,8 +6,6 @@ gem 'rails', '3.0.20'
 gem "devise"
 gem 'sl_data', :path => 'lib/sl_data'
 gem 'sl_workflow_data', :path => 'lib/sl_workflow_data'
-gem 'workflow-conductor', :require => 'workflow/conductor', :path => 'lib/workflow-conductor'
-
 
 gem "pg"
 # workflow
