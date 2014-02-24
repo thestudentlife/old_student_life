@@ -1,7 +1,7 @@
 require 'builder'
 require 'rack/utils'
 
-class Daffy
+class WebdavServer
 	
 	class ArticlePhotoFile
 		def initialize(photo)

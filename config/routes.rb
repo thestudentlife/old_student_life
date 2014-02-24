@@ -1,6 +1,6 @@
 TslRails::Application.routes.draw do
 
-  mount Daffy, :at => '/webdav'
+  mount WebdavServer, :at => '/webdav'
 
   devise_for :users
 
