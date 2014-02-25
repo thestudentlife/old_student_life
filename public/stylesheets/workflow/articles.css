@@ -76,7 +76,7 @@ section#articles {
 	border-radius: 2px;
 }
 .photograph-status:before {
-	content: "Has Photo: ";
+	content: "Photo Assigned: ";
 	font-weight: bold;
 }
 section#articles > .article {
