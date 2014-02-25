@@ -1,4 +1,3 @@
-module Workflow
 class Conductor
   
   include ActiveModel::Validations
@@ -38,4 +37,3 @@ class Conductor
   end
   
 end # class Conductor
-end # module Workflow
