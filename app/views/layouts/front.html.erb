@@ -424,6 +424,8 @@
 				:class => ('selected' if request.fullpath == page_path(:staff)) %>
 			<%= li_tag link_to('Subscriptions', page_path(:subscriptions)),
 				:class => ('selected' if request.fullpath == page_path(:subscriptions)) %>
+			<%= li_tag link_to('Contact Us', page_path(:contact)),
+				:class => ('selected' if request.fullpath == page_path(:contact)) %>
 			<%= li_tag link_to('About', page_path(:about)),
 				:class => ('selected' if request.fullpath == page_path(:about)) %>
 			<%= li_tag link_to('Archives', page_path(:pdfs)),
