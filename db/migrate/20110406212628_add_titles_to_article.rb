@@ -3,11 +3,6 @@ ArticleTitle = Class.new(ActiveRecord::Base)
 class AddTitlesToArticle < ActiveRecord::Migration
   def self.up
     add_column :web_published_articles, :title, :string
-    WebPublishedArticle.reset_column_information
-    WebPublishedArticle.all.each do |web|
-      web.title = ArticleTitle.find(web.title_id).text
-      web.save!
-    end
     remove_column :web_published_articles, :title_id
     
     add_column :articles, :titles, :string

@@ -8,7 +8,7 @@ class ArticlesController < ApplicationController
   def index
     @featured_articles = Article.featured
     @news = Section.order('priority ASC').first
-    @articles = Article.find_all_published_in_section(@news).limit(5)
+    @articles = [] 
   end
   
   def article
