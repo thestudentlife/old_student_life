@@ -3,7 +3,7 @@
 development:
   adapter: postgresql
   host: localhost
-  database: studentlife
+  database: studentlife_prod # old: studentlife
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
